@@ -18,16 +18,16 @@ Largest Contentful Paint (LCP) is a new page load metric, which describes page s
 
 ### Why largest and contentful 
 
-In order to better correlate with user experience, we designed LCP to represent the speed of delivering **main content** on screen. While the main content is important in user experience, it’s highly subjective to different users. As an approximation, LCP uses the largest contentful element to represent the main content.
+In order to better correlate with user experience, we designed LCP to represent the speed of delivering **main content** on screen. While the main content is important to the user experience, what is the main content is highly subjective and different users can come up with different answers. As an approximation, LCP uses the largest contentful element to represent the main content.
 
-Historically, we’ve tried [complex heuristics](https://docs.google.com/document/d/1BR94tJdZLsin5poeet0XoTW60M0SjvOJQttKT-JK8HI) to determine when the page has meaningfully painted, as in First Meaningful Paint (FMP) metric. In practice, these heuristics have been able to work well for ~80% of content, but often produce strange, hard to explain outlier results in the remaining cases. LCP is a simple, practical approach to estimating a time that represents a meaningful paint for users, without heavily relying on complex heuristics. With LCP, we don’t observe the outliers encountered with FMP.
+Historically, we’ve tried [complex heuristics](https://docs.google.com/document/d/1BR94tJdZLsin5poeet0XoTW60M0SjvOJQttKT-JK8HI) to determine when the page has meaningfully painted, as in First Meaningful Paint (FMP) metric. In practice, these heuristics have been able to work well for ~80% of content, but often produce strange, hard-to-explain outlier results in the remaining cases. LCP is a simple, practical approach to estimating a time that represents a meaningful paint for users, without heavily relying on complex heuristics. With LCP, we don’t observe the outliers encountered with FMP.
 
 
 ### Largest: biggest initial size
 
-LCP uses the largest element to approximate the main content on page. As [sizes](#visual-size) of elements can change during the whole page load, LCP uses the size of the [first paint](#paint-first-paint) of elements to decide which one is the largest. During the page load, an element can be painted many times, for example, the first paint when an element has just been added to the DOM tree, the repaint when text has to replace its font with the just loaded web font. An element can even be removed from the DOM, and reattached later. No matter how many times an element is painted, the metric uses the size of the first paint to decide the largest.
+LCP uses the largest element to approximate the main content on the page. As [visual sizes](#visual-size) of elements can change during the whole page load, LCP uses the size of the [first paint](#paint-first-paint) of elements to decide which one is the largest. During the page load, an element can be painted many times, for example, the first paint when an element has just been added to the DOM tree, the repaint when text has to replace its font with the newly loaded web font. An element can even be removed from the DOM, and reattached later. No matter how many times an element is painted, the metric uses the size of the first paint to decide the largest.
 
-The use of **initial** size affects the pages where the elements move, such as animated image carousel. In the carousel, take the second image sliding in for example, LCP defines the size of the second image as the first paint after it’s added to the DOM (which is 0 or the size of a small rect which just appears from the side of the container element), because it’s the initial paint size of the element. This applies to the interstitials/dialog box that slides into the screen as well.
+The use of **initial** size affects pages where the elements move, such as animated image carousel. In such carousel examples, for images that are initially outside the viewport and that "slide" into it, LCP may define their size as their painted size when they are first added to the DOM, which will be 0. The same issue also applies to interstitials or dialog boxes that slide into the viewport.
 
 
 ### Contentful: text, image, background images, videos’ poster-images 
@@ -49,23 +49,19 @@ The pictorial elements includes:
 *   html elements with [contentful](#contentful-style-background-images) style-background-images
 *   video elements with poster images
 
-In the future, the contentful elements may also include canvas elements and the video elements with frames.
+In the future, we may add canvas and video elements that paint their initial frame to the contentful elements group.
 
 
 #### Contentful style-background-images 
 
-LCP uses heuristics to distinguish the style-background-images that are used as background and content. LCP excludes those used as background as they are less relevant to user experience than those used as content.
+Background images can serve a role as background or as part of the contents of the page. LCP uses heuristics to distinguish between those uses and exclude one with a background role, as they are less relevant to user experience than those used as content.
 
-The heuristics to identify a background-purposed image include:
-
-
-
-*   attached to the document, or
-*   is a generated image
-
-When a style-background-image is attached to <body> or <html>, it is attached to the whole document. The image in this style is likely to serve for background purposes, and thus less likely to be the main content.
-
+The heuristics to identify a background-purposed image may include:
+* Document position - Background images of the document's `<body>` or its `<html>` are more likely to serve as a background for the page.
+* Level of entropy - 
 A generated image is an image that’s defined in terms of points, curves, other than pixels. These images are commonly used to draw simple background, e.g., a gradient background. So we use this as a heuristic to find out images serving as background.
+
+TODO: better explain the generated image part
 
 
 ### Paint: first paint 
@@ -83,14 +79,18 @@ In the context of LCP, the size of an element refers to the visual size, which i
 *   Elements whose CSS visibility property set to “hidden” is regarded as invisible.
 *   A text element in [font-block period](https://developer.mozilla.org/en-US/docs/Web/CSS/@font-face/font-display#The_font_display_timeline) is invisible.
 
-Note that we haven’t taken occlusion into account. We are not sure whether occlusion is possible to implement efficiently, but we'd like to take it into account if we can find an efficient approach.
+Note that occlusion is not taken into account due to implementation efficiency concerns. It may be added in the future if those concerns are alleviated.
 
-Text size has a granularity issue. There is a discrepancy between users’ understanding of a block of text and how the text is defined in DOM tree. While users tend to regard a paragraph as a block of text, the paragraph may be represented by several text nodes on the DOM tree because of links and different text style. Currently LCP regards each text node as a unit of text, which is sometimes different from user perception. LCP will explore ways of grouping text considering computational cost and accuracy (Element Timing is exploring about [grouping text nodes by their immediate parent](https://docs.google.com/document/d/1xhPJnXf0Nqsi8cBFrlzBuHavirOVZBd8TqdD_OyrDGw/edit#heading=h.1e3yk3amx58m)).
+Regarding text, there is some discrepency between the way users may preceive blocks of text and the way text is defined in the DOM tree.
+While users tend to regard a paragraph as a block of text, the paragraph may be represented by several text nodes on the DOM tree because of links and different text style.
+Currently LCP regards each text node as a unit of text, which is sometimes different from user perception.
+
+The issue of grouping text nodes seems like an issue shared between LCP and its underlying primitive, Element Timing. Element Timing is exploring [grouping text nodes by their immediate parent](https://docs.google.com/document/d/1xhPJnXf0Nqsi8cBFrlzBuHavirOVZBd8TqdD_OyrDGw/edit#heading=h.1e3yk3amx58m)).
 
 
-### Before user input 
+### Interaction with user input 
 
-The design of the metric has also considered the fact that user inputs may cause pages to show different content. Because of different ways of user interaction, the same page may produce different LCPs.
+The design of the metric has also considered the fact that user inputs may cause pages to show different content. Because of different ways users may interact with the page, the same page may produce different LCPs.
 
 We observe that, for many pages, large elements can be inserted into the document in response to user input. Without ignoring updates after user input, LCP often reported values closer to the total time a user spent on the page. Without filtering out updates due to user input, LCP ends up measuring time to user input that inserted the largest element, rather than time until the main content of the page is initially visible.
 
@@ -104,14 +104,14 @@ In order to reduce this variation, the LCP algorithm only observe the page until
 
 ### The last candidate
 
-During a page load, with page content constantly changing, LCP may be different at different moment. The LCP algorithm keeps updating the LCP candidate until the ending condition is met. The ending condition can be each of these:
+During a page load, with page content constantly changing, LCP may have a different result at different times. The LCP algorithm keeps updating the LCP candidate until the ending condition is met. The ending condition can be each of these:
 
 
 
 *   the user provides the first input
 *   the page navigates away
 
-It’s possible for the last candidate to be too early because the measurement is aborted (page closing, [user input](https://docs.google.com/document/d/1ySnglZJiCbOrOMX8PNgE0mRKmt9vglNDyggE8oYN8gQ/edit?disco=AAAACm_mTEg&usp_dm=false&ts=5c8a36c5#heading=h.leq0znnz6i6w), etc) too early. This will cause a skew in the result because the result haven’t considered the content loaded after its termination. This ‘abort bias’ is inherent to any metric that is conditionally recorded only if the page visit reaches the point in time where the metric is observed. While a single sample may be affected by abort bias, aggregating a large number of samples can mitigate this problem. We find that using aggregate statistics for higher percentiles, such as 90th, avoids bias due to these early aborts.
+It’s possible that the last candidate returned would be a premature result, because the measurement was aborted (due to the user navigating away or due to [user input](https://docs.google.com/document/d/1ySnglZJiCbOrOMX8PNgE0mRKmt9vglNDyggE8oYN8gQ/edit?disco=AAAACm_mTEg&usp_dm=false&ts=5c8a36c5#heading=h.leq0znnz6i6w)). This will cause a skew in the result because the result haven’t considered the content loaded (or that would have been loaded) after its termination. This ‘abort bias’ is inherent to any metric that is conditionally recorded only if the page visit reaches the point in time where the metric is observed. While a single sample may be affected by abort bias, aggregating a large number of samples can mitigate this problem. We find that using aggregate statistics for higher percentiles, such as 90th, avoids bias due to these early aborts.
 
 
 ### Ignore removed elements 

@@ -4,6 +4,8 @@
 
 ## Objectives
 
+Developers today don't have a reliable metric that correlated with their user's visual rendering experience. Existing metrics such as First Paint and First Contentful Paint focus on initial rendering, but don't take into account the importance of the painted content, and therefore may indicate times in which the user still does not consider the page useful.
+
 Largest Contentful Paint aims to be a new page-load metric that:
 
 *   better correlates with user experience than the existing page-load metrics
@@ -14,6 +16,8 @@ Largest Contentful Paint aims to be a new page-load metric that:
 ## What is Largest Contentful Paint 
 
 Largest Contentful Paint (LCP) is a new page load metric, which describes page speed as the speed of delivering the largest contentful element to the screen.
+
+It is the high-level metric, where [Element Timing](https://github.com/WICG/Element-Timing) is its low-level primitive, aiming to provide a meaningful result even for developers that won't go through the trouble of annotating their sites. 
 
 
 ### Why largest and contentful 

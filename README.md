@@ -106,8 +106,6 @@ In order to reduce this variation, the LCP algorithm only observe the page until
 
 During a page load, with page content constantly changing, LCP may have a different result at different times. The LCP algorithm keeps updating the LCP candidate until the ending condition is met. The ending condition can be each of these:
 
-
-
 *   the user provides the first input
 *   the page navigates away
 
@@ -116,13 +114,14 @@ It’s possible that the last candidate returned would be a premature result, be
 
 ### Ignore removed elements 
 
-LCP ignores the removed elements. If a content element is removed from the DOM tree, the element is temporarily excluded from being the element of LCP. This prevents LCP ([the last candidate](#the-last-candidate)) from firing at ephemeral elements on a page, such as the splash screen (if the page load outlives the splash screen).
+In order to considering  ephemereal elements (such as splash screens) as the largest contentful paint, LCP ignores removed elements. If a content element is removed from the DOM tree, the element is temporarily excluded from being an LCP candidate.
 
 ## API shape
 One challenge with exposing LCP as a Performance Entry is the fact that the browser is not aware of the "winning" candidate until the measurement is over, at which point it is potentially too late, as the user may have navigated away.
 As such, we want to make sure that the latest candidate is exposed to developers as the page is loaded, and analytics scripts can pick up that latest candidate at each point in time.
 
 For that purpose we want to satisfy a few, somewhat contradictory, requirements:
+
 * Developers need to be able to always pick the latest candidate.
 * Developers need to be notified when the candidate value changes.
 * Accumulating all potential candidates should not take an excessive amount of memory.
@@ -130,38 +129,46 @@ For that purpose we want to satisfy a few, somewhat contradictory, requirements:
 
 Let's explore some potential API shapes.
 
-### PerformanceObserver + LatestLargestContentfulPaint performance entry
+### `PerformanceObserver` + `LatestLargestContentfulPaint` performance entry
+In this option, we will use a typical `PerformanceObserver` API, define a new performance entry for LargestContentfulPaint and dispatch a new entry for each new candidate.
+Developers would then get access into all potential LCP candidates, even if typically they should be interested only in the latest one.
+
 Advantages: Enables developers to pick the latest candidate, notifies them, and consistent with other performance APIs.
 Disadvantage: Accumulates all the entries, resulting in suboptimal memory consumption.
 
-### `performance.LatestContentfulPaint()` method
-Advantages: Enables developers to pick the latest candidate, and does not accumulate extra entries.
-Disadvantage: Does not notify developers when the candidate is replaced, requiring polling based solutions. Not consistent with other performance APIs.
-
 ### PerformanceObserver + entries while deleting older entries
+A similar option to the above that would avoid the extra memory consumption is for the browser to dispatch a `PerformanceEntry` for each candidate, but only keep a reference to the last one.
+
 Advantages: Enables developers to pick the latest candidate, notifies them, and doesn't result in a lot of memory usage.
 Disadvantage: inconsistent with other performance APIs.
 
-## Advantage 
+### `performance.LatestContentfulPaint()` method
+Here, we would mint a new method that developers can poll in order to get the latest LCP candidate.
+
+Advantages: Enables developers to pick the latest candidate, and does not accumulate extra entries.
+Disadvantage: Does not notify developers when the candidate is replaced, requiring polling based solutions. Not consistent with other performance APIs.
+
+## LCP compared to other metrics
+
+### Advantages
 
 While FCP focuses on the speed of delivering the first paint, LCP focuses on the speed of delivering main content. As a proxy for main content, the largest element won’t always identify the main content perfectly, but in practice we have found it to be a simple heuristic that works well in most cases.
 
-Compared with FCP, LCP includes an important factor in user experience - element’s visual size. As FCP does not consider whether elements are painted out of viewport, it may choose a paint that’s out of users’ awareness to represent page speed. As FCP does not consider the size of content, it may choose a trivial element appearing way earlier than the main content, for which users come to the page, to represent page speed. LCP improves on FCP for identifying time to main content
+Compared to FCP, LCP includes an important factor related to the user experience - the element’s visual size. As FCP does not consider whether elements are painted out of viewport, it may choose a paint that’s out of users’ awareness to represent page speed. As FCP does not consider the size of content, it may choose a trivial element appearing significantly earlier than the main content, for which users come to the page, to represent page speed. LCP improves on FCP for identifying time to main content
 
-LCP is also aware of content removal. As FCP does not ignore the removed content, it may choose the splash screen to represent page speed, while page content may appear much later. LCP excludes the splash screen after the splash screen is removed from page, so that it can target the page content that users care about to represent page speed. 
+LCP is also aware of content removal. As FCP does not ignore removed content, it may choose the splash screen to represent page speed, while page content may appear much later. LCP excludes the splash screen after the splash screen is removed from page, so that it can target the page content that users care about to represent page speed. 
 
 Compared with FMP which relies on [complex heuristics](https://docs.google.com/document/d/1BR94tJdZLsin5poeet0XoTW60M0SjvOJQttKT-JK8HI/edit), LCP uses simpler heuristics, which makes its results easier to interpret.
 
 
-## Limitations
+### Limitations
 
 As heuristics for other metrics have shortcomings, some of the heuristics that LCP uses are not perfect as well. It can perform poorly for certain scenarios.
 
-LCP tries to [exclude](#contentful-style-background-images) “backgroundful” style-background-images. The heuristics LCP uses cannot rule out all of the backgroundful images. If a backgroundful style-background-image is not attached to the document, the image won’t not excluded, and the largest element won’t be the main content that LCP intends to capture.
+* LCP tries to [exclude](#contentful-style-background-images) non-content background-images. The heuristics LCP uses cannot rule out all backgroundful images. If a non-content background-image is not attached to the document, the image won’t be excluded, and the largest element may not be the main content that LCP intends to capture.
 
-LCP is deactivated after user input. If main content shows up after any user input, then the largest element that LCP uses won’t reflect the main content.
-
-Like most other DOM tree based metrics, LCP has a semantic gap between user perception of UI and the UI’s underlying DOM tree structure. This makes it hard for LCP in understanding certain complex UI objects, such as animated image carousel. In the case of animated image carousel, because of the heuristics of ignoring the removed element, LCP ignores the image that slides away (until they slide back). This causes LCP to report indefinite result for pages that uses animated image carousel.
+* LCP is deactivated after user input. If main content shows up after any user input, then the largest element that LCP uses won’t reflect the main content.
+* Complex UI structures such as image carousels may be mis-represented by LCP. Since the element's first paint is the one taken into account, images that are painted outside the viewport and slide in will be ignored. Similarly, images painted in the viewport but then slide outof it and removed will be ignored as well.
 
 
 ## Acknowledgements

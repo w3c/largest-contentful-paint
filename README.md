@@ -140,7 +140,7 @@ Developers would then get access into all potential LCP candidates, even if typi
 Advantages: Enables developers to pick the latest candidate, notifies them, and consistent with other performance APIs.
 Disadvantage: Accumulates all the entries, resulting in suboptimal memory consumption.
 
-### PerformanceObserver + entries while deleting older entries
+### `PerformanceObserver` + entries while deleting older entries
 A similar option to the above that would avoid the extra memory consumption is for the browser to dispatch a `PerformanceEntry` for each candidate, but only keep a reference to the last one.
 
 Advantages: Enables developers to pick the latest candidate, notifies them, and doesn't result in a lot of memory usage.

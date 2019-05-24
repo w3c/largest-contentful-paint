@@ -64,11 +64,7 @@ Background images can serve a role as background or as part of the contents of t
 
 The heuristics to identify a background-purposed image may include:
 * Document position - Background images of the document's `<body>` or its `<html>` are more likely to serve as a background for the page.
-* Level of entropy - 
-A generated image is an image that’s defined in terms of points, curves, other than pixels. These images are commonly used to draw simple background, e.g., a gradient background. So we use this as a heuristic to find out images serving as background.
-
-TODO: better explain the generated image part
-
+* Background image that's not fetched - a CSS background images that's either a [cross fade](https://drafts.csswg.org/css-images-4/#funcdef-cross-fade) or a [gradient](https://drafts.csswg.org/css-images-4/#typedef-gradient).
 
 ### Paint: first paint 
 

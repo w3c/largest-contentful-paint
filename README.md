@@ -6,11 +6,13 @@
 
 Developers today don't have a reliable metric that correlated with their user's visual rendering experience. Existing metrics such as First Paint and First Contentful Paint focus on initial rendering, but don't take into account the importance of the painted content, and therefore may indicate times in which the user still does not consider the page useful.
 
-Largest Contentful Paint aims to be a new page-load metric that:
+Largest Contentful Paint (LCP) aims to be a new page-load metric that:
 
 *   better correlates with user experience than the existing page-load metrics
 *   is easy to understand and reason about
 *   reduces the chance of gaming
+
+At the same time, LCP does not try to be respresentative of the user's entire rendering journey. That's something that the lower-level [Element-Timing](https://wicg.github.io/element-timing/) can help developers accomplish.
 
 
 ## What is Largest Contentful Paint 
@@ -131,22 +133,30 @@ For that purpose we want to satisfy a few, somewhat contradictory, requirements:
 * Accumulating all potential candidates should not take an excessive amount of memory.
 * The API should be consistent with other performance APIs.
 
-Let's explore some potential API shapes.
+We chose to use the `PerformanceObserver` API, define a `LatestLargestContentfulPaint` performance entry, and dispatch a new entry for each new candidate element (for which there can be one per paint operation), while leaving older ones in place.
 
-### `PerformanceObserver` + `LatestLargestContentfulPaint` performance entry
-In this option, we will use a typical `PerformanceObserver` API, define a new performance entry for LargestContentfulPaint and dispatch a new entry for each new candidate.
-Developers would then get access into all potential LCP candidates, even if typically they should be interested only in the latest one.
+That approach has the advantage of enabling developers to pick the latest candidate, notifying them of new candidates, and being consistent with other performance APIs.
+Its main disadvantage is that it accumulates all the entries, resulting in suboptimal memory consumption. But as mentioned, the number of candidates is capped by the number of paint operations, and in practice is expected to be significantly lower than that.
 
-Advantages: Enables developers to pick the latest candidate, notifies them, and consistent with other performance APIs.
-Disadvantage: Accumulates all the entries, resulting in suboptimal memory consumption.
+### Example code
+```javascript
+const po = new PerformanceObserver(list => {
+    const entries = list.getEntries();
+    const entry = entries[entries.length - 1];
+    // Process entry as the latest LCP candidate
+});
+po.observe({entryTypes: ['largestcontentfulpaint']});
+```
 
-### `PerformanceObserver` + entries while deleting older entries
+### Alternatives explored
+
+#### `PerformanceObserver` + entries while deleting older entries
 A similar option to the above that would avoid the extra memory consumption is for the browser to dispatch a `PerformanceEntry` for each candidate, but only keep a reference to the last one.
 
 Advantages: Enables developers to pick the latest candidate, notifies them, and doesn't result in a lot of memory usage.
 Disadvantage: inconsistent with other performance APIs.
 
-### `performance.LatestContentfulPaint()` method
+#### `performance.LatestContentfulPaint()` method
 Here, we would mint a new method that developers can poll in order to get the latest LCP candidate.
 
 Advantages: Enables developers to pick the latest candidate, and does not accumulate extra entries.

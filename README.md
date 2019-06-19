@@ -180,6 +180,9 @@ As heuristics for other metrics have shortcomings, some of the heuristics that L
 * LCP is deactivated after user input. If main content shows up after any user input, then the largest element that LCP uses won’t reflect the main content.
 * Complex UI structures such as image carousels may be mis-represented by LCP. Since the element's first paint is the one taken into account, images that are painted outside the viewport and slide in will be ignored. Similarly, images painted in the viewport but then slide outof it and removed will be ignored as well.
 
+# Security & privacy considerations
+
+This API relies on Element Timing for its underlying primitives. LCP may expose some element not exposed by Element Timing in case that they are smaller than Element Timing's limits, but are still the largest elements to be painted up until that point in the page's loading. That does not seem to expose any sensitive information beyond what Element Timing already enables.
 
 ## Acknowledgements
 

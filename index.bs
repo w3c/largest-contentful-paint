@@ -132,6 +132,5 @@ When asked to add a text entry, the user agent must run the following steps:
 Security & privacy considerations {#sec-security}
 ===============================================
 
-This API relies on Element Timing for its underlying primitives. As such, it does not expose any information not exposed by Element Timing.
+This API relies on Element Timing for its underlying primitives. LCP may expose some element not exposed by Element Timing in case that they are smaller than Element Timing's limits, but are still the largest elements to be painted up until that point in the page's loading. That does not seem to expose any sensitive information beyond what Element Timing already enables.
 
-TODO: Not 100% true. We expose smaller elements than ET. Is that relevant?

@@ -1,0 +1,137 @@
+<pre class=metadata>
+Title: Largest Contentful Paint
+Status: ED
+Shortname: largest-contentful-paint
+Group: WICG
+Level: 1
+Editor: Yoav Weiss, Google https://google.com, yoavweiss@chromium.org
+URL: https://wicg.github.io/largest-contentful-paint
+Repository: https://github.com/WICG/largest-contentful-paint
+Test Suite: https://github.com/web-platform-tests/wpt/tree/master/largest-contentful-paint
+Abstract: This document defines an API that enables monitoring the largest paint an element triggered on screen.
+Default Highlight: js
+</pre>
+
+<pre class=anchors>
+urlPrefix: https://w3c.github.io/performance-timeline/; spec: PERFORMANCE-TIMELINE-2;
+    type: interface; url: #the-performanceentry-interface; text: PerformanceEntry;
+    type: attribute; for: PerformanceEntry;
+        text: name; url: #dom-performanceentry-name;
+        text: entryType; url: #dom-performanceentry-entrytype;
+        text: startTime; url: #dom-performanceentry-starttime;
+        text: duration; url: #dom-performanceentry-duration;
+    type: attribute; for: PerformanceObserver;
+        text: supportedEntryTypes; url: #supportedentrytypes-attribute;
+urlPrefix: https://wicg.github.io/element-timing/; spec: ELEMENT-TIMING;
+    type: dfn; url: #sec-elements-exposed; text: exposed;
+</pre>
+
+Introduction {#sec-intro}
+=====================
+
+<em>This section is non-normative.</em>
+The LargestContentfulPaint API enables developers to gain visibility into the loading and rendering process of the web pages, in order for them to be able to optimize it.
+
+Developers today don't have a reliable metric that correlated with their user's visual rendering experience. Existing metrics such as First Paint and First Contentful Paint focus on initial rendering, but don't take into account the importance of the painted content, and therefore may indicate times in which the user still does not consider the page useful.
+
+Largest Contentful Paint (LCP) aims to be a new page-load metric that:
+* better correlates with user experience than the existing page-load metrics
+* is easy to understand and reason about
+* reduces the chance of gaming
+
+The largest paint during the loading process of the page is likely to signify a meaningful event from the user's perspective, and is therefore something we want to expose by default to developers, enabling performance teams, analytics providers and lab-based measurement tools to collect those metrics without requiring extra annotation work by the folks creating the content itself.
+
+The API relies heavily on <a href="https://wicg.github.io/element-timing">Element Timing</a>, which can be thought of as the low-level primitive that this high-level feature is built on top of. For cases where the content creators are willing to annotate their content and indicate the important points in the page's loading cycle, Element Timing is the API that will provide them more control over the elements that get reported.
+
+
+Elements exposed {#sec-elements-exposed}
+------------------------
+
+The Largest Contentful Paint API will only expose element types that are already <a href="https://wicg.github.io/element-timing#sec-elements-exposed">exposed</a> by the Element Timing API.
+
+Usage example {#sec-example}
+------------------------
+
+The following example shows an image and a large body of text. The developer then registers an observer that gets candidate entries for the largest paint while the page is loading.
+
+<xmp class="example highlight" highlight=html>
+    <img src="large_image.jpg">
+    <p id='large-paragraph'>This is large body of text.</p>
+    ...
+    <script>
+    const observer = new PerformanceObserver((list) => {
+      let perfEntries = list.getEntries();
+      let lastEntry = perfEntries[perfEntries.length - 1];
+      // Process the latest candidate for largest contentful paint
+    });
+    observer.observe({entryTypes: ['largest-contentful-paint']});
+    </script>
+</xmp>
+
+Largest Contenntful Paint {#sec-largest-contentful-paint}
+=======================================
+
+Largest Contentful Paint involves the following new interface:
+
+{{PerformanceLargestContentfulPaintCandidate}} interface {#sec-performance-largest-contentful-paint-candidate}
+------------------------------------------------------------------------
+
+<pre class="idl">
+interface PerformanceLargestContentfulPaintCandidate : PerformanceEntry {
+    readonly attribute unsigned long size;
+    readonly attribute DOMString identifier;
+    readonly attribute Element? element;
+};
+</pre>
+
+Each {{PerformanceLargestContentfulPaintCandidate}} object has these associated concepts:
+* An <dfn>element</dfn> containing the associated {{Element}}, initially set to <code>null</code>.
+* A <dfn>startTime</dfn>, initially set to 0.
+* A <dfn>size</dfn>, initially set to 0.
+
+The {{PerformanceEntry/entryType}} attribute's getter must return the {{DOMString}} <code>"largest-contentful-paint-candidate"</code>.
+
+The {{PerformanceEntry/name}} attribute's getter must return the value it was initialized to.
+
+The {{PerformanceEntry/startTime}} attribute must return the value of the <a>context object</a>'s <a>startTime</a>.
+
+The {{PerformanceEntry/duration}} attribute's getter must return 0.
+
+The {{PerformanceLargestContentfulPaintCandidate/size}} attribute must return the value of the <a>context object</a>'s <a>size</a>.
+
+The {{PerformanceLargestContentfulPaintCandidate/element}} attribute's getter must run these steps:
+<div algorithm="PerformanceLargestContentfulPaintCandidate element">
+    1. Let |element| be the <a>context object</a>'s <a>element</a>.
+    1. If |element| is not <a>connected</a>, return <code>null</code>.
+    1. Let |settings| be the <a>context object</a>'s <a>relevant settings object</a>.
+    1. Let |document| be |settings|'s <a>responsible document</a>.
+    1. If |element|'s <a for="tree">root</a> is not equal to |document|, return <code>null</code>.
+    1. Return |element|.
+</div>
+
+Note: This means that an element that is no longer <a>descendant</a> of the {{Document}} will no longer be returned by {{PerformanceLargestContentfulPaintCandidate/element}}'s attribute getter, including elements that are inside a shadow DOM.
+
+Processing model {#sec-processing-model}
+========================================
+
+Note: A user agent implementing the Largest Contentful Paint API would need to include <code>"largest-contentful-paint"</code> in {{PerformanceObserver/supportedEntryTypes}} for {{Window}} contexts.
+This allows developers to detect support for the API.
+
+When asked to add an image entry, the user agent must run the following steps:
+<div algorithm="PerformanceLargestContentfulPaintCandidate add-image-entry">
+    1. Bla
+    2. Foo
+</div>
+
+When asked to add a text entry, the user agent must run the following steps:
+<div algorithm="PerformanceLargestContentfulPaintCandidate add-text-entry">
+    1. Bla
+    2. Foo
+</div>
+
+Security & privacy considerations {#sec-security}
+===============================================
+
+This API relies on Element Timing for its underlying primitives. As such, it does not expose any information not exposed by Element Timing.
+
+TODO: Not 100% true. We expose smaller elements than ET. Is that relevant?

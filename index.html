@@ -1215,7 +1215,7 @@ Possible extra rowspan handling
   <link href="https://www.w3.org/StyleSheets/TR/2016/W3C-ED" rel="stylesheet">
   <meta content="Bikeshed version 872cce6d3026423d677f3bd5837f1a1a46299a04" name="generator">
   <link href="https://wicg.github.io/largest-contentful-paint" rel="canonical">
-  <meta content="772550e1e954e95b5fb60ad64c37019589d57939" name="document-revision">
+  <meta content="17c3cea73926fee4c50270ddad14cfe5f917d795" name="document-revision">
 <style>/* style-md-lists */
 
 /* This is a weird hack for me not yet following the commonmark spec
@@ -1473,7 +1473,7 @@ c-[il] { color: #000000 } /* Literal.Number.Integer.Long */
   <div class="head">
    <p data-fill-with="logo"></p>
    <h1 class="p-name no-ref" id="title">Largest Contentful Paint</h1>
-   <h2 class="no-num no-toc no-ref heading settled" id="subtitle"><span class="content">Editor’s Draft, <time class="dt-updated" datetime="2019-06-19">19 June 2019</time></span></h2>
+   <h2 class="no-num no-toc no-ref heading settled" id="subtitle"><span class="content">Editor’s Draft, <time class="dt-updated" datetime="2019-06-20">20 June 2019</time></span></h2>
    <div data-fill-with="spec-metadata">
     <dl>
      <dt>This version:
@@ -1574,33 +1574,44 @@ observer<c- p>.</c->observe<c- p>({</c->entryTypes<c- o>:</c-> <c- p>[</c-><c- t
    <h3 class="heading settled" data-level="2.1" id="sec-performance-largest-contentful-paint-candidate"><span class="secno">2.1. </span><span class="content"><code class="idl"><a data-link-type="idl" href="#performancelargestcontentfulpaintcandidate" id="ref-for-performancelargestcontentfulpaintcandidate">PerformanceLargestContentfulPaintCandidate</a></code> interface</span><a class="self-link" href="#sec-performance-largest-contentful-paint-candidate"></a></h3>
 <pre class="idl highlight def"><c- b>interface</c-> <dfn class="dfn-paneled idl-code" data-dfn-type="interface" data-export id="performancelargestcontentfulpaintcandidate"><code class="highlight"><c- g>PerformanceLargestContentfulPaintCandidate</c-></code></dfn> : <a class="n" data-link-type="idl-name" href="https://w3c.github.io/performance-timeline/#the-performanceentry-interface" id="ref-for-the-performanceentry-interface"><c- n>PerformanceEntry</c-></a> {
     <c- b>readonly</c-> <c- b>attribute</c-> <a class="idl-code" data-link-type="interface" href="https://heycam.github.io/webidl/#idl-unsigned-long" id="ref-for-idl-unsigned-long"><c- b>unsigned</c-> <c- b>long</c-></a> <dfn class="dfn-paneled idl-code" data-dfn-for="PerformanceLargestContentfulPaintCandidate" data-dfn-type="attribute" data-export data-readonly data-type="unsigned long" id="dom-performancelargestcontentfulpaintcandidate-size"><code class="highlight"><c- g>size</c-></code></dfn>;
-    <c- b>readonly</c-> <c- b>attribute</c-> <a class="idl-code" data-link-type="interface" href="https://heycam.github.io/webidl/#idl-DOMString" id="ref-for-idl-DOMString"><c- b>DOMString</c-></a> <dfn class="idl-code" data-dfn-for="PerformanceLargestContentfulPaintCandidate" data-dfn-type="attribute" data-export data-readonly data-type="DOMString" id="dom-performancelargestcontentfulpaintcandidate-identifier"><code class="highlight"><c- g>identifier</c-></code><a class="self-link" href="#dom-performancelargestcontentfulpaintcandidate-identifier"></a></dfn>;
+    <c- b>readonly</c-> <c- b>attribute</c-> <a class="n" data-link-type="idl-name" href="https://w3c.github.io/hr-time#dom-domhighrestimestamp" id="ref-for-dom-domhighrestimestamp"><c- n>DOMHighResTimeStamp</c-></a> <dfn class="dfn-paneled idl-code" data-dfn-for="PerformanceLargestContentfulPaintCandidate" data-dfn-type="attribute" data-export data-readonly data-type="DOMHighResTimeStamp" id="dom-performancelargestcontentfulpaintcandidate-responseend"><code class="highlight"><c- g>responseEnd</c-></code></dfn>;
+    <c- b>readonly</c-> <c- b>attribute</c-> <a class="idl-code" data-link-type="interface" href="https://heycam.github.io/webidl/#idl-DOMString" id="ref-for-idl-DOMString"><c- b>DOMString</c-></a> <dfn class="dfn-paneled idl-code" data-dfn-for="PerformanceLargestContentfulPaintCandidate" data-dfn-type="attribute" data-export data-readonly data-type="DOMString" id="dom-performancelargestcontentfulpaintcandidate-id"><code class="highlight"><c- g>id</c-></code></dfn>;
+    <c- b>readonly</c-> <c- b>attribute</c-> <a class="idl-code" data-link-type="interface" href="https://heycam.github.io/webidl/#idl-DOMString" id="ref-for-idl-DOMString①"><c- b>DOMString</c-></a> <dfn class="dfn-paneled idl-code" data-dfn-for="PerformanceLargestContentfulPaintCandidate" data-dfn-type="attribute" data-export data-readonly data-type="DOMString" id="dom-performancelargestcontentfulpaintcandidate-url"><code class="highlight"><c- g>url</c-></code></dfn>;
     <c- b>readonly</c-> <c- b>attribute</c-> <a class="n" data-link-type="idl-name" href="https://dom.spec.whatwg.org/#element" id="ref-for-element"><c- n>Element</c-></a>? <dfn class="dfn-paneled idl-code" data-dfn-for="PerformanceLargestContentfulPaintCandidate" data-dfn-type="attribute" data-export data-readonly data-type="Element?" id="dom-performancelargestcontentfulpaintcandidate-element"><code class="highlight"><c- g>element</c-></code></dfn>;
 };
 </pre>
    <p>Each <code class="idl"><a data-link-type="idl" href="#performancelargestcontentfulpaintcandidate" id="ref-for-performancelargestcontentfulpaintcandidate①">PerformanceLargestContentfulPaintCandidate</a></code> object has these associated concepts:</p>
    <ul>
     <li data-md>
-     <p>An <dfn class="dfn-paneled" data-dfn-type="dfn" data-noexport id="element">element</dfn> containing the associated <code class="idl"><a data-link-type="idl" href="https://dom.spec.whatwg.org/#element" id="ref-for-element①">Element</a></code>, initially set to <code class="highlight"><c- kc>null</c-></code>.</p>
-    <li data-md>
      <p>A <dfn class="dfn-paneled" data-dfn-type="dfn" data-noexport id="starttime">startTime</dfn>, initially set to 0.</p>
     <li data-md>
      <p>A <dfn class="dfn-paneled" data-dfn-type="dfn" data-noexport id="size">size</dfn>, initially set to 0.</p>
+    <li data-md>
+     <p>A <dfn class="dfn-paneled" data-dfn-type="dfn" data-noexport id="responseend">responseEnd</dfn>, initially set to 0.</p>
+    <li data-md>
+     <p>An <dfn class="dfn-paneled" data-dfn-type="dfn" data-noexport id="id">id</dfn>, initially set to the empty string.</p>
+    <li data-md>
+     <p>A <dfn class="dfn-paneled" data-dfn-type="dfn" data-noexport id="url">url</dfn>, initially set to the empty string.</p>
+    <li data-md>
+     <p>An <dfn class="dfn-paneled" data-dfn-type="dfn" data-noexport id="element">element</dfn> containing the associated <code class="idl"><a data-link-type="idl" href="https://dom.spec.whatwg.org/#element" id="ref-for-element①">Element</a></code>, initially set to <code class="highlight"><c- kc>null</c-></code>.</p>
    </ul>
-   <p>The <code class="idl"><a data-link-type="idl" href="https://w3c.github.io/performance-timeline/#dom-performanceentry-entrytype" id="ref-for-dom-performanceentry-entrytype">entryType</a></code> attribute’s getter must return the <code class="idl"><a data-link-type="idl" href="https://heycam.github.io/webidl/#idl-DOMString" id="ref-for-idl-DOMString①">DOMString</a></code> <code class="highlight"><c- u>"largest-contentful-paint-candidate"</c-></code>.</p>
+   <p>The <code class="idl"><a data-link-type="idl" href="https://w3c.github.io/performance-timeline/#dom-performanceentry-entrytype" id="ref-for-dom-performanceentry-entrytype">entryType</a></code> attribute’s getter must return the <code class="idl"><a data-link-type="idl" href="https://heycam.github.io/webidl/#idl-DOMString" id="ref-for-idl-DOMString②">DOMString</a></code> <code class="highlight"><c- u>"largest-contentful-paint-candidate"</c-></code>.</p>
    <p>The <code class="idl"><a data-link-type="idl" href="https://w3c.github.io/performance-timeline/#dom-performanceentry-name" id="ref-for-dom-performanceentry-name">name</a></code> attribute’s getter must return the value it was initialized to.</p>
    <p>The <code class="idl"><a data-link-type="idl" href="https://w3c.github.io/performance-timeline/#dom-performanceentry-starttime" id="ref-for-dom-performanceentry-starttime">startTime</a></code> attribute must return the value of the <a data-link-type="dfn" href="https://dom.spec.whatwg.org/#context-object" id="ref-for-context-object">context object</a>’s <a data-link-type="dfn" href="#starttime" id="ref-for-starttime">startTime</a>.</p>
    <p>The <code class="idl"><a data-link-type="idl" href="https://w3c.github.io/performance-timeline/#dom-performanceentry-duration" id="ref-for-dom-performanceentry-duration">duration</a></code> attribute’s getter must return 0.</p>
    <p>The <code class="idl"><a data-link-type="idl" href="#dom-performancelargestcontentfulpaintcandidate-size" id="ref-for-dom-performancelargestcontentfulpaintcandidate-size">size</a></code> attribute must return the value of the <a data-link-type="dfn" href="https://dom.spec.whatwg.org/#context-object" id="ref-for-context-object①">context object</a>’s <a data-link-type="dfn" href="#size" id="ref-for-size">size</a>.</p>
+   <p>The <code class="idl"><a data-link-type="idl" href="#dom-performancelargestcontentfulpaintcandidate-responseend" id="ref-for-dom-performancelargestcontentfulpaintcandidate-responseend">responseEnd</a></code> attribute must return the value of the <a data-link-type="dfn" href="https://dom.spec.whatwg.org/#context-object" id="ref-for-context-object②">context object</a>’s <a data-link-type="dfn" href="#responseend" id="ref-for-responseend">responseEnd</a>.</p>
+   <p>The <code class="idl"><a data-link-type="idl" href="#dom-performancelargestcontentfulpaintcandidate-id" id="ref-for-dom-performancelargestcontentfulpaintcandidate-id">id</a></code> attribute must return the value of the <a data-link-type="dfn" href="https://dom.spec.whatwg.org/#context-object" id="ref-for-context-object③">context object</a>’s <a data-link-type="dfn" href="#id" id="ref-for-id">id</a>.</p>
+   <p>The <code class="idl"><a data-link-type="idl" href="#dom-performancelargestcontentfulpaintcandidate-url" id="ref-for-dom-performancelargestcontentfulpaintcandidate-url">url</a></code> attribute must return the value of the <a data-link-type="dfn" href="https://dom.spec.whatwg.org/#context-object" id="ref-for-context-object④">context object</a>’s <a data-link-type="dfn" href="#url" id="ref-for-url">url</a>.</p>
    <p>The <code class="idl"><a data-link-type="idl" href="#dom-performancelargestcontentfulpaintcandidate-element" id="ref-for-dom-performancelargestcontentfulpaintcandidate-element">element</a></code> attribute’s getter must run these steps:</p>
    <div class="algorithm" data-algorithm="PerformanceLargestContentfulPaintCandidate element">
     <ol>
      <li data-md>
-      <p>Let <var>element</var> be the <a data-link-type="dfn" href="https://dom.spec.whatwg.org/#context-object" id="ref-for-context-object②">context object</a>’s <a data-link-type="dfn" href="#element" id="ref-for-element②">element</a>.</p>
+      <p>Let <var>element</var> be the <a data-link-type="dfn" href="https://dom.spec.whatwg.org/#context-object" id="ref-for-context-object⑤">context object</a>’s <a data-link-type="dfn" href="#element" id="ref-for-element②">element</a>.</p>
      <li data-md>
       <p>If <var>element</var> is not <a data-link-type="dfn" href="https://dom.spec.whatwg.org/#connected" id="ref-for-connected">connected</a>, return <code class="highlight"><c- kc>null</c-></code>.</p>
      <li data-md>
-      <p>Let <var>settings</var> be the <a data-link-type="dfn" href="https://dom.spec.whatwg.org/#context-object" id="ref-for-context-object③">context object</a>’s <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/webappapis.html#relevant-settings-object" id="ref-for-relevant-settings-object">relevant settings object</a>.</p>
+      <p>Let <var>settings</var> be the <a data-link-type="dfn" href="https://dom.spec.whatwg.org/#context-object" id="ref-for-context-object⑥">context object</a>’s <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/webappapis.html#relevant-settings-object" id="ref-for-relevant-settings-object">relevant settings object</a>.</p>
      <li data-md>
       <p>Let <var>document</var> be <var>settings</var>’s <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/webappapis.html#responsible-document" id="ref-for-responsible-document">responsible document</a>.</p>
      <li data-md>
@@ -1610,26 +1621,46 @@ observer<c- p>.</c->observe<c- p>({</c->entryTypes<c- o>:</c-> <c- p>[</c-><c- t
     </ol>
    </div>
    <p class="note" role="note"><span>Note:</span> This means that an element that is no longer <a data-link-type="dfn" href="https://dom.spec.whatwg.org/#concept-tree-descendant" id="ref-for-concept-tree-descendant">descendant</a> of the <code class="idl"><a data-link-type="idl" href="https://dom.spec.whatwg.org/#document" id="ref-for-document">Document</a></code> will no longer be returned by <code class="idl"><a data-link-type="idl" href="#dom-performancelargestcontentfulpaintcandidate-element" id="ref-for-dom-performancelargestcontentfulpaintcandidate-element①">element</a></code>'s attribute getter, including elements that are inside a shadow DOM.</p>
+   <p>TODO: replace the above with a call to ElementTiming’s similar algorithm.</p>
+   <p>This specification also extends <code class="idl"><a data-link-type="idl" href="https://dom.spec.whatwg.org/#document" id="ref-for-document①">Document</a></code> by adding it a <dfn class="dfn-paneled" data-dfn-type="dfn" data-noexport id="largestcontentfulpaintsize">largestContentfulPaintSize</dfn> concept, initially set to 0.</p>
    <h2 class="heading settled" data-level="3" id="sec-processing-model"><span class="secno">3. </span><span class="content">Processing model</span><a class="self-link" href="#sec-processing-model"></a></h2>
    <p class="note" role="note"><span>Note:</span> A user agent implementing the Largest Contentful Paint API would need to include <code class="highlight"><c- u>"largest-contentful-paint"</c-></code> in <code class="idl"><a data-link-type="idl" href="https://w3c.github.io/performance-timeline/#supportedentrytypes-attribute" id="ref-for-supportedentrytypes-attribute">supportedEntryTypes</a></code> for <code class="idl"><a data-link-type="idl" href="https://html.spec.whatwg.org/multipage/window-object.html#window" id="ref-for-window">Window</a></code> contexts.
 This allows developers to detect support for the API.</p>
-   <p>When asked to add an image entry, the user agent must run the following steps:</p>
+   <p>In order add a <code class="idl"><a data-link-type="idl" href="#performancelargestcontentfulpaintcandidate" id="ref-for-performancelargestcontentfulpaintcandidate②">PerformanceLargestContentfulPaintCandidate</a></code> entry, the user agent must run the following steps:</p>
    <div class="algorithm" data-algorithm="PerformanceLargestContentfulPaintCandidate add-image-entry">
-    <ol>
-     <li data-md>
-      <p>Bla</p>
-     <li data-md>
-      <p>Foo</p>
-    </ol>
-   </div>
-   <p>When asked to add a text entry, the user agent must run the following steps:</p>
-   <div class="algorithm" data-algorithm="PerformanceLargestContentfulPaintCandidate add-text-entry">
-    <ol>
-     <li data-md>
-      <p>Bla</p>
-     <li data-md>
-      <p>Foo</p>
-    </ol>
+    <dl>
+     <dt data-md>Input
+     <dd data-md>
+      <p><var>size</var>, an unsigned long</p>
+     <dd data-md>
+      <p><var>url</var>, a string</p>
+     <dd data-md>
+      <p><var>id</var>, a string</p>
+     <dd data-md>
+      <p><var>time</var>, a DOMHighResTimestamp</p>
+     <dd data-md>
+      <p><var>responseEnd</var>, a DOMHighResTimestamp</p>
+     <dd data-md>
+      <p><var>element</var>, a DOMElement</p>
+     <dd data-md>
+      <p><var>document</var>, a Document</p>
+     <dt data-md>Output
+     <dd data-md>
+      <p>None</p>
+      <ol>
+       <li data-md>
+        <p>Let <var>largest</var> be <var>document</var>’s <a data-link-type="dfn" href="#largestcontentfulpaintsize" id="ref-for-largestcontentfulpaintsize">largestContentfulPaintSize</a>.</p>
+       <li data-md>
+        <p>If <var>size</var> is smaller or equals <var>largest</var>, return.</p>
+       <li data-md>
+        <p>Set <var>document</var>’s <a data-link-type="dfn" href="#largestcontentfulpaintsize" id="ref-for-largestcontentfulpaintsize①">largestContentfulPaintSize</a> to <var>size</var>.</p>
+       <li data-md>
+        <p>Let <var>entry</var> be a new <code class="idl"><a data-link-type="idl" href="#performancelargestcontentfulpaintcandidate" id="ref-for-performancelargestcontentfulpaintcandidate③">PerformanceLargestContentfulPaintCandidate</a></code> entry, with it’s <code class="idl"><a data-link-type="idl" href="#dom-performancelargestcontentfulpaintcandidate-size" id="ref-for-dom-performancelargestcontentfulpaintcandidate-size①">size</a></code> set to <var>size</var>, <code class="idl"><a data-link-type="idl" href="#dom-performancelargestcontentfulpaintcandidate-url" id="ref-for-dom-performancelargestcontentfulpaintcandidate-url①">url</a></code> set to <var>url</var>, <code class="idl"><a data-link-type="idl" href="#dom-performancelargestcontentfulpaintcandidate-id" id="ref-for-dom-performancelargestcontentfulpaintcandidate-id①">id</a></code> set to <var>id</var>, <code class="idl"><a data-link-type="idl" href="https://w3c.github.io/performance-timeline/#dom-performanceentry-starttime" id="ref-for-dom-performanceentry-starttime①">startTime</a></code> set to <var>time</var>, <code class="idl"><a data-link-type="idl" href="#dom-performancelargestcontentfulpaintcandidate-responseend" id="ref-for-dom-performancelargestcontentfulpaintcandidate-responseend①">responseEnd</a></code> set to <var>responseEnd</var>,
+   and its <code class="idl"><a data-link-type="idl" href="#dom-performancelargestcontentfulpaintcandidate-element" id="ref-for-dom-performancelargestcontentfulpaintcandidate-element②">element</a></code> set to <var>element</var>.</p>
+       <li data-md>
+        <p><a data-link-type="dfn" href="https://w3c.github.io/performance-timeline/#dfn-queue-a-performanceentry" id="ref-for-dfn-queue-a-performanceentry">Queue the PerformanceEntry</a> <var>entry</var>.</p>
+      </ol>
+    </dl>
    </div>
    <h2 class="heading settled" data-level="4" id="sec-security"><span class="secno">4. </span><span class="content">Security &amp; privacy considerations</span><a class="self-link" href="#sec-security"></a></h2>
    <p>This API relies on Element Timing for its underlying primitives. LCP may expose some element not exposed by Element Timing in case that they are smaller than Element Timing’s limits, but are still the largest elements to be painted up until that point in the page’s loading. That does not seem to expose any sensitive information beyond what Element Timing already enables.</p>
@@ -1789,8 +1820,20 @@ This allows developers to detect support for the API.</p>
      <li><a href="#dom-performancelargestcontentfulpaintcandidate-element">attribute for PerformanceLargestContentfulPaintCandidate</a><span>, in §2.1</span>
      <li><a href="#element">definition of</a><span>, in §2.1</span>
     </ul>
-   <li><a href="#dom-performancelargestcontentfulpaintcandidate-identifier">identifier</a><span>, in §2.1</span>
+   <li>
+    id
+    <ul>
+     <li><a href="#dom-performancelargestcontentfulpaintcandidate-id">attribute for PerformanceLargestContentfulPaintCandidate</a><span>, in §2.1</span>
+     <li><a href="#id">definition of</a><span>, in §2.1</span>
+    </ul>
+   <li><a href="#largestcontentfulpaintsize">largestContentfulPaintSize</a><span>, in §2.1</span>
    <li><a href="#performancelargestcontentfulpaintcandidate">PerformanceLargestContentfulPaintCandidate</a><span>, in §2.1</span>
+   <li>
+    responseEnd
+    <ul>
+     <li><a href="#dom-performancelargestcontentfulpaintcandidate-responseend">attribute for PerformanceLargestContentfulPaintCandidate</a><span>, in §2.1</span>
+     <li><a href="#responseend">definition of</a><span>, in §2.1</span>
+    </ul>
    <li>
     size
     <ul>
@@ -1798,11 +1841,17 @@ This allows developers to detect support for the API.</p>
      <li><a href="#size">definition of</a><span>, in §2.1</span>
     </ul>
    <li><a href="#starttime">startTime</a><span>, in §2.1</span>
+   <li>
+    url
+    <ul>
+     <li><a href="#dom-performancelargestcontentfulpaintcandidate-url">attribute for PerformanceLargestContentfulPaintCandidate</a><span>, in §2.1</span>
+     <li><a href="#url">definition of</a><span>, in §2.1</span>
+    </ul>
   </ul>
   <aside class="dfn-panel" data-for="term-for-document">
    <a href="https://dom.spec.whatwg.org/#document">https://dom.spec.whatwg.org/#document</a><b>Referenced in:</b>
    <ul>
-    <li><a href="#ref-for-document">2.1. PerformanceLargestContentfulPaintCandidate interface</a>
+    <li><a href="#ref-for-document">2.1. PerformanceLargestContentfulPaintCandidate interface</a> <a href="#ref-for-document①">(2)</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="term-for-element">
@@ -1820,7 +1869,7 @@ This allows developers to detect support for the API.</p>
   <aside class="dfn-panel" data-for="term-for-context-object">
    <a href="https://dom.spec.whatwg.org/#context-object">https://dom.spec.whatwg.org/#context-object</a><b>Referenced in:</b>
    <ul>
-    <li><a href="#ref-for-context-object">2.1. PerformanceLargestContentfulPaintCandidate interface</a> <a href="#ref-for-context-object①">(2)</a> <a href="#ref-for-context-object②">(3)</a> <a href="#ref-for-context-object③">(4)</a>
+    <li><a href="#ref-for-context-object">2.1. PerformanceLargestContentfulPaintCandidate interface</a> <a href="#ref-for-context-object①">(2)</a> <a href="#ref-for-context-object②">(3)</a> <a href="#ref-for-context-object③">(4)</a> <a href="#ref-for-context-object④">(5)</a> <a href="#ref-for-context-object⑤">(6)</a> <a href="#ref-for-context-object⑥">(7)</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="term-for-concept-tree-descendant">
@@ -1833,6 +1882,12 @@ This allows developers to detect support for the API.</p>
    <a href="https://dom.spec.whatwg.org/#concept-tree-root">https://dom.spec.whatwg.org/#concept-tree-root</a><b>Referenced in:</b>
    <ul>
     <li><a href="#ref-for-concept-tree-root">2.1. PerformanceLargestContentfulPaintCandidate interface</a>
+   </ul>
+  </aside>
+  <aside class="dfn-panel" data-for="term-for-dom-domhighrestimestamp">
+   <a href="https://w3c.github.io/hr-time#dom-domhighrestimestamp">https://w3c.github.io/hr-time#dom-domhighrestimestamp</a><b>Referenced in:</b>
+   <ul>
+    <li><a href="#ref-for-dom-domhighrestimestamp">2.1. PerformanceLargestContentfulPaintCandidate interface</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="term-for-window">
@@ -1877,10 +1932,17 @@ This allows developers to detect support for the API.</p>
     <li><a href="#ref-for-dom-performanceentry-name">2.1. PerformanceLargestContentfulPaintCandidate interface</a>
    </ul>
   </aside>
+  <aside class="dfn-panel" data-for="term-for-dfn-queue-a-performanceentry">
+   <a href="https://w3c.github.io/performance-timeline/#dfn-queue-a-performanceentry">https://w3c.github.io/performance-timeline/#dfn-queue-a-performanceentry</a><b>Referenced in:</b>
+   <ul>
+    <li><a href="#ref-for-dfn-queue-a-performanceentry">3. Processing model</a>
+   </ul>
+  </aside>
   <aside class="dfn-panel" data-for="term-for-dom-performanceentry-starttime">
    <a href="https://w3c.github.io/performance-timeline/#dom-performanceentry-starttime">https://w3c.github.io/performance-timeline/#dom-performanceentry-starttime</a><b>Referenced in:</b>
    <ul>
     <li><a href="#ref-for-dom-performanceentry-starttime">2.1. PerformanceLargestContentfulPaintCandidate interface</a>
+    <li><a href="#ref-for-dom-performanceentry-starttime①">3. Processing model</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="term-for-supportedentrytypes-attribute">
@@ -1892,7 +1954,7 @@ This allows developers to detect support for the API.</p>
   <aside class="dfn-panel" data-for="term-for-idl-DOMString">
    <a href="https://heycam.github.io/webidl/#idl-DOMString">https://heycam.github.io/webidl/#idl-DOMString</a><b>Referenced in:</b>
    <ul>
-    <li><a href="#ref-for-idl-DOMString">2.1. PerformanceLargestContentfulPaintCandidate interface</a> <a href="#ref-for-idl-DOMString①">(2)</a>
+    <li><a href="#ref-for-idl-DOMString">2.1. PerformanceLargestContentfulPaintCandidate interface</a> <a href="#ref-for-idl-DOMString①">(2)</a> <a href="#ref-for-idl-DOMString②">(3)</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="term-for-idl-unsigned-long">
@@ -1914,6 +1976,11 @@ This allows developers to detect support for the API.</p>
      <li><span class="dfn-paneled" id="term-for-concept-tree-root" style="color:initial">root</span>
     </ul>
    <li>
+    <a data-link-type="biblio">[hr-time]</a> defines the following terms:
+    <ul>
+     <li><span class="dfn-paneled" id="term-for-dom-domhighrestimestamp" style="color:initial">DOMHighResTimeStamp</span>
+    </ul>
+   <li>
     <a data-link-type="biblio">[HTML]</a> defines the following terms:
     <ul>
      <li><span class="dfn-paneled" id="term-for-window" style="color:initial">Window</span>
@@ -1927,6 +1994,7 @@ This allows developers to detect support for the API.</p>
      <li><span class="dfn-paneled" id="term-for-dom-performanceentry-duration" style="color:initial">duration</span>
      <li><span class="dfn-paneled" id="term-for-dom-performanceentry-entrytype" style="color:initial">entryType</span>
      <li><span class="dfn-paneled" id="term-for-dom-performanceentry-name" style="color:initial">name</span>
+     <li><span class="dfn-paneled" id="term-for-dfn-queue-a-performanceentry" style="color:initial">queue the performanceentry</span>
      <li><span class="dfn-paneled" id="term-for-dom-performanceentry-starttime" style="color:initial">startTime</span>
      <li><span class="dfn-paneled" id="term-for-supportedentrytypes-attribute" style="color:initial">supportedEntryTypes</span>
     </ul>
@@ -1942,6 +2010,8 @@ This allows developers to detect support for the API.</p>
   <dl>
    <dt id="biblio-dom">[DOM]
    <dd>Anne van Kesteren. <a href="https://dom.spec.whatwg.org/">DOM Standard</a>. Living Standard. URL: <a href="https://dom.spec.whatwg.org/">https://dom.spec.whatwg.org/</a>
+   <dt id="biblio-hr-time">[HR-TIME]
+   <dd>Jatinder Mann. <a href="https://www.w3.org/TR/hr-time/">High Resolution Time</a>. 17 December 2012. REC. URL: <a href="https://www.w3.org/TR/hr-time/">https://www.w3.org/TR/hr-time/</a>
    <dt id="biblio-html">[HTML]
    <dd>Anne van Kesteren; et al. <a href="https://html.spec.whatwg.org/multipage/">HTML Standard</a>. Living Standard. URL: <a href="https://html.spec.whatwg.org/multipage/">https://html.spec.whatwg.org/multipage/</a>
    <dt id="biblio-performance-timeline-2">[PERFORMANCE-TIMELINE-2]
@@ -1954,7 +2024,9 @@ This allows developers to detect support for the API.</p>
   <h2 class="no-num no-ref heading settled" id="idl-index"><span class="content">IDL Index</span><a class="self-link" href="#idl-index"></a></h2>
 <pre class="idl highlight def"><c- b>interface</c-> <a href="#performancelargestcontentfulpaintcandidate"><code class="highlight"><c- g>PerformanceLargestContentfulPaintCandidate</c-></code></a> : <a class="n" data-link-type="idl-name" href="https://w3c.github.io/performance-timeline/#the-performanceentry-interface" id="ref-for-the-performanceentry-interface①"><c- n>PerformanceEntry</c-></a> {
     <c- b>readonly</c-> <c- b>attribute</c-> <a class="idl-code" data-link-type="interface" href="https://heycam.github.io/webidl/#idl-unsigned-long" id="ref-for-idl-unsigned-long①"><c- b>unsigned</c-> <c- b>long</c-></a> <a data-readonly data-type="unsigned long" href="#dom-performancelargestcontentfulpaintcandidate-size"><code class="highlight"><c- g>size</c-></code></a>;
-    <c- b>readonly</c-> <c- b>attribute</c-> <a class="idl-code" data-link-type="interface" href="https://heycam.github.io/webidl/#idl-DOMString" id="ref-for-idl-DOMString②"><c- b>DOMString</c-></a> <a data-readonly data-type="DOMString" href="#dom-performancelargestcontentfulpaintcandidate-identifier"><code class="highlight"><c- g>identifier</c-></code></a>;
+    <c- b>readonly</c-> <c- b>attribute</c-> <a class="n" data-link-type="idl-name" href="https://w3c.github.io/hr-time#dom-domhighrestimestamp" id="ref-for-dom-domhighrestimestamp①"><c- n>DOMHighResTimeStamp</c-></a> <a data-readonly data-type="DOMHighResTimeStamp" href="#dom-performancelargestcontentfulpaintcandidate-responseend"><code class="highlight"><c- g>responseEnd</c-></code></a>;
+    <c- b>readonly</c-> <c- b>attribute</c-> <a class="idl-code" data-link-type="interface" href="https://heycam.github.io/webidl/#idl-DOMString" id="ref-for-idl-DOMString③"><c- b>DOMString</c-></a> <a data-readonly data-type="DOMString" href="#dom-performancelargestcontentfulpaintcandidate-id"><code class="highlight"><c- g>id</c-></code></a>;
+    <c- b>readonly</c-> <c- b>attribute</c-> <a class="idl-code" data-link-type="interface" href="https://heycam.github.io/webidl/#idl-DOMString" id="ref-for-idl-DOMString①①"><c- b>DOMString</c-></a> <a data-readonly data-type="DOMString" href="#dom-performancelargestcontentfulpaintcandidate-url"><code class="highlight"><c- g>url</c-></code></a>;
     <c- b>readonly</c-> <c- b>attribute</c-> <a class="n" data-link-type="idl-name" href="https://dom.spec.whatwg.org/#element" id="ref-for-element③"><c- n>Element</c-></a>? <a data-readonly data-type="Element?" href="#dom-performancelargestcontentfulpaintcandidate-element"><code class="highlight"><c- g>element</c-></code></a>;
 };
 
@@ -1963,24 +2035,42 @@ This allows developers to detect support for the API.</p>
    <b><a href="#performancelargestcontentfulpaintcandidate">#performancelargestcontentfulpaintcandidate</a></b><b>Referenced in:</b>
    <ul>
     <li><a href="#ref-for-performancelargestcontentfulpaintcandidate">2.1. PerformanceLargestContentfulPaintCandidate interface</a> <a href="#ref-for-performancelargestcontentfulpaintcandidate①">(2)</a>
+    <li><a href="#ref-for-performancelargestcontentfulpaintcandidate②">3. Processing model</a> <a href="#ref-for-performancelargestcontentfulpaintcandidate③">(2)</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="dom-performancelargestcontentfulpaintcandidate-size">
    <b><a href="#dom-performancelargestcontentfulpaintcandidate-size">#dom-performancelargestcontentfulpaintcandidate-size</a></b><b>Referenced in:</b>
    <ul>
     <li><a href="#ref-for-dom-performancelargestcontentfulpaintcandidate-size">2.1. PerformanceLargestContentfulPaintCandidate interface</a>
+    <li><a href="#ref-for-dom-performancelargestcontentfulpaintcandidate-size①">3. Processing model</a>
+   </ul>
+  </aside>
+  <aside class="dfn-panel" data-for="dom-performancelargestcontentfulpaintcandidate-responseend">
+   <b><a href="#dom-performancelargestcontentfulpaintcandidate-responseend">#dom-performancelargestcontentfulpaintcandidate-responseend</a></b><b>Referenced in:</b>
+   <ul>
+    <li><a href="#ref-for-dom-performancelargestcontentfulpaintcandidate-responseend">2.1. PerformanceLargestContentfulPaintCandidate interface</a>
+    <li><a href="#ref-for-dom-performancelargestcontentfulpaintcandidate-responseend①">3. Processing model</a>
+   </ul>
+  </aside>
+  <aside class="dfn-panel" data-for="dom-performancelargestcontentfulpaintcandidate-id">
+   <b><a href="#dom-performancelargestcontentfulpaintcandidate-id">#dom-performancelargestcontentfulpaintcandidate-id</a></b><b>Referenced in:</b>
+   <ul>
+    <li><a href="#ref-for-dom-performancelargestcontentfulpaintcandidate-id">2.1. PerformanceLargestContentfulPaintCandidate interface</a>
+    <li><a href="#ref-for-dom-performancelargestcontentfulpaintcandidate-id①">3. Processing model</a>
+   </ul>
+  </aside>
+  <aside class="dfn-panel" data-for="dom-performancelargestcontentfulpaintcandidate-url">
+   <b><a href="#dom-performancelargestcontentfulpaintcandidate-url">#dom-performancelargestcontentfulpaintcandidate-url</a></b><b>Referenced in:</b>
+   <ul>
+    <li><a href="#ref-for-dom-performancelargestcontentfulpaintcandidate-url">2.1. PerformanceLargestContentfulPaintCandidate interface</a>
+    <li><a href="#ref-for-dom-performancelargestcontentfulpaintcandidate-url①">3. Processing model</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="dom-performancelargestcontentfulpaintcandidate-element">
    <b><a href="#dom-performancelargestcontentfulpaintcandidate-element">#dom-performancelargestcontentfulpaintcandidate-element</a></b><b>Referenced in:</b>
    <ul>
     <li><a href="#ref-for-dom-performancelargestcontentfulpaintcandidate-element">2.1. PerformanceLargestContentfulPaintCandidate interface</a> <a href="#ref-for-dom-performancelargestcontentfulpaintcandidate-element①">(2)</a>
-   </ul>
-  </aside>
-  <aside class="dfn-panel" data-for="element">
-   <b><a href="#element">#element</a></b><b>Referenced in:</b>
-   <ul>
-    <li><a href="#ref-for-element②">2.1. PerformanceLargestContentfulPaintCandidate interface</a>
+    <li><a href="#ref-for-dom-performancelargestcontentfulpaintcandidate-element②">3. Processing model</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="starttime">
@@ -1993,6 +2083,36 @@ This allows developers to detect support for the API.</p>
    <b><a href="#size">#size</a></b><b>Referenced in:</b>
    <ul>
     <li><a href="#ref-for-size">2.1. PerformanceLargestContentfulPaintCandidate interface</a>
+   </ul>
+  </aside>
+  <aside class="dfn-panel" data-for="responseend">
+   <b><a href="#responseend">#responseend</a></b><b>Referenced in:</b>
+   <ul>
+    <li><a href="#ref-for-responseend">2.1. PerformanceLargestContentfulPaintCandidate interface</a>
+   </ul>
+  </aside>
+  <aside class="dfn-panel" data-for="id">
+   <b><a href="#id">#id</a></b><b>Referenced in:</b>
+   <ul>
+    <li><a href="#ref-for-id">2.1. PerformanceLargestContentfulPaintCandidate interface</a>
+   </ul>
+  </aside>
+  <aside class="dfn-panel" data-for="url">
+   <b><a href="#url">#url</a></b><b>Referenced in:</b>
+   <ul>
+    <li><a href="#ref-for-url">2.1. PerformanceLargestContentfulPaintCandidate interface</a>
+   </ul>
+  </aside>
+  <aside class="dfn-panel" data-for="element">
+   <b><a href="#element">#element</a></b><b>Referenced in:</b>
+   <ul>
+    <li><a href="#ref-for-element②">2.1. PerformanceLargestContentfulPaintCandidate interface</a>
+   </ul>
+  </aside>
+  <aside class="dfn-panel" data-for="largestcontentfulpaintsize">
+   <b><a href="#largestcontentfulpaintsize">#largestcontentfulpaintsize</a></b><b>Referenced in:</b>
+   <ul>
+    <li><a href="#ref-for-largestcontentfulpaintsize">3. Processing model</a> <a href="#ref-for-largestcontentfulpaintsize①">(2)</a>
    </ul>
   </aside>
 <script>/* script-var-click-highlighting */

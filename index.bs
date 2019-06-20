@@ -20,10 +20,14 @@ urlPrefix: https://w3c.github.io/performance-timeline/; spec: PERFORMANCE-TIMELI
         text: entryType; url: #dom-performanceentry-entrytype;
         text: startTime; url: #dom-performanceentry-starttime;
         text: duration; url: #dom-performanceentry-duration;
+    type: dfn; url: #dfn-queue-a-performanceentry; text: queue the PerformanceEntry;
     type: attribute; for: PerformanceObserver;
         text: supportedEntryTypes; url: #supportedentrytypes-attribute;
 urlPrefix: https://wicg.github.io/element-timing/; spec: ELEMENT-TIMING;
     type: dfn; url: #sec-elements-exposed; text: exposed;
+urlPrefix: https://w3c.github.io/hr-time; spec: HR-TIME;
+    type: dfn; url: #dfn-current-high-resolution-time; text: current high resolution time;
+    type: interface; url: #dom-domhighrestimestamp; text: DOMHighResTimeStamp;
 </pre>
 
 Introduction {#sec-intro}
@@ -79,15 +83,20 @@ Largest Contentful Paint involves the following new interface:
 <pre class="idl">
 interface PerformanceLargestContentfulPaintCandidate : PerformanceEntry {
     readonly attribute unsigned long size;
-    readonly attribute DOMString identifier;
+    readonly attribute DOMHighResTimeStamp responseEnd;
+    readonly attribute DOMString id;
+    readonly attribute DOMString url;
     readonly attribute Element? element;
 };
 </pre>
 
 Each {{PerformanceLargestContentfulPaintCandidate}} object has these associated concepts:
-* An <dfn>element</dfn> containing the associated {{Element}}, initially set to <code>null</code>.
 * A <dfn>startTime</dfn>, initially set to 0.
 * A <dfn>size</dfn>, initially set to 0.
+* A <dfn>responseEnd</dfn>, initially set to 0.
+* An <dfn>id</dfn>, initially set to the empty string.
+* A <dfn>url</dfn>, initially set to the empty string.
+* An <dfn>element</dfn> containing the associated {{Element}}, initially set to <code>null</code>.
 
 The {{PerformanceEntry/entryType}} attribute's getter must return the {{DOMString}} <code>"largest-contentful-paint-candidate"</code>.
 
@@ -98,6 +107,12 @@ The {{PerformanceEntry/startTime}} attribute must return the value of the <a>con
 The {{PerformanceEntry/duration}} attribute's getter must return 0.
 
 The {{PerformanceLargestContentfulPaintCandidate/size}} attribute must return the value of the <a>context object</a>'s <a>size</a>.
+
+The {{PerformanceLargestContentfulPaintCandidate/responseEnd}} attribute must return the value of the <a>context object</a>'s <a>responseEnd</a>.
+
+The {{PerformanceLargestContentfulPaintCandidate/id}} attribute must return the value of the <a>context object</a>'s <a>id</a>.
+
+The {{PerformanceLargestContentfulPaintCandidate/url}} attribute must return the value of the <a>context object</a>'s <a>url</a>.
 
 The {{PerformanceLargestContentfulPaintCandidate/element}} attribute's getter must run these steps:
 <div algorithm="PerformanceLargestContentfulPaintCandidate element">
@@ -111,22 +126,39 @@ The {{PerformanceLargestContentfulPaintCandidate/element}} attribute's getter mu
 
 Note: This means that an element that is no longer <a>descendant</a> of the {{Document}} will no longer be returned by {{PerformanceLargestContentfulPaintCandidate/element}}'s attribute getter, including elements that are inside a shadow DOM.
 
+TODO: replace the above with a call to ElementTiming's similar algorithm.
+
+This specification also extends {{Document}} by adding it a <dfn>largestContentfulPaintSize</dfn> concept, initially set to 0.
+
 Processing model {#sec-processing-model}
 ========================================
 
 Note: A user agent implementing the Largest Contentful Paint API would need to include <code>"largest-contentful-paint"</code> in {{PerformanceObserver/supportedEntryTypes}} for {{Window}} contexts.
 This allows developers to detect support for the API.
 
-When asked to add an image entry, the user agent must run the following steps:
+In order add a {{PerformanceLargestContentfulPaintCandidate}} entry, the user agent must run the following steps:
 <div algorithm="PerformanceLargestContentfulPaintCandidate add-image-entry">
-    1. Bla
-    2. Foo
-</div>
-
-When asked to add a text entry, the user agent must run the following steps:
-<div algorithm="PerformanceLargestContentfulPaintCandidate add-text-entry">
-    1. Bla
-    2. Foo
+    : Input
+    ::  |size|, an unsigned long
+    ::  |url|, a string
+    ::  |id|, a string
+    ::  |time|, a DOMHighResTimestamp
+    ::  |responseEnd|, a DOMHighResTimestamp
+    ::  |element|, a DOMElement
+    ::  |document|, a Document
+    : Output
+    ::  None
+        1. Let |largest| be |document|'s [=largestContentfulPaintSize=].
+        1. If |size| is smaller or equals |largest|, return.
+        1. Set |document|'s [=largestContentfulPaintSize=] to |size|.
+        1. Let |entry| be a new {{PerformanceLargestContentfulPaintCandidate}} entry, with it's
+               {{PerformanceLargestContentfulPaintCandidate/size}} set to |size|,
+               {{PerformanceLargestContentfulPaintCandidate/url}} set to |url|,
+               {{PerformanceLargestContentfulPaintCandidate/id}} set to |id|,
+               {{PerformanceEntry/startTime}} set to |time|,
+               {{PerformanceLargestContentfulPaintCandidate/responseEnd}} set to |responseEnd|,
+               and its {{PerformanceLargestContentfulPaintCandidate/element}} set to |element|.
+        1. [=Queue the PerformanceEntry=] |entry|.
 </div>
 
 Security & privacy considerations {#sec-security}

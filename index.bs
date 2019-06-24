@@ -25,6 +25,7 @@ urlPrefix: https://w3c.github.io/performance-timeline/; spec: PERFORMANCE-TIMELI
         text: supportedEntryTypes; url: #supportedentrytypes-attribute;
 urlPrefix: https://wicg.github.io/element-timing/; spec: ELEMENT-TIMING;
     type: dfn; url: #sec-elements-exposed; text: exposed;
+    type: dfn; url: #get-an-element; text: get an element;
 urlPrefix: https://w3c.github.io/hr-time; spec: HR-TIME;
     type: dfn; url: #dfn-current-high-resolution-time; text: current high resolution time;
     type: interface; url: #dom-domhighrestimestamp; text: DOMHighResTimeStamp;
@@ -114,19 +115,9 @@ The {{PerformanceLargestContentfulPaintCandidate/id}} attribute must return the 
 
 The {{PerformanceLargestContentfulPaintCandidate/url}} attribute must return the value of the <a>context object</a>'s <a>url</a>.
 
-The {{PerformanceLargestContentfulPaintCandidate/element}} attribute's getter must run these steps:
-<div algorithm="PerformanceLargestContentfulPaintCandidate element">
-    1. Let |element| be the <a>context object</a>'s <a>element</a>.
-    1. If |element| is not <a>connected</a>, return <code>null</code>.
-    1. Let |settings| be the <a>context object</a>'s <a>relevant settings object</a>.
-    1. Let |document| be |settings|'s <a>responsible document</a>.
-    1. If |element|'s <a for="tree">root</a> is not equal to |document|, return <code>null</code>.
-    1. Return |element|.
-</div>
+The {{PerformanceLargestContentfulPaintCandidate/element}} attribute's getter must return the value returned by running the <a>get an element</a> algorithm.
 
-Note: This means that an element that is no longer <a>descendant</a> of the {{Document}} will no longer be returned by {{PerformanceLargestContentfulPaintCandidate/element}}'s attribute getter, including elements that are inside a shadow DOM.
-
-TODO: replace the above with a call to ElementTiming's similar algorithm.
+Note: The above algorithm defines that an element that is no longer <a>descendant</a> of the {{Document}} will no longer be returned by {{PerformanceLargestContentfulPaintCandidate/element}}'s attribute getter, including elements that are inside a shadow DOM.
 
 This specification also extends {{Document}} by adding it a <dfn>largestContentfulPaintSize</dfn> concept, initially set to 0.
 
@@ -136,7 +127,7 @@ Processing model {#sec-processing-model}
 Note: A user agent implementing the Largest Contentful Paint API would need to include <code>"largest-contentful-paint"</code> in {{PerformanceObserver/supportedEntryTypes}} for {{Window}} contexts.
 This allows developers to detect support for the API.
 
-In order add a {{PerformanceLargestContentfulPaintCandidate}} entry, the user agent must run the following steps:
+In order to <dfn export>potentially add a {{PerformanceLargestContentfulPaintCandidate}} entry</dfn>, the user agent must run the following steps:
 <div algorithm="PerformanceLargestContentfulPaintCandidate add-image-entry">
     : Input
     ::  |size|, an unsigned long

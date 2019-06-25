@@ -1215,7 +1215,7 @@ Possible extra rowspan handling
   <link href="https://www.w3.org/StyleSheets/TR/2016/W3C-ED" rel="stylesheet">
   <meta content="Bikeshed version 872cce6d3026423d677f3bd5837f1a1a46299a04" name="generator">
   <link href="https://wicg.github.io/largest-contentful-paint" rel="canonical">
-  <meta content="189dc0c146e57ca71ffed6c05c181ca1fb9ffbb5" name="document-revision">
+  <meta content="a136c0e655dc4fca47867fef178387354904c6c7" name="document-revision">
 <style>/* style-md-lists */
 
 /* This is a weird hack for me not yet following the commonmark spec
@@ -1473,7 +1473,7 @@ c-[il] { color: #000000 } /* Literal.Number.Integer.Long */
   <div class="head">
    <p data-fill-with="logo"></p>
    <h1 class="p-name no-ref" id="title">Largest Contentful Paint</h1>
-   <h2 class="no-num no-toc no-ref heading settled" id="subtitle"><span class="content">Editor’s Draft, <time class="dt-updated" datetime="2019-06-24">24 June 2019</time></span></h2>
+   <h2 class="no-num no-toc no-ref heading settled" id="subtitle"><span class="content">Editor’s Draft, <time class="dt-updated" datetime="2019-06-25">25 June 2019</time></span></h2>
    <div data-fill-with="spec-metadata">
     <dl>
      <dt>This version:
@@ -1594,7 +1594,7 @@ observer<c- p>.</c->observe<c- p>({</c->entryTypes<c- o>:</c-> <c- p>[</c-><c- t
     <li data-md>
      <p>A <dfn class="dfn-paneled" data-dfn-type="dfn" data-noexport id="url">url</dfn>, initially set to the empty string.</p>
     <li data-md>
-     <p>An <dfn data-dfn-type="dfn" data-noexport id="element">element<a class="self-link" href="#element"></a></dfn> containing the associated <code class="idl"><a data-link-type="idl" href="https://dom.spec.whatwg.org/#element" id="ref-for-element①">Element</a></code>, initially set to <code class="highlight"><c- kc>null</c-></code>.</p>
+     <p>An <dfn class="dfn-paneled" data-dfn-type="dfn" data-noexport id="element">element</dfn> containing the associated <code class="idl"><a data-link-type="idl" href="https://dom.spec.whatwg.org/#element" id="ref-for-element①">Element</a></code>, initially set to <code class="highlight"><c- kc>null</c-></code>.</p>
    </ul>
    <p>The <code class="idl"><a data-link-type="idl" href="https://w3c.github.io/performance-timeline/#dom-performanceentry-entrytype" id="ref-for-dom-performanceentry-entrytype">entryType</a></code> attribute’s getter must return the <code class="idl"><a data-link-type="idl" href="https://heycam.github.io/webidl/#idl-DOMString" id="ref-for-idl-DOMString②">DOMString</a></code> <code class="highlight"><c- u>"largest-contentful-paint-candidate"</c-></code>.</p>
    <p>The <code class="idl"><a data-link-type="idl" href="https://w3c.github.io/performance-timeline/#dom-performanceentry-name" id="ref-for-dom-performanceentry-name">name</a></code> attribute’s getter must return the value it was initialized to.</p>
@@ -1615,25 +1615,33 @@ This allows developers to detect support for the API.</p>
     <dl>
      <dt data-md>Input
      <dd data-md>
-      <p><var>size</var>, an unsigned long</p>
+      <p><var>intersectionRect</var>, a <code class="idl"><a data-link-type="idl" href="https://drafts.fxtf.org/geometry-1/#domrectreadonly" id="ref-for-domrectreadonly">DOMRectReadOnly</a></code></p>
      <dd data-md>
-      <p><var>url</var>, a string</p>
-     <dd data-md>
-      <p><var>id</var>, a string</p>
+      <p><var>request</var>, a <code class="idl"><a data-link-type="idl" href="https://fetch.spec.whatwg.org/#request" id="ref-for-request">Request</a></code></p>
      <dd data-md>
       <p><var>time</var>, a DOMHighResTimestamp</p>
      <dd data-md>
-      <p><var>responseEnd</var>, a DOMHighResTimestamp</p>
+      <p><var>element</var>, an <a data-link-type="dfn" href="#element" id="ref-for-element②">Element</a></p>
      <dd data-md>
-      <p><var>element</var>, a DOMElement</p>
-     <dd data-md>
-      <p><var>document</var>, a Document</p>
+      <p><var>document</var>, a <a data-link-type="dfn" href="https://dom.spec.whatwg.org#concept-document" id="ref-for-concept-document">Document</a></p>
      <dt data-md>Output
      <dd data-md>
       <p>None</p>
       <ol>
        <li data-md>
         <p>Let <var>largest</var> be <var>document</var>’s <a data-link-type="dfn" href="#largestcontentfulpaintsize" id="ref-for-largestcontentfulpaintsize">largestContentfulPaintSize</a>.</p>
+       <li data-md>
+        <p>Let <var>url</var> be <var>request</var>’s {=URL=}.</p>
+       <li data-md>
+        <p>Let <var>id</var> be <var>element</var>’s <a class="idl-code" data-link-type="attribute" href="https://dom.spec.whatwg.org#dom-element-id" id="ref-for-dom-element-id">element id</a>.</p>
+       <li data-md>
+        <p>Let <var>responseEnd</var> be the result of running <a data-link-type="dfn" href="https://wicg.github.io/element-timing/#get-response-end-time" id="ref-for-get-response-end-time">get response end time</a> with <var>request</var> as input.</p>
+       <li data-md>
+        <p>Let <var>width</var> be <var>intersectionRect</var>’s <code class="idl"><a data-link-type="idl" href="https://drafts.fxtf.org/geometry-1/#dom-domrectreadonly-width" id="ref-for-dom-domrectreadonly-width">width</a></code>.</p>
+       <li data-md>
+        <p>Let <var>height</var> be <var>intersectionRect</var>’s <code class="idl"><a data-link-type="idl" href="https://drafts.fxtf.org/geometry-1/#dom-domrectreadonly-height" id="ref-for-dom-domrectreadonly-height">height</a></code>.</p>
+       <li data-md>
+        <p>Let <var>size</var> be <var>width</var>*<var>height</var>.</p>
        <li data-md>
         <p>If <var>size</var> is smaller or equals <var>largest</var>, return.</p>
        <li data-md>
@@ -1857,6 +1865,18 @@ This allows developers to detect support for the API.</p>
     <li><a href="#ref-for-concept-tree-descendant">2.1. PerformanceLargestContentfulPaintCandidate interface</a>
    </ul>
   </aside>
+  <aside class="dfn-panel" data-for="term-for-concept-document">
+   <a href="https://dom.spec.whatwg.org#concept-document">https://dom.spec.whatwg.org#concept-document</a><b>Referenced in:</b>
+   <ul>
+    <li><a href="#ref-for-concept-document">3. Processing model</a>
+   </ul>
+  </aside>
+  <aside class="dfn-panel" data-for="term-for-dom-element-id">
+   <a href="https://dom.spec.whatwg.org#dom-element-id">https://dom.spec.whatwg.org#dom-element-id</a><b>Referenced in:</b>
+   <ul>
+    <li><a href="#ref-for-dom-element-id">3. Processing model</a>
+   </ul>
+  </aside>
   <aside class="dfn-panel" data-for="term-for-sec-elements-exposed">
    <a href="https://wicg.github.io/element-timing/#sec-elements-exposed">https://wicg.github.io/element-timing/#sec-elements-exposed</a><b>Referenced in:</b>
    <ul>
@@ -1867,6 +1887,36 @@ This allows developers to detect support for the API.</p>
    <a href="https://wicg.github.io/element-timing/#get-an-element">https://wicg.github.io/element-timing/#get-an-element</a><b>Referenced in:</b>
    <ul>
     <li><a href="#ref-for-get-an-element">2.1. PerformanceLargestContentfulPaintCandidate interface</a>
+   </ul>
+  </aside>
+  <aside class="dfn-panel" data-for="term-for-get-response-end-time">
+   <a href="https://wicg.github.io/element-timing/#get-response-end-time">https://wicg.github.io/element-timing/#get-response-end-time</a><b>Referenced in:</b>
+   <ul>
+    <li><a href="#ref-for-get-response-end-time">3. Processing model</a>
+   </ul>
+  </aside>
+  <aside class="dfn-panel" data-for="term-for-request">
+   <a href="https://fetch.spec.whatwg.org/#request">https://fetch.spec.whatwg.org/#request</a><b>Referenced in:</b>
+   <ul>
+    <li><a href="#ref-for-request">3. Processing model</a>
+   </ul>
+  </aside>
+  <aside class="dfn-panel" data-for="term-for-domrectreadonly">
+   <a href="https://drafts.fxtf.org/geometry-1/#domrectreadonly">https://drafts.fxtf.org/geometry-1/#domrectreadonly</a><b>Referenced in:</b>
+   <ul>
+    <li><a href="#ref-for-domrectreadonly">3. Processing model</a>
+   </ul>
+  </aside>
+  <aside class="dfn-panel" data-for="term-for-dom-domrectreadonly-height">
+   <a href="https://drafts.fxtf.org/geometry-1/#dom-domrectreadonly-height">https://drafts.fxtf.org/geometry-1/#dom-domrectreadonly-height</a><b>Referenced in:</b>
+   <ul>
+    <li><a href="#ref-for-dom-domrectreadonly-height">3. Processing model</a>
+   </ul>
+  </aside>
+  <aside class="dfn-panel" data-for="term-for-dom-domrectreadonly-width">
+   <a href="https://drafts.fxtf.org/geometry-1/#dom-domrectreadonly-width">https://drafts.fxtf.org/geometry-1/#dom-domrectreadonly-width</a><b>Referenced in:</b>
+   <ul>
+    <li><a href="#ref-for-dom-domrectreadonly-width">3. Processing model</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="term-for-dom-domhighrestimestamp">
@@ -1945,12 +1995,27 @@ This allows developers to detect support for the API.</p>
      <li><span class="dfn-paneled" id="term-for-element" style="color:initial">Element</span>
      <li><span class="dfn-paneled" id="term-for-context-object" style="color:initial">context object</span>
      <li><span class="dfn-paneled" id="term-for-concept-tree-descendant" style="color:initial">descendant</span>
+     <li><span class="dfn-paneled" id="term-for-concept-document" style="color:initial">document</span>
+     <li><span class="dfn-paneled" id="term-for-dom-element-id" style="color:initial">element id</span>
     </ul>
    <li>
     <a data-link-type="biblio">[ELEMENT-TIMING]</a> defines the following terms:
     <ul>
      <li><span class="dfn-paneled" id="term-for-sec-elements-exposed" style="color:initial">exposed</span>
      <li><span class="dfn-paneled" id="term-for-get-an-element" style="color:initial">get an element</span>
+     <li><span class="dfn-paneled" id="term-for-get-response-end-time" style="color:initial">get response end time</span>
+    </ul>
+   <li>
+    <a data-link-type="biblio">[FETCH]</a> defines the following terms:
+    <ul>
+     <li><span class="dfn-paneled" id="term-for-request" style="color:initial">Request</span>
+    </ul>
+   <li>
+    <a data-link-type="biblio">[geometry-1]</a> defines the following terms:
+    <ul>
+     <li><span class="dfn-paneled" id="term-for-domrectreadonly" style="color:initial">DOMRectReadOnly</span>
+     <li><span class="dfn-paneled" id="term-for-dom-domrectreadonly-height" style="color:initial">height</span>
+     <li><span class="dfn-paneled" id="term-for-dom-domrectreadonly-width" style="color:initial">width</span>
     </ul>
    <li>
     <a data-link-type="biblio">[hr-time]</a> defines the following terms:
@@ -1987,6 +2052,10 @@ This allows developers to detect support for the API.</p>
    <dd>Anne van Kesteren. <a href="https://dom.spec.whatwg.org/">DOM Standard</a>. Living Standard. URL: <a href="https://dom.spec.whatwg.org/">https://dom.spec.whatwg.org/</a>
    <dt id="biblio-element-timing">[ELEMENT-TIMING]
    <dd><a href="https://wicg.github.io/element-timing/">Element Timing API</a>. cg-draft. URL: <a href="https://wicg.github.io/element-timing/">https://wicg.github.io/element-timing/</a>
+   <dt id="biblio-fetch">[FETCH]
+   <dd>Anne van Kesteren. <a href="https://fetch.spec.whatwg.org/">Fetch Standard</a>. Living Standard. URL: <a href="https://fetch.spec.whatwg.org/">https://fetch.spec.whatwg.org/</a>
+   <dt id="biblio-geometry-1">[GEOMETRY-1]
+   <dd>Simon Pieters; Chris Harrelson. <a href="https://www.w3.org/TR/geometry-1/">Geometry Interfaces Module Level 1</a>. 4 December 2018. CR. URL: <a href="https://www.w3.org/TR/geometry-1/">https://www.w3.org/TR/geometry-1/</a>
    <dt id="biblio-hr-time">[HR-TIME]
    <dd>Jatinder Mann. <a href="https://www.w3.org/TR/hr-time/">High Resolution Time</a>. 17 December 2012. REC. URL: <a href="https://www.w3.org/TR/hr-time/">https://www.w3.org/TR/hr-time/</a>
    <dt id="biblio-performance-timeline-2">[PERFORMANCE-TIMELINE-2]
@@ -2007,7 +2076,7 @@ This allows developers to detect support for the API.</p>
     <c- b>readonly</c-> <c- b>attribute</c-> <a class="n" data-link-type="idl-name" href="https://w3c.github.io/hr-time#dom-domhighrestimestamp" id="ref-for-dom-domhighrestimestamp①"><c- n>DOMHighResTimeStamp</c-></a> <a data-readonly data-type="DOMHighResTimeStamp" href="#dom-performancelargestcontentfulpaintcandidate-responseend"><code class="highlight"><c- g>responseEnd</c-></code></a>;
     <c- b>readonly</c-> <c- b>attribute</c-> <a class="idl-code" data-link-type="interface" href="https://heycam.github.io/webidl/#idl-DOMString" id="ref-for-idl-DOMString③"><c- b>DOMString</c-></a> <a data-readonly data-type="DOMString" href="#dom-performancelargestcontentfulpaintcandidate-id"><code class="highlight"><c- g>id</c-></code></a>;
     <c- b>readonly</c-> <c- b>attribute</c-> <a class="idl-code" data-link-type="interface" href="https://heycam.github.io/webidl/#idl-DOMString" id="ref-for-idl-DOMString①①"><c- b>DOMString</c-></a> <a data-readonly data-type="DOMString" href="#dom-performancelargestcontentfulpaintcandidate-url"><code class="highlight"><c- g>url</c-></code></a>;
-    <c- b>readonly</c-> <c- b>attribute</c-> <a class="n" data-link-type="idl-name" href="https://dom.spec.whatwg.org/#element" id="ref-for-element②"><c- n>Element</c-></a>? <a data-readonly data-type="Element?" href="#dom-performancelargestcontentfulpaintcandidate-element"><code class="highlight"><c- g>element</c-></code></a>;
+    <c- b>readonly</c-> <c- b>attribute</c-> <a class="n" data-link-type="idl-name" href="https://dom.spec.whatwg.org/#element" id="ref-for-element③"><c- n>Element</c-></a>? <a data-readonly data-type="Element?" href="#dom-performancelargestcontentfulpaintcandidate-element"><code class="highlight"><c- g>element</c-></code></a>;
 };
 
 </pre>
@@ -2081,6 +2150,12 @@ This allows developers to detect support for the API.</p>
    <b><a href="#url">#url</a></b><b>Referenced in:</b>
    <ul>
     <li><a href="#ref-for-url">2.1. PerformanceLargestContentfulPaintCandidate interface</a>
+   </ul>
+  </aside>
+  <aside class="dfn-panel" data-for="element">
+   <b><a href="#element">#element</a></b><b>Referenced in:</b>
+   <ul>
+    <li><a href="#ref-for-element②">3. Processing model</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="largestcontentfulpaintsize">

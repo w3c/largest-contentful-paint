@@ -121,7 +121,7 @@ The {{PerformanceLargestContentfulPaintCandidate/id}} attribute must return the 
 
 The {{PerformanceLargestContentfulPaintCandidate/url}} attribute must return the value of the <a>context object</a>'s <a>url</a>.
 
-The {{PerformanceLargestContentfulPaintCandidate/element}} attribute's getter must return the value returned by running the <a>get an element</a> algorithm.
+The {{PerformanceLargestContentfulPaintCandidate/element}} attribute's getter must return the value returned by running the <a>get an element</a> algorithm with <a>element</a> and null as inputs.
 
 Note: The above algorithm defines that an element that is no longer <a>descendant</a> of the {{Document}} will no longer be returned by {{PerformanceLargestContentfulPaintCandidate/element}}'s attribute getter, including elements that are inside a shadow DOM.
 

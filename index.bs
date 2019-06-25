@@ -26,9 +26,15 @@ urlPrefix: https://w3c.github.io/performance-timeline/; spec: PERFORMANCE-TIMELI
 urlPrefix: https://wicg.github.io/element-timing/; spec: ELEMENT-TIMING;
     type: dfn; url: #sec-elements-exposed; text: exposed;
     type: dfn; url: #get-an-element; text: get an element;
+    type: dfn; url: #get-response-end-time; text: get response end time;
 urlPrefix: https://w3c.github.io/hr-time; spec: HR-TIME;
     type: dfn; url: #dfn-current-high-resolution-time; text: current high resolution time;
     type: interface; url: #dom-domhighrestimestamp; text: DOMHighResTimeStamp;
+urlPrefix: https://dom.spec.whatwg.org; spec: DOM;
+    type: dfn; url: #concept-document; text: Document;
+    type: dfn; url: #concept-element; text: Element;
+    type: attribute; for: Element;
+        text: element id; url: #dom-element-id;
 </pre>
 
 Introduction {#sec-intro}
@@ -130,16 +136,20 @@ This allows developers to detect support for the API.
 In order to <dfn export>potentially add a {{PerformanceLargestContentfulPaintCandidate}} entry</dfn>, the user agent must run the following steps:
 <div algorithm="PerformanceLargestContentfulPaintCandidate add-image-entry">
     : Input
-    ::  |size|, an unsigned long
-    ::  |url|, a string
-    ::  |id|, a string
+    ::  |intersectionRect|, a {{DOMRectReadOnly}}
+    ::  |request|, a {{Request}}
     ::  |time|, a DOMHighResTimestamp
-    ::  |responseEnd|, a DOMHighResTimestamp
-    ::  |element|, a DOMElement
-    ::  |document|, a Document
+    ::  |element|, an <a>Element</a>
+    ::  |document|, a <a>Document</a>
     : Output
     ::  None
         1. Let |largest| be |document|'s [=largestContentfulPaintSize=].
+        1. Let |url| be |request|'s {=URL=}.
+        1. Let |id| be |element|'s <a attribute for=Element>element id</a>.
+        1. Let |responseEnd| be the result of running <a>get response end time</a> with |request| as input.
+        1. Let |width| be |intersectionRect|'s {{DOMRectReadOnly/width}}.
+        1. Let |height| be |intersectionRect|'s {{DOMRectReadOnly/height}}.
+        1. Let |size| be |width|*|height|.
         1. If |size| is smaller or equals |largest|, return.
         1. Set |document|'s [=largestContentfulPaintSize=] to |size|.
         1. Let |entry| be a new {{PerformanceLargestContentfulPaintCandidate}} entry, with it's

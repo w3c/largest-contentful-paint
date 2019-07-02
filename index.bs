@@ -75,20 +75,20 @@ The following example shows an image and a large body of text. The developer the
       let lastEntry = perfEntries[perfEntries.length - 1];
       // Process the latest candidate for largest contentful paint
     });
-    observer.observe({entryTypes: ['largest-contentful-paint']});
+    observer.observe({entryTypes: ['largestContentfulPaint']});
     </script>
 </xmp>
 
-Largest Contenntful Paint {#sec-largest-contentful-paint}
+Largest Contentful Paint {#sec-largest-contentful-paint}
 =======================================
 
 Largest Contentful Paint involves the following new interface:
 
-{{PerformanceLargestContentfulPaintCandidate}} interface {#sec-performance-largest-contentful-paint-candidate}
+{{LargestContentfulPaint}} interface {#sec-largest-contentful-paint-interface}
 ------------------------------------------------------------------------
 
 <pre class="idl">
-interface PerformanceLargestContentfulPaintCandidate : PerformanceEntry {
+interface LargestContentfulPaint : PerformanceEntry {
     readonly attribute unsigned long size;
     readonly attribute DOMHighResTimeStamp responseEnd;
     readonly attribute DOMString id;
@@ -97,7 +97,7 @@ interface PerformanceLargestContentfulPaintCandidate : PerformanceEntry {
 };
 </pre>
 
-Each {{PerformanceLargestContentfulPaintCandidate}} object has these associated concepts:
+Each {{LargestContentfulPaint}} object has these associated concepts:
 * A <dfn>startTime</dfn>, initially set to 0.
 * A <dfn>size</dfn>, initially set to 0.
 * A <dfn>responseEnd</dfn>, initially set to 0.
@@ -105,7 +105,7 @@ Each {{PerformanceLargestContentfulPaintCandidate}} object has these associated 
 * A <dfn>url</dfn>, initially set to the empty string.
 * An <dfn>element</dfn> containing the associated {{Element}}, initially set to <code>null</code>.
 
-The {{PerformanceEntry/entryType}} attribute's getter must return the {{DOMString}} <code>"largest-contentful-paint-candidate"</code>.
+The {{PerformanceEntry/entryType}} attribute's getter must return the {{DOMString}} <code>"largestContentfulPaint"</code>.
 
 The {{PerformanceEntry/name}} attribute's getter must return the value it was initialized to.
 
@@ -113,17 +113,17 @@ The {{PerformanceEntry/startTime}} attribute must return the value of the <a>con
 
 The {{PerformanceEntry/duration}} attribute's getter must return 0.
 
-The {{PerformanceLargestContentfulPaintCandidate/size}} attribute must return the value of the <a>context object</a>'s <a>size</a>.
+The {{LargestContentfulPaint/size}} attribute must return the value of the <a>context object</a>'s <a>size</a>.
 
-The {{PerformanceLargestContentfulPaintCandidate/responseEnd}} attribute must return the value of the <a>context object</a>'s <a>responseEnd</a>.
+The {{LargestContentfulPaint/responseEnd}} attribute must return the value of the <a>context object</a>'s <a>responseEnd</a>.
 
-The {{PerformanceLargestContentfulPaintCandidate/id}} attribute must return the value of the <a>context object</a>'s <a>id</a>.
+The {{LargestContentfulPaint/id}} attribute must return the value of the <a>context object</a>'s <a>id</a>.
 
-The {{PerformanceLargestContentfulPaintCandidate/url}} attribute must return the value of the <a>context object</a>'s <a>url</a>.
+The {{LargestContentfulPaint/url}} attribute must return the value of the <a>context object</a>'s <a>url</a>.
 
-The {{PerformanceLargestContentfulPaintCandidate/element}} attribute's getter must return the value returned by running the <a>get an element</a> algorithm with <a>element</a> and null as inputs.
+The {{LargestContentfulPaint/element}} attribute's getter must return the value returned by running the <a>get an element</a> algorithm with <a>element</a> and null as inputs.
 
-Note: The above algorithm defines that an element that is no longer <a>descendant</a> of the {{Document}} will no longer be returned by {{PerformanceLargestContentfulPaintCandidate/element}}'s attribute getter, including elements that are inside a shadow DOM.
+Note: The above algorithm defines that an element that is no longer <a>descendant</a> of the {{Document}} will no longer be returned by {{LargestContentfulPaint/element}}'s attribute getter, including elements that are inside a shadow DOM.
 
 This specification also extends {{Document}} by adding it a <dfn>largestContentfulPaintSize</dfn> concept, initially set to 0.
 
@@ -133,8 +133,8 @@ Processing model {#sec-processing-model}
 Note: A user agent implementing the Largest Contentful Paint API would need to include <code>"largest-contentful-paint"</code> in {{PerformanceObserver/supportedEntryTypes}} for {{Window}} contexts.
 This allows developers to detect support for the API.
 
-In order to <dfn export>potentially add a {{PerformanceLargestContentfulPaintCandidate}} entry</dfn>, the user agent must run the following steps:
-<div algorithm="PerformanceLargestContentfulPaintCandidate add-image-entry">
+In order to <dfn export>potentially add a {{LargestContentfulPaint}} entry</dfn>, the user agent must run the following steps:
+<div algorithm="LargestContentfulPaint add-image-entry">
     : Input
     ::  |intersectionRect|, a {{DOMRectReadOnly}}
     ::  |request|, a {{Request}}
@@ -152,13 +152,13 @@ In order to <dfn export>potentially add a {{PerformanceLargestContentfulPaintCan
         1. Let |size| be |width|*|height|.
         1. If |size| is smaller or equals |largest|, return.
         1. Set |document|'s [=largestContentfulPaintSize=] to |size|.
-        1. Let |entry| be a new {{PerformanceLargestContentfulPaintCandidate}} entry, with it's
-               {{PerformanceLargestContentfulPaintCandidate/size}} set to |size|,
-               {{PerformanceLargestContentfulPaintCandidate/url}} set to |url|,
-               {{PerformanceLargestContentfulPaintCandidate/id}} set to |id|,
+        1. Let |entry| be a new {{LargestContentfulPaint}} entry, with it's
+               {{LargestContentfulPaint/size}} set to |size|,
+               {{LargestContentfulPaint/url}} set to |url|,
+               {{LargestContentfulPaint/id}} set to |id|,
                {{PerformanceEntry/startTime}} set to |time|,
-               {{PerformanceLargestContentfulPaintCandidate/responseEnd}} set to |responseEnd|,
-               and its {{PerformanceLargestContentfulPaintCandidate/element}} set to |element|.
+               {{LargestContentfulPaint/responseEnd}} set to |responseEnd|,
+               and its {{LargestContentfulPaint/element}} set to |element|.
         1. [=Queue the PerformanceEntry=] |entry|.
 </div>
 

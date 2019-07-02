@@ -75,7 +75,7 @@ The following example shows an image and a large body of text. The developer the
       let lastEntry = perfEntries[perfEntries.length - 1];
       // Process the latest candidate for largest contentful paint
     });
-    observer.observe({entryTypes: ['largestContentfulPaint']});
+    observer.observe({entryTypes: ['largest-contentful-paint']});
     </script>
 </xmp>
 
@@ -105,7 +105,7 @@ Each {{LargestContentfulPaint}} object has these associated concepts:
 * A <dfn>url</dfn>, initially set to the empty string.
 * An <dfn>element</dfn> containing the associated {{Element}}, initially set to <code>null</code>.
 
-The {{PerformanceEntry/entryType}} attribute's getter must return the {{DOMString}} <code>"largestContentfulPaint"</code>.
+The {{PerformanceEntry/entryType}} attribute's getter must return the {{DOMString}} <code>"largest-contentful-paint"</code>.
 
 The {{PerformanceEntry/name}} attribute's getter must return the value it was initialized to.
 

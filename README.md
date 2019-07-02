@@ -137,7 +137,7 @@ const po = new PerformanceObserver(list => {
     const entry = entries[entries.length - 1];
     // Process entry as the latest LCP candidate
 });
-po.observe({entryTypes: ['largestContentfulPaint']});
+po.observe({entryTypes: ['largest-contentful-paint']});
 ```
 
 ### Alternatives explored

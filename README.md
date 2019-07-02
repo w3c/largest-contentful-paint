@@ -125,7 +125,7 @@ For that purpose we want to satisfy a few, somewhat contradictory, requirements:
 * Accumulating all potential candidates should not take an excessive amount of memory.
 * The API should be consistent with other performance APIs.
 
-We chose to use the `PerformanceObserver` API, define a `LatestLargestContentfulPaint` performance entry, and dispatch a new entry for each new candidate element (for which there can be one per paint operation), while leaving older ones in place.
+We chose to use the `PerformanceObserver` API, define a `LargestContentfulPaint` performance entry, and dispatch a new entry for each new candidate element (for which there can be one per paint operation), while leaving older ones in place.
 
 That approach has the advantage of enabling developers to pick the latest candidate, notifying them of new candidates, and being consistent with other performance APIs.
 Its main disadvantage is that it accumulates all the entries, resulting in suboptimal memory consumption. But as mentioned, the number of candidates is capped by the number of paint operations, and in practice is expected to be significantly lower than that.
@@ -137,7 +137,7 @@ const po = new PerformanceObserver(list => {
     const entry = entries[entries.length - 1];
     // Process entry as the latest LCP candidate
 });
-po.observe({entryTypes: ['largestcontentfulpaint']});
+po.observe({entryTypes: ['largestContentfulPaint']});
 ```
 
 ### Alternatives explored

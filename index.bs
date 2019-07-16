@@ -89,8 +89,9 @@ Largest Contentful Paint involves the following new interface:
 
 <pre class="idl">
 interface LargestContentfulPaint : PerformanceEntry {
-    readonly attribute unsigned long size;
+    readonly attribute DOMHighResTimeStamp renderTime;
     readonly attribute DOMHighResTimeStamp responseEnd;
+    readonly attribute unsigned long size;
     readonly attribute DOMString id;
     readonly attribute DOMString url;
     readonly attribute Element? element;
@@ -98,7 +99,7 @@ interface LargestContentfulPaint : PerformanceEntry {
 </pre>
 
 Each {{LargestContentfulPaint}} object has these associated concepts:
-* A <dfn>startTime</dfn>, initially set to 0.
+* A <dfn>renderTime</dfn>, initially set to 0.
 * A <dfn>size</dfn>, initially set to 0.
 * A <dfn>responseEnd</dfn>, initially set to 0.
 * An <dfn>id</dfn>, initially set to the empty string.
@@ -109,13 +110,15 @@ The {{PerformanceEntry/entryType}} attribute's getter must return the {{DOMStrin
 
 The {{PerformanceEntry/name}} attribute's getter must return the value it was initialized to.
 
-The {{PerformanceEntry/startTime}} attribute must return the value of the <a>context object</a>'s <a>startTime</a>.
+The {{PerformanceEntry/startTime}} attribute's getter must return 0.
 
 The {{PerformanceEntry/duration}} attribute's getter must return 0.
 
-The {{LargestContentfulPaint/size}} attribute must return the value of the <a>context object</a>'s <a>size</a>.
+The {{LargestContentfulPaint/renderTime}} attribute must return the value of the <a>context object</a>'s <a>renderTime</a>.
 
 The {{LargestContentfulPaint/responseEnd}} attribute must return the value of the <a>context object</a>'s <a>responseEnd</a>.
+
+The {{LargestContentfulPaint/size}} attribute must return the value of the <a>context object</a>'s <a>size</a>.
 
 The {{LargestContentfulPaint/id}} attribute must return the value of the <a>context object</a>'s <a>id</a>.
 
@@ -156,7 +159,7 @@ In order to <dfn export>potentially add a {{LargestContentfulPaint}} entry</dfn>
                {{LargestContentfulPaint/size}} set to |size|,
                {{LargestContentfulPaint/url}} set to |url|,
                {{LargestContentfulPaint/id}} set to |id|,
-               {{PerformanceEntry/startTime}} set to |time|,
+               {{LargestContentfulPaint/renderTime}} set to |time|,
                {{LargestContentfulPaint/responseEnd}} set to |responseEnd|,
                and its {{LargestContentfulPaint/element}} set to |element|.
         1. [=Queue the PerformanceEntry=] |entry|.

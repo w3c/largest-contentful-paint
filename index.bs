@@ -35,6 +35,9 @@ urlPrefix: https://dom.spec.whatwg.org; spec: DOM;
     type: dfn; url: #concept-element; text: Element;
     type: attribute; for: Element;
         text: element id; url: #dom-element-id;
+    type: dfn; url: #concept-event-dispatch; text: event dispatch algorithm;
+urlPrefix: https://wicg.github.io/event-timing; spec: EVENT-TIMING;
+    type: dfn; url: #has-dispatched-input-event; text: has dispatched input event;
 </pre>
 
 Introduction {#sec-intro}
@@ -143,6 +146,9 @@ In order to <dfn export>potentially add a {{PerformanceLargestContentfulPaintCan
     ::  |document|, a <a>Document</a>
     : Output
     ::  None
+        1. Let |window| be |document|’s relevant global object.
+        1. If either of |window|'s [=has dispatched scroll event=] or [=has dispatched input event=] is true, return.
+
         1. Let |largest| be |document|'s [=largestContentfulPaintSize=].
         1. Let |url| be |request|'s {=URL=}.
         1. Let |id| be |element|'s <a attribute for=Element>element id</a>.
@@ -161,6 +167,25 @@ In order to <dfn export>potentially add a {{PerformanceLargestContentfulPaintCan
                and its {{PerformanceLargestContentfulPaintCandidate/element}} set to |element|.
         1. [=Queue the PerformanceEntry=] |entry|.
 </div>
+
+Modifications to the DOM specification {#sec-modifications-DOM}
+--------------------------------------------------------
+
+<em>This section will be removed once the [[DOM]] specification has been modified.</em>
+
+<div algorithm="additions to event dispatch">
+    We modify the <a>event dispatch algorithm</a> as follows.
+
+    Right after step 1, we add the following step:
+
+    * If |target| is a {{Window}} object and if <var ignore>event</var>'s {{Event/type}} is {{scroll}}, set |target|'s [=has dispatched scroll event=] to true.
+</div>
+
+Modifications to the HTML specification {#sec-modifications-HTML}
+----------------------------------------
+<em>This section will be removed once the [[HTML]] specification has been modified.</em>
+
+Each {{Window}} has <dfn>has dispatched scroll event</dfn>, a boolean which is initially set to false.
 
 Security & privacy considerations {#sec-security}
 ===============================================

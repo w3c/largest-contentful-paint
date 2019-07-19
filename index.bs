@@ -26,7 +26,6 @@ urlPrefix: https://w3c.github.io/performance-timeline/; spec: PERFORMANCE-TIMELI
 urlPrefix: https://wicg.github.io/element-timing/; spec: ELEMENT-TIMING;
     type: dfn; url: #sec-elements-exposed; text: exposed;
     type: dfn; url: #get-an-element; text: get an element;
-    type: dfn; url: #get-response-end-time; text: get response end time;
 urlPrefix: https://w3c.github.io/hr-time; spec: HR-TIME;
     type: dfn; url: #dfn-current-high-resolution-time; text: current high resolution time;
     type: interface; url: #dom-domhighrestimestamp; text: DOMHighResTimeStamp;
@@ -93,7 +92,7 @@ Largest Contentful Paint involves the following new interface:
 <pre class="idl">
 interface LargestContentfulPaint : PerformanceEntry {
     readonly attribute DOMHighResTimeStamp renderTime;
-    readonly attribute DOMHighResTimeStamp responseEnd;
+    readonly attribute DOMHighResTimeStamp loadTime;
     readonly attribute unsigned long size;
     readonly attribute DOMString id;
     readonly attribute DOMString url;
@@ -104,7 +103,7 @@ interface LargestContentfulPaint : PerformanceEntry {
 Each {{LargestContentfulPaint}} object has these associated concepts:
 * A <dfn>renderTime</dfn>, initially set to 0.
 * A <dfn>size</dfn>, initially set to 0.
-* A <dfn>responseEnd</dfn>, initially set to 0.
+* A <dfn>loadTime</dfn>, initially set to 0.
 * An <dfn>id</dfn>, initially set to the empty string.
 * A <dfn>url</dfn>, initially set to the empty string.
 * An <dfn>element</dfn> containing the associated {{Element}}, initially set to <code>null</code>.
@@ -119,7 +118,7 @@ The {{PerformanceEntry/duration}} attribute's getter must return 0.
 
 The {{LargestContentfulPaint/renderTime}} attribute must return the value of the <a>context object</a>'s <a>renderTime</a>.
 
-The {{LargestContentfulPaint/responseEnd}} attribute must return the value of the <a>context object</a>'s <a>responseEnd</a>.
+The {{LargestContentfulPaint/loadTime}} attribute must return the value of the <a>context object</a>'s <a>loadTime</a>.
 
 The {{LargestContentfulPaint/size}} attribute must return the value of the <a>context object</a>'s <a>size</a>.
 
@@ -144,7 +143,8 @@ In order to <dfn export>potentially add a {{LargestContentfulPaint}} entry</dfn>
     : Input
     ::  |intersectionRect|, a {{DOMRectReadOnly}}
     ::  |request|, a {{Request}}
-    ::  |time|, a DOMHighResTimestamp
+    ::  |renderTime|, a DOMHighResTimestamp
+    ::  |loadTime|, a DOMHighResTimestamp
     ::  |element|, an <a>Element</a>
     ::  |document|, a <a>Document</a>
     : Output
@@ -155,7 +155,6 @@ In order to <dfn export>potentially add a {{LargestContentfulPaint}} entry</dfn>
         1. Let |largest| be |document|'s [=largestContentfulPaintSize=].
         1. Let |url| be |request|'s {=URL=}.
         1. Let |id| be |element|'s <a attribute for=Element>element id</a>.
-        1. Let |responseEnd| be the result of running <a>get response end time</a> with |request| as input.
         1. Let |width| be |intersectionRect|'s {{DOMRectReadOnly/width}}.
         1. Let |height| be |intersectionRect|'s {{DOMRectReadOnly/height}}.
         1. Let |size| be |width|*|height|.
@@ -165,8 +164,8 @@ In order to <dfn export>potentially add a {{LargestContentfulPaint}} entry</dfn>
                {{LargestContentfulPaint/size}} set to |size|,
                {{LargestContentfulPaint/url}} set to |url|,
                {{LargestContentfulPaint/id}} set to |id|,
-               {{LargestContentfulPaint/renderTime}} set to |time|,
-               {{LargestContentfulPaint/responseEnd}} set to |responseEnd|,
+               {{LargestContentfulPaint/renderTime}} set to |renderTime|,
+               {{LargestContentfulPaint/loadTime}} set to |loadTime|,
                and its {{LargestContentfulPaint/element}} set to |element|.
         1. [=Queue the PerformanceEntry=] |entry|.
 </div>

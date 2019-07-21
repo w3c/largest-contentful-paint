@@ -136,6 +136,18 @@ const po = new PerformanceObserver(list => {
     const entries = list.getEntries();
     const entry = entries[entries.length - 1];
     // Process entry as the latest LCP candidate
+    let accurateLCP = false;
+    // Use renderTime if it is nonzero. In this case, LCP will be accurate.
+    if (entry.renderTime) {
+      accurateLCP = true;
+      largestPaintTime = entry.renderTime;
+    }
+    // If not present, use loadTime. In this case, LCP will be less accurate.
+    else {
+      // Try to avoid getting here by adding Timing-Allow-Origin headers!
+      largestPaintTime = entry.loadTime;
+    }
+    // Send the LCP information for processing.
 });
 po.observe({entryTypes: ['largest-contentful-paint']});
 ```

@@ -186,7 +186,7 @@ As heuristics for other metrics have shortcomings, some of the heuristics that L
 * LCP tries to [exclude](#contentful-style-background-images) non-content background-images. The heuristics LCP uses cannot rule out all backgroundful images. If a non-content background-image is not attached to the document, the image won’t be excluded, and the largest element may not be the main content that LCP intends to capture.
 
 * LCP is deactivated after user input. If main content shows up after any user input, then the largest element that LCP uses won’t reflect the main content.
-* Complex UI structures such as image carousels may be mis-represented by LCP. Since the element's first paint is the one taken into account, images that are painted outside the viewport and slide in will be ignored. Similarly, images painted in the viewport but then slide outof it and removed will be ignored as well.
+* Complex UI structures such as image carousels may be mis-represented by LCP. Since the element's first paint is the one taken into account, images that are painted outside the viewport and slide in will be ignored. Similarly, images painted in the viewport but that then slide out of it will be ignored as well.
 
 # Security & privacy considerations
 

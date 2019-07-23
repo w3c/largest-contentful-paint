@@ -6,11 +6,7 @@
 
 Developers today don't have a reliable metric that correlated with their user's visual rendering experience. Existing metrics such as First Paint and First Contentful Paint focus on initial rendering, but don't take into account the importance of the painted content, and therefore may indicate times in which the user still does not consider the page useful.
 
-Largest Contentful Paint (LCP) aims to be a new page-load metric that:
-
-*   better correlates with user experience than the existing page-load metrics
-*   is easy to understand and reason about
-*   reduces the chance of gaming
+Largest Contentful Paint (LCP) aims to be a new page-load metric that better correlates with user experience than the existing page-load metrics, and is easy to understand and reason about.
 
 At the same time, LCP does not try to be respresentative of the user's entire rendering journey. That's something that the lower-level [Element-Timing](https://wicg.github.io/element-timing/) can help developers accomplish.
 

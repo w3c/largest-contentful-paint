@@ -110,9 +110,9 @@ During a page load, with page content constantly changing, LCP may have a differ
 It’s possible that the last candidate returned would be a premature result, because the measurement was aborted (due to the user navigating away or due to [user input](https://docs.google.com/document/d/1ySnglZJiCbOrOMX8PNgE0mRKmt9vglNDyggE8oYN8gQ/edit?disco=AAAACm_mTEg&usp_dm=false&ts=5c8a36c5#heading=h.leq0znnz6i6w)). This will cause a skew in the result because the result haven’t considered the content loaded (or that would have been loaded) after its termination. This ‘abort bias’ is inherent to any metric that is conditionally recorded only if the page visit reaches the point in time where the metric is observed. While a single sample may be affected by abort bias, aggregating a large number of samples can mitigate this problem. We find that using aggregate statistics for higher percentiles, such as 90th, avoids bias due to these early aborts.
 
 
-### Ignore removed elements 
+### Ignore removed elements
 
-In order to considering  ephemereal elements (such as splash screens) as the largest contentful paint, LCP ignores removed elements. If a content element is removed from the DOM tree, the element is temporarily excluded from being an LCP candidate.
+In order to avoid considering  ephemereal elements (such as splash screens) as the largest contentful paint, LCP ignores removed elements. If a content element is removed from the DOM tree, the element is temporarily excluded from being an LCP candidate.
 
 ## API shape
 One challenge with exposing LCP as a Performance Entry is the fact that the browser is not aware of the "winning" candidate until the measurement is over, at which point it is potentially too late, as the user may have navigated away.

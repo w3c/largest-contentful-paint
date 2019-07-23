@@ -40,7 +40,7 @@ The use of **initial** size affects pages where the elements move, such as anima
 
 The contentful elements in LCP’s context include two main groups - textual and pictorial.
 
-Groups of text nodes are created as describe in the <a href="https://github.com/WICG/element-timing#text-considerations">text considerations section</a> of the Element Timing explainer. The textual nodes which are grouped includes:
+Groups of text nodes are created as described in the <a href="https://github.com/WICG/element-timing#text-considerations">text considerations section</a> of the Element Timing explainer. The textual nodes which are grouped includes:
 
 *   text nodes
 *   SVG text nodes

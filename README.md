@@ -83,7 +83,7 @@ Regarding text, there is some discrepency between the way users may preceive blo
 While users tend to regard a paragraph as a block of text, the paragraph may be represented by several text nodes on the DOM tree because of links and different text style.
 Currently LCP regards each text node as a unit of text, which is sometimes different from user perception.
 
-The issue of grouping text nodes seems like an issue shared between LCP and its underlying primitive, Element Timing. Element Timing is exploring [grouping text nodes by their immediate parent](https://docs.google.com/document/d/1xhPJnXf0Nqsi8cBFrlzBuHavirOVZBd8TqdD_OyrDGw/edit#heading=h.1e3yk3amx58m)).
+The issue of grouping text nodes seems like an issue shared between LCP and its underlying primitive, Element Timing. Element Timing is exploring [grouping text nodes by their immediate parent](https://docs.google.com/document/d/1xhPJnXf0Nqsi8cBFrlzBuHavirOVZBd8TqdD_OyrDGw/edit#heading=h.1e3yk3amx58m).
 
 
 ### Interaction with user input 

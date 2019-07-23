@@ -4,32 +4,32 @@
 
 ## Objectives
 
-Developers today don't have a reliable metric that correlated with their user's visual rendering experience. Existing metrics such as First Paint and First Contentful Paint focus on initial rendering, but don't take into account the importance of the painted content, and therefore may indicate times in which the user still does not consider the page useful.
+Developers today don't have a reliable metric that correlates with their user's visual rendering experience. Existing metrics such as First Paint and First Contentful Paint focus on initial rendering, but don't take into account the importance of the painted content. Therefore, these metrics may indicate times in which the user still does not consider the page useful.
 
-Largest Contentful Paint (LCP) aims to be a new page-load metric that better correlates with user experience than the existing page-load metrics, and is easy to understand and reason about.
+Largest Contentful Paint (LCP) aims to be a new page-load metric that correlates with user experience better than the existing page-load metrics, and is easy to understand and reason about.
 
 At the same time, LCP does not try to be respresentative of the user's entire rendering journey. That's something that the lower-level [Element-Timing](https://wicg.github.io/element-timing/) can help developers accomplish.
 
 
 ## What is Largest Contentful Paint 
 
-Largest Contentful Paint (LCP) is a new page load metric, which describes page speed as the speed of delivering the largest contentful element to the screen.
+Largest Contentful Paint (LCP) is a new page load metric which describes the speed of delivering the largest contentful element to the screen.
 
-It is the high-level metric, where [Element Timing](https://github.com/WICG/Element-Timing) is its low-level primitive, aiming to provide a meaningful result even for developers that won't go through the trouble of annotating their sites. 
+LCP is the high-level metric, with [Element Timing](https://github.com/WICG/Element-Timing) being its low-level primitive. LCP aims to provide a meaningful result even for developers that won't go through the trouble of annotating their sites, which is a requirement to use Element Timing. 
 
 
 ### Why largest and contentful 
 
-In order to better correlate with user experience, we designed LCP to represent the speed of delivering **main content** on screen. While the main content is important to the user experience, what is the main content is highly subjective and different users can come up with different answers. As an approximation, LCP uses the largest contentful element to represent the main content.
+In order to better correlate with user experience, we designed LCP to represent the speed of delivering **main content** on the screen. While the main content is important to the user experience, what the main content is is highly subjective and different users can come up with different answers. As an approximation, LCP uses the largest contentful element to represent the main content.
 
-Historically, we’ve tried [complex heuristics](https://docs.google.com/document/d/1BR94tJdZLsin5poeet0XoTW60M0SjvOJQttKT-JK8HI) to determine when the page has meaningfully painted, as in First Meaningful Paint (FMP) metric. In practice, these heuristics have been able to work well for ~80% of content, but often produce strange, hard-to-explain outlier results in the remaining cases. LCP is a simple, practical approach to estimating a time that represents a meaningful paint for users, without heavily relying on complex heuristics. With LCP, we don’t observe the outliers encountered with FMP.
+Historically, we’ve tried complex heuristics to determine when the page has meaningfully painted, as in [First Meaningful Paint](https://docs.google.com/document/d/1BR94tJdZLsin5poeet0XoTW60M0SjvOJQttKT-JK8HI) (FMP) metric. In practice, these heuristics have worked well for ~80% of the content. But they often produce strange, hard-to-explain outlier results in the remaining cases. LCP is a simple, practical approach to estimating a time that represents a meaningful paint for users, without heavily relying on complex heuristics. With LCP, we don’t observe the outliers encountered with FMP.
 
 
 ### Largest: biggest initial size
 
-LCP uses the largest element to approximate the main content on the page. As [visual sizes](#visual-size) of elements can change during the whole page load, LCP uses the size of the [first paint](#paint-first-paint) of elements to decide which one is the largest. During the page load, an element can be painted many times, for example, the first paint when an element has just been added to the DOM tree, the repaint when text has to replace its font with the newly loaded web font. An element can even be removed from the DOM, and reattached later. No matter how many times an element is painted, the metric uses the size of the first paint to decide the largest.
+LCP uses the largest element to approximate the main content on the page. As [visual sizes](#visual-size) of elements can change during the whole page load, LCP uses the size of the [first paint](#paint-first-paint) of elements to decide which one is the largest. During the page load, an element can be painted many times, for example, an element could be first painted when added to the DOM tree, and repainted when text has to replace its font with a newly loaded web font.
 
-The use of **initial** size affects pages where the elements move, such as animated image carousel. In such carousel examples, for images that are initially outside the viewport and that "slide" into it, LCP may define their size as their painted size when they are first added to the DOM, which will be 0. The same issue also applies to interstitials or dialog boxes that slide into the viewport.
+The use of **initial** size affects pages where the elements move, such as animated image carousels. In such carousels, for images that are initially outside the viewport and that "slide" into it, LCP may define their size as their painted size when they are first added to the DOM, which will be 0. The same issue also applies to interstitials or dialog boxes that slide into the viewport.
 
 
 ### Contentful: text, image, background images, videos’ poster-images 

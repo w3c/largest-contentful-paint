@@ -153,7 +153,7 @@ In order to <dfn export>potentially add a {{LargestContentfulPaint}} entry</dfn>
         1. If either of |window|'s [=has dispatched scroll event=] or [=has dispatched input event=] is true, return.
 
         1. Let |largest| be |document|'s [=largestContentfulPaintSize=].
-        1. Let |url| be |request|'s {=URL=}.
+        1. Let |url| be |request|'s {{Request/URL}}.
         1. Let |id| be |element|'s <a attribute for=Element>element id</a>.
         1. Let |width| be |intersectionRect|'s {{DOMRectReadOnly/width}}.
         1. Let |height| be |intersectionRect|'s {{DOMRectReadOnly/height}}.

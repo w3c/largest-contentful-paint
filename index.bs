@@ -39,6 +39,8 @@ urlPrefix: https://wicg.github.io/event-timing; spec: EVENT-TIMING;
     type: dfn; url: #has-dispatched-input-event; text: has dispatched input event;
 urlPrefix: https://fetch.spec.whatwg.org/; spec: FETCH;
     type: dfn; url: #dom-request-url; text: request URL
+urlPrefix: https://html.spec.whatwg.org/multipage/webappapis.html; type: dfn; spec: html
+    text: relevant global object; url: concept-relevant-global
 </pre>
 
 Introduction {#sec-intro}
@@ -151,7 +153,7 @@ In order to <dfn export>potentially add a {{LargestContentfulPaint}} entry</dfn>
     ::  |document|, a <a>Document</a>
     : Output
     ::  None
-        1. Let |window| be |document|’s relevant global object.
+        1. Let |window| be |document|’s [=relevant global object=].
         1. If either of |window|'s [=has dispatched scroll event=] or [=has dispatched input event=] is true, return.
 
         1. Let |largest| be |document|'s [=largestContentfulPaintSize=].
@@ -183,7 +185,7 @@ Modifications to the DOM specification {#sec-modifications-DOM}
 
     Right after step 1, we add the following step:
 
-    * If |target| is a {{Window}} object and if <var ignore>event</var>'s {{Event/type}} is {{scroll}}, set |target|'s [=has dispatched scroll event=] to true.
+    * If |target|'s [=relevant global object=] is a {{Window}} object and if <var ignore>event</var>'s {{Event/type}} is {{scroll}}, set |target|'s [=relevant global object=]'s [=has dispatched scroll event=] to true.
 </div>
 
 Modifications to the HTML specification {#sec-modifications-HTML}

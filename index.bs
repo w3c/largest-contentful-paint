@@ -37,6 +37,8 @@ urlPrefix: https://dom.spec.whatwg.org; spec: DOM;
     type: dfn; url: #concept-event-dispatch; text: event dispatch algorithm;
 urlPrefix: https://wicg.github.io/event-timing; spec: EVENT-TIMING;
     type: dfn; url: #has-dispatched-input-event; text: has dispatched input event;
+urlPrefix: https://fetch.spec.whatwg.org/; spec: FETCH;
+    type: dfn; url: #dom-request-url; text: request URL
 urlPrefix: https://html.spec.whatwg.org/multipage/webappapis.html; type: dfn; spec: html
     text: relevant global object; url: concept-relevant-global
 </pre>
@@ -155,7 +157,8 @@ In order to <dfn export>potentially add a {{LargestContentfulPaint}} entry</dfn>
         1. If either of |window|'s [=has dispatched scroll event=] or [=has dispatched input event=] is true, return.
 
         1. Let |largest| be |document|'s [=largestContentfulPaintSize=].
-        1. Let |url| be |request|'s {=URL=}.
+        1. Let |url| be the empty string.
+        1. If |request| is not null, set |url| to be |request|'s [=request URL=].
         1. Let |id| be |element|'s <a attribute for=Element>element id</a>.
         1. Let |width| be |intersectionRect|'s {{DOMRectReadOnly/width}}.
         1. Let |height| be |intersectionRect|'s {{DOMRectReadOnly/height}}.

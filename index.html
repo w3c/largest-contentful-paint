@@ -1215,7 +1215,7 @@ Possible extra rowspan handling
   <link href="https://www.w3.org/StyleSheets/TR/2016/W3C-ED" rel="stylesheet">
   <meta content="Bikeshed version 39652c9ea7fd5d09639da5e1182cd481b0c5ae70" name="generator">
   <link href="https://wicg.github.io/largest-contentful-paint" rel="canonical">
-  <meta content="bc7674e38bb6a22bc13d2df374c013ca2e36dfda" name="document-revision">
+  <meta content="ce85cf96695b0ed86f2901faab5e10ab90f17211" name="document-revision">
 <style>/* style-md-lists */
 
 /* This is a weird hack for me not yet following the commonmark spec
@@ -1643,7 +1643,9 @@ This allows developers to detect support for the API.</p>
        <li data-md>
         <p>Let <var>largest</var> be <var>document</var>’s <a data-link-type="dfn" href="#largestcontentfulpaintsize" id="ref-for-largestcontentfulpaintsize">largestContentfulPaintSize</a>.</p>
        <li data-md>
-        <p>Let <var>url</var> be <var>request</var>’s {=URL=}.</p>
+        <p>Let <var>url</var> be the empty string.</p>
+       <li data-md>
+        <p>If <var>request</var> is not null, set <var>url</var> to be <var>request</var>’s <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#dom-request-url" id="ref-for-dom-request-url">request URL</a>.</p>
        <li data-md>
         <p>Let <var>id</var> be <var>element</var>’s <a class="idl-code" data-link-type="attribute" href="https://dom.spec.whatwg.org#dom-element-id" id="ref-for-dom-element-id">element id</a>.</p>
        <li data-md>
@@ -1948,6 +1950,12 @@ This allows developers to detect support for the API.</p>
     <li><a href="#ref-for-request">3. Processing model</a>
    </ul>
   </aside>
+  <aside class="dfn-panel" data-for="term-for-dom-request-url">
+   <a href="https://fetch.spec.whatwg.org/#dom-request-url">https://fetch.spec.whatwg.org/#dom-request-url</a><b>Referenced in:</b>
+   <ul>
+    <li><a href="#ref-for-dom-request-url">3. Processing model</a>
+   </ul>
+  </aside>
   <aside class="dfn-panel" data-for="term-for-domrectreadonly">
    <a href="https://drafts.fxtf.org/geometry-1/#domrectreadonly">https://drafts.fxtf.org/geometry-1/#domrectreadonly</a><b>Referenced in:</b>
    <ul>
@@ -2075,6 +2083,7 @@ This allows developers to detect support for the API.</p>
     <a data-link-type="biblio">[FETCH]</a> defines the following terms:
     <ul>
      <li><span class="dfn-paneled" id="term-for-request" style="color:initial">Request</span>
+     <li><span class="dfn-paneled" id="term-for-dom-request-url" style="color:initial">request url</span>
     </ul>
    <li>
     <a data-link-type="biblio">[geometry-1]</a> defines the following terms:

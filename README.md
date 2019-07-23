@@ -36,51 +36,42 @@ The use of **initial** size affects pages where the elements move, such as anima
 
 The contentful elements in LCP’s context include two main groups - textual and pictorial.
 
-Groups of text nodes are created as described in the <a href="https://github.com/WICG/element-timing#text-considerations">text considerations section</a> of the Element Timing explainer. The textual nodes which are grouped includes:
+Groups of text nodes are created as described in the <a href="https://github.com/WICG/element-timing#text-considerations">text considerations section</a> of the Element Timing explainer. The textual nodes which are grouped include:
 
 *   text nodes
 *   SVG text nodes
 
-Pictorial elements are described in the <a href="https://github.com/WICG/element-timing#image-considerations">image considerations section</a> of the Element Timing explainer. The pictorial elements includes:
+Pictorial elements are described in the <a href="https://github.com/WICG/element-timing#image-considerations">image considerations section</a> of the Element Timing explainer. The pictorial elements include:
 
 *   image elements
 *   html elements with [contentful](#contentful-style-background-images) style-background-images
 *   video elements with poster images
 
-In the future, we may add canvas and video elements that paint their initial frame to the contentful elements group.
+In the future, we may add canvas and video elements to the group of contentful elements.
 
 
 #### Contentful style-background-images 
 
-Background images can serve a role as background or as part of the contents of the page. LCP uses heuristics to distinguish between those uses and exclude one with a background role, as they are less relevant to user experience than those used as content.
+Background images can serve a role as background or as part of the contents of the page. LCP uses simple heuristics to exclude background images with a background role, as they are less relevant to user experience than those used as content of the page.
 
 The heuristics to identify a background-purposed image may include:
-* Document position - Background images of the document's `<body>` or its `<html>` are more likely to serve as a background for the page.
-* Background image that's not fetched - a CSS background images that's either a [cross fade](https://drafts.csswg.org/css-images-4/#funcdef-cross-fade) or a [gradient](https://drafts.csswg.org/css-images-4/#typedef-gradient).
+* Document position - background images of the document's `<body>` or its `<html>` are more likely to serve as a background for the page.
+* Background image that's not fetched - a CSS background image that's either a [cross fade](https://drafts.csswg.org/css-images-4/#funcdef-cross-fade) or a [gradient](https://drafts.csswg.org/css-images-4/#typedef-gradient) is considered background for the page.
 
 ### Paint: first paint 
 
-We have different definitions of first paint time for textual and pictorial elements. For pictorial elements in particular, the first paint time refers to the first paint after the image is fully loaded and decoded. For text, the first paint time is the first paint of the text at its earliest font. In other words, if a text element with a default font is repainted after its web-font is loaded, the first paint time refers to that of the default font.
+We have different definitions of first paint time for textual and pictorial elements. For pictorial elements, the first paint time refers to the first paint after the image is fully loaded. For text, the first paint time is the first paint of the text at its earliest font. In other words, if a text element with a default font is repainted after its web-font is loaded, the first paint time refers to that of the default font.
 
 
 ### Visual size 
 
 In the context of LCP, the size of an element refers to the visual size, which is the size visible to users. In terms of visibility, the metric has included the following factors:
 
-
-
-*   The visible area of an element is clipped by the screen viewport, frame viewports, ancestor elements’ visible area.
-*   Elements whose CSS visibility property set to “hidden” is regarded as invisible.
+*   The visible area of an element is clipped by the screen viewport, frame viewports, and ancestor elements’ visible area.
+*   An element whose CSS visibility property is set to “hidden” is regarded as invisible.
 *   A text element in [font-block period](https://developer.mozilla.org/en-US/docs/Web/CSS/@font-face/font-display#The_font_display_timeline) is invisible.
 
 Note that occlusion is not taken into account due to implementation efficiency concerns. It may be added in the future if those concerns are alleviated.
-
-Regarding text, there is some discrepency between the way users may preceive blocks of text and the way text is defined in the DOM tree.
-While users tend to regard a paragraph as a block of text, the paragraph may be represented by several text nodes on the DOM tree because of links and different text style.
-Currently LCP regards each text node as a unit of text, which is sometimes different from user perception.
-
-The issue of grouping text nodes seems like an issue shared between LCP and its underlying primitive, Element Timing. Element Timing is exploring [grouping text nodes by their immediate parent](https://docs.google.com/document/d/1xhPJnXf0Nqsi8cBFrlzBuHavirOVZBd8TqdD_OyrDGw/edit#heading=h.1e3yk3amx58m).
-
 
 ### Interaction with user input 
 

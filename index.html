@@ -1215,7 +1215,7 @@ Possible extra rowspan handling
   <link href="https://www.w3.org/StyleSheets/TR/2016/W3C-ED" rel="stylesheet">
   <meta content="Bikeshed version 39652c9ea7fd5d09639da5e1182cd481b0c5ae70" name="generator">
   <link href="https://wicg.github.io/largest-contentful-paint" rel="canonical">
-  <meta content="9af1cb2fdd30aaa1aa3b211ca63781223cb69829" name="document-revision">
+  <meta content="bc7674e38bb6a22bc13d2df374c013ca2e36dfda" name="document-revision">
 <style>/* style-md-lists */
 
 /* This is a weird hack for me not yet following the commonmark spec
@@ -1637,7 +1637,7 @@ This allows developers to detect support for the API.</p>
       <p>None</p>
       <ol>
        <li data-md>
-        <p>Let <var>window</var> be <var>document</var>’s relevant global object.</p>
+        <p>Let <var>window</var> be <var>document</var>’s <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/webappapis.html#concept-relevant-global" id="ref-for-concept-relevant-global">relevant global object</a>.</p>
        <li data-md>
         <p>If either of <var>window</var>’s <a data-link-type="dfn" href="#has-dispatched-scroll-event" id="ref-for-has-dispatched-scroll-event">has dispatched scroll event</a> or <a data-link-type="dfn" href="https://wicg.github.io/event-timing#has-dispatched-input-event" id="ref-for-has-dispatched-input-event">has dispatched input event</a> is true, return.</p>
        <li data-md>
@@ -1671,7 +1671,7 @@ This allows developers to detect support for the API.</p>
     <p>Right after step 1, we add the following step:</p>
     <ul>
      <li data-md>
-      <p>If <var>target</var> is a <code class="idl"><a data-link-type="idl" href="https://html.spec.whatwg.org/multipage/window-object.html#window" id="ref-for-window①">Window</a></code> object and if <var>event</var>’s <code class="idl"><a data-link-type="idl" href="https://dom.spec.whatwg.org/#dom-event-type" id="ref-for-dom-event-type">type</a></code> is <code class="idl"><a data-link-type="idl" href="https://drafts.csswg.org/cssom-view-1/#eventdef-document-scroll" id="ref-for-eventdef-document-scroll">scroll</a></code>, set <var>target</var>’s <a data-link-type="dfn" href="#has-dispatched-scroll-event" id="ref-for-has-dispatched-scroll-event①">has dispatched scroll event</a> to true.</p>
+      <p>If <var>target</var>’s <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/webappapis.html#concept-relevant-global" id="ref-for-concept-relevant-global①">relevant global object</a> is a <code class="idl"><a data-link-type="idl" href="https://html.spec.whatwg.org/multipage/window-object.html#window" id="ref-for-window①">Window</a></code> object and if <var>event</var>’s <code class="idl"><a data-link-type="idl" href="https://dom.spec.whatwg.org/#dom-event-type" id="ref-for-dom-event-type">type</a></code> is <code class="idl"><a data-link-type="idl" href="https://drafts.csswg.org/cssom-view-1/#eventdef-document-scroll" id="ref-for-eventdef-document-scroll">scroll</a></code>, set <var>target</var>’s <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/webappapis.html#concept-relevant-global" id="ref-for-concept-relevant-global②">relevant global object</a>'s <a data-link-type="dfn" href="#has-dispatched-scroll-event" id="ref-for-has-dispatched-scroll-event①">has dispatched scroll event</a> to true.</p>
     </ul>
    </div>
    <h3 class="heading settled" data-level="3.2" id="sec-modifications-HTML"><span class="secno">3.2. </span><span class="content">Modifications to the HTML specification</span><a class="self-link" href="#sec-modifications-HTML"></a></h3>
@@ -1980,6 +1980,13 @@ This allows developers to detect support for the API.</p>
     <li><a href="#ref-for-window②">3.2. Modifications to the HTML specification</a>
    </ul>
   </aside>
+  <aside class="dfn-panel" data-for="term-for-concept-relevant-global">
+   <a href="https://html.spec.whatwg.org/multipage/webappapis.html#concept-relevant-global">https://html.spec.whatwg.org/multipage/webappapis.html#concept-relevant-global</a><b>Referenced in:</b>
+   <ul>
+    <li><a href="#ref-for-concept-relevant-global">3. Processing model</a>
+    <li><a href="#ref-for-concept-relevant-global①">3.1. Modifications to the DOM specification</a> <a href="#ref-for-concept-relevant-global②">(2)</a>
+   </ul>
+  </aside>
   <aside class="dfn-panel" data-for="term-for-the-performanceentry-interface">
    <a href="https://w3c.github.io/performance-timeline/#the-performanceentry-interface">https://w3c.github.io/performance-timeline/#the-performanceentry-interface</a><b>Referenced in:</b>
    <ul>
@@ -2085,6 +2092,7 @@ This allows developers to detect support for the API.</p>
     <a data-link-type="biblio">[HTML]</a> defines the following terms:
     <ul>
      <li><span class="dfn-paneled" id="term-for-window" style="color:initial">Window</span>
+     <li><span class="dfn-paneled" id="term-for-concept-relevant-global" style="color:initial">relevant global object</span>
     </ul>
    <li>
     <a data-link-type="biblio">[performance-timeline-2]</a> defines the following terms:

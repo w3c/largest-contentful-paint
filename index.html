@@ -1215,7 +1215,7 @@ Possible extra rowspan handling
   <link href="https://www.w3.org/StyleSheets/TR/2016/W3C-ED" rel="stylesheet">
   <meta content="Bikeshed version b9c59eccbcc25454195a0043aa99cbc393f9772d" name="generator">
   <link href="https://wicg.github.io/largest-contentful-paint" rel="canonical">
-  <meta content="510849f079493dcfe2771ee40c65e44f4ec0c2e0" name="document-revision">
+  <meta content="d49e0f80f81a8f84b35c0f37c21878fd32a81eb7" name="document-revision">
 <style>/* style-md-lists */
 
 /* This is a weird hack for me not yet following the commonmark spec
@@ -1603,13 +1603,13 @@ observer<c- p>.</c->observe<c- p>({</c->entryTypes<c- o>:</c-> <c- p>[</c-><c- t
    </ul>
    <p>The <code class="idl"><a data-link-type="idl" href="https://w3c.github.io/performance-timeline/#dom-performanceentry-entrytype" id="ref-for-dom-performanceentry-entrytype">entryType</a></code> attribute’s getter must return the <code class="idl"><a data-link-type="idl" href="https://heycam.github.io/webidl/#idl-DOMString" id="ref-for-idl-DOMString②">DOMString</a></code> <code class="highlight"><c- u>"largest-contentful-paint"</c-></code>.</p>
    <p>The <code class="idl"><a data-link-type="idl" href="https://w3c.github.io/performance-timeline/#dom-performanceentry-name" id="ref-for-dom-performanceentry-name">name</a></code> attribute’s getter must return the value it was initialized to.</p>
-   <p>The <code class="idl"><a data-link-type="idl" href="https://w3c.github.io/performance-timeline/#dom-performanceentry-starttime" id="ref-for-dom-performanceentry-starttime">startTime</a></code> attribute’s getter must return 0.</p>
+   <p>The <code class="idl"><a data-link-type="idl" href="https://w3c.github.io/performance-timeline/#dom-performanceentry-starttime" id="ref-for-dom-performanceentry-starttime">startTime</a></code> attribute’s getter must return the value of the <a data-link-type="dfn" href="https://dom.spec.whatwg.org/#context-object" id="ref-for-context-object">context object</a>’s <a data-link-type="dfn" href="#rendertime" id="ref-for-rendertime">renderTime</a> if it is not 0, and the value of the <a data-link-type="dfn" href="https://dom.spec.whatwg.org/#context-object" id="ref-for-context-object①">context object</a>’s <a data-link-type="dfn" href="#loadtime" id="ref-for-loadtime">loadTime</a> otherwise.</p>
    <p>The <code class="idl"><a data-link-type="idl" href="https://w3c.github.io/performance-timeline/#dom-performanceentry-duration" id="ref-for-dom-performanceentry-duration">duration</a></code> attribute’s getter must return 0.</p>
-   <p>The <code class="idl"><a data-link-type="idl" href="#dom-largestcontentfulpaint-rendertime" id="ref-for-dom-largestcontentfulpaint-rendertime">renderTime</a></code> attribute must return the value of the <a data-link-type="dfn" href="https://dom.spec.whatwg.org/#context-object" id="ref-for-context-object">context object</a>’s <a data-link-type="dfn" href="#rendertime" id="ref-for-rendertime">renderTime</a>.</p>
-   <p>The <code class="idl"><a data-link-type="idl" href="#dom-largestcontentfulpaint-loadtime" id="ref-for-dom-largestcontentfulpaint-loadtime">loadTime</a></code> attribute must return the value of the <a data-link-type="dfn" href="https://dom.spec.whatwg.org/#context-object" id="ref-for-context-object①">context object</a>’s <a data-link-type="dfn" href="#loadtime" id="ref-for-loadtime">loadTime</a>.</p>
-   <p>The <code class="idl"><a data-link-type="idl" href="#dom-largestcontentfulpaint-size" id="ref-for-dom-largestcontentfulpaint-size">size</a></code> attribute must return the value of the <a data-link-type="dfn" href="https://dom.spec.whatwg.org/#context-object" id="ref-for-context-object②">context object</a>’s <a data-link-type="dfn" href="#size" id="ref-for-size">size</a>.</p>
-   <p>The <code class="idl"><a data-link-type="idl" href="#dom-largestcontentfulpaint-id" id="ref-for-dom-largestcontentfulpaint-id">id</a></code> attribute must return the value of the <a data-link-type="dfn" href="https://dom.spec.whatwg.org/#context-object" id="ref-for-context-object③">context object</a>’s <a data-link-type="dfn" href="#id" id="ref-for-id">id</a>.</p>
-   <p>The <code class="idl"><a data-link-type="idl" href="#dom-largestcontentfulpaint-url" id="ref-for-dom-largestcontentfulpaint-url">url</a></code> attribute must return the value of the <a data-link-type="dfn" href="https://dom.spec.whatwg.org/#context-object" id="ref-for-context-object④">context object</a>’s <a data-link-type="dfn" href="#url" id="ref-for-url">url</a>.</p>
+   <p>The <code class="idl"><a data-link-type="idl" href="#dom-largestcontentfulpaint-rendertime" id="ref-for-dom-largestcontentfulpaint-rendertime">renderTime</a></code> attribute must return the value of the <a data-link-type="dfn" href="https://dom.spec.whatwg.org/#context-object" id="ref-for-context-object②">context object</a>’s <a data-link-type="dfn" href="#rendertime" id="ref-for-rendertime①">renderTime</a>.</p>
+   <p>The <code class="idl"><a data-link-type="idl" href="#dom-largestcontentfulpaint-loadtime" id="ref-for-dom-largestcontentfulpaint-loadtime">loadTime</a></code> attribute must return the value of the <a data-link-type="dfn" href="https://dom.spec.whatwg.org/#context-object" id="ref-for-context-object③">context object</a>’s <a data-link-type="dfn" href="#loadtime" id="ref-for-loadtime①">loadTime</a>.</p>
+   <p>The <code class="idl"><a data-link-type="idl" href="#dom-largestcontentfulpaint-size" id="ref-for-dom-largestcontentfulpaint-size">size</a></code> attribute must return the value of the <a data-link-type="dfn" href="https://dom.spec.whatwg.org/#context-object" id="ref-for-context-object④">context object</a>’s <a data-link-type="dfn" href="#size" id="ref-for-size">size</a>.</p>
+   <p>The <code class="idl"><a data-link-type="idl" href="#dom-largestcontentfulpaint-id" id="ref-for-dom-largestcontentfulpaint-id">id</a></code> attribute must return the value of the <a data-link-type="dfn" href="https://dom.spec.whatwg.org/#context-object" id="ref-for-context-object⑤">context object</a>’s <a data-link-type="dfn" href="#id" id="ref-for-id">id</a>.</p>
+   <p>The <code class="idl"><a data-link-type="idl" href="#dom-largestcontentfulpaint-url" id="ref-for-dom-largestcontentfulpaint-url">url</a></code> attribute must return the value of the <a data-link-type="dfn" href="https://dom.spec.whatwg.org/#context-object" id="ref-for-context-object⑥">context object</a>’s <a data-link-type="dfn" href="#url" id="ref-for-url">url</a>.</p>
    <p>The <code class="idl"><a data-link-type="idl" href="#dom-largestcontentfulpaint-element" id="ref-for-dom-largestcontentfulpaint-element">element</a></code> attribute’s getter must return the value returned by running the <a data-link-type="dfn" href="https://wicg.github.io/element-timing/#get-an-element" id="ref-for-get-an-element">get an element</a> algorithm with <a data-link-type="dfn" href="#element" id="ref-for-element②">element</a> and null as inputs.</p>
    <p class="note" role="note"><span>Note:</span> The above algorithm defines that an element that is no longer <a data-link-type="dfn" href="https://dom.spec.whatwg.org/#concept-tree-descendant" id="ref-for-concept-tree-descendant">descendant</a> of the <code class="idl"><a data-link-type="idl" href="https://dom.spec.whatwg.org/#document" id="ref-for-document">Document</a></code> will no longer be returned by <code class="idl"><a data-link-type="idl" href="#dom-largestcontentfulpaint-element" id="ref-for-dom-largestcontentfulpaint-element①">element</a></code>'s attribute getter, including elements that are inside a shadow DOM.</p>
    <p>This specification also extends <code class="idl"><a data-link-type="idl" href="https://dom.spec.whatwg.org/#document" id="ref-for-document①">Document</a></code> by adding it a <dfn class="dfn-paneled" data-dfn-type="dfn" data-noexport id="largestcontentfulpaintsize">largestContentfulPaintSize</dfn> concept, initially set to 0.</p>
@@ -1893,7 +1893,7 @@ This allows developers to detect support for the API.</p>
   <aside class="dfn-panel" data-for="term-for-context-object">
    <a href="https://dom.spec.whatwg.org/#context-object">https://dom.spec.whatwg.org/#context-object</a><b>Referenced in:</b>
    <ul>
-    <li><a href="#ref-for-context-object">2.1. LargestContentfulPaint interface</a> <a href="#ref-for-context-object①">(2)</a> <a href="#ref-for-context-object②">(3)</a> <a href="#ref-for-context-object③">(4)</a> <a href="#ref-for-context-object④">(5)</a>
+    <li><a href="#ref-for-context-object">2.1. LargestContentfulPaint interface</a> <a href="#ref-for-context-object①">(2)</a> <a href="#ref-for-context-object②">(3)</a> <a href="#ref-for-context-object③">(4)</a> <a href="#ref-for-context-object④">(5)</a> <a href="#ref-for-context-object⑤">(6)</a> <a href="#ref-for-context-object⑥">(7)</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="term-for-concept-tree-descendant">
@@ -2217,7 +2217,7 @@ This allows developers to detect support for the API.</p>
   <aside class="dfn-panel" data-for="rendertime">
    <b><a href="#rendertime">#rendertime</a></b><b>Referenced in:</b>
    <ul>
-    <li><a href="#ref-for-rendertime">2.1. LargestContentfulPaint interface</a>
+    <li><a href="#ref-for-rendertime">2.1. LargestContentfulPaint interface</a> <a href="#ref-for-rendertime①">(2)</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="size">
@@ -2229,7 +2229,7 @@ This allows developers to detect support for the API.</p>
   <aside class="dfn-panel" data-for="loadtime">
    <b><a href="#loadtime">#loadtime</a></b><b>Referenced in:</b>
    <ul>
-    <li><a href="#ref-for-loadtime">2.1. LargestContentfulPaint interface</a>
+    <li><a href="#ref-for-loadtime">2.1. LargestContentfulPaint interface</a> <a href="#ref-for-loadtime①">(2)</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="id">

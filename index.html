@@ -1215,7 +1215,7 @@ Possible extra rowspan handling
   <link href="https://www.w3.org/StyleSheets/TR/2016/W3C-ED" rel="stylesheet">
   <meta content="Bikeshed version b9c59eccbcc25454195a0043aa99cbc393f9772d" name="generator">
   <link href="https://wicg.github.io/largest-contentful-paint" rel="canonical">
-  <meta content="0612277642bac95c29aefc97ee79bdcc7d07314d" name="document-revision">
+  <meta content="510849f079493dcfe2771ee40c65e44f4ec0c2e0" name="document-revision">
 <style>/* style-md-lists */
 
 /* This is a weird hack for me not yet following the commonmark spec
@@ -1673,7 +1673,7 @@ This allows developers to detect support for the API.</p>
     <p>Right after step 1, we add the following step:</p>
     <ul>
      <li data-md>
-      <p>If <var>target</var>’s <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/webappapis.html#concept-relevant-global" id="ref-for-concept-relevant-global①">relevant global object</a> is a <code class="idl"><a data-link-type="idl" href="https://html.spec.whatwg.org/multipage/window-object.html#window" id="ref-for-window①">Window</a></code> object and if <var>event</var>’s <code class="idl"><a data-link-type="idl" href="https://dom.spec.whatwg.org/#dom-event-type" id="ref-for-dom-event-type">type</a></code> is <code class="idl"><a data-link-type="idl" href="https://drafts.csswg.org/cssom-view-1/#eventdef-document-scroll" id="ref-for-eventdef-document-scroll">scroll</a></code>, set <var>target</var>’s <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/webappapis.html#concept-relevant-global" id="ref-for-concept-relevant-global②">relevant global object</a>'s <a data-link-type="dfn" href="#has-dispatched-scroll-event" id="ref-for-has-dispatched-scroll-event①">has dispatched scroll event</a> to true.</p>
+      <p>If <var>target</var>’s <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/webappapis.html#concept-relevant-global" id="ref-for-concept-relevant-global①">relevant global object</a> is a <code class="idl"><a data-link-type="idl" href="https://html.spec.whatwg.org/multipage/window-object.html#window" id="ref-for-window①">Window</a></code> object, <var>event</var>’s <code class="idl"><a data-link-type="idl" href="https://dom.spec.whatwg.org/#dom-event-type" id="ref-for-dom-event-type">type</a></code> is <code class="idl"><a data-link-type="idl" href="https://drafts.csswg.org/cssom-view-1/#eventdef-document-scroll" id="ref-for-eventdef-document-scroll">scroll</a></code> and its <code class="idl"><a data-link-type="idl" href="https://dom.spec.whatwg.org/#dom-event-istrusted" id="ref-for-dom-event-istrusted">isTrusted</a></code> is false, set <var>target</var>’s <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/webappapis.html#concept-relevant-global" id="ref-for-concept-relevant-global②">relevant global object</a>'s <a data-link-type="dfn" href="#has-dispatched-scroll-event" id="ref-for-has-dispatched-scroll-event①">has dispatched scroll event</a> to true.</p>
     </ul>
    </div>
    <h3 class="heading settled" data-level="3.2" id="sec-modifications-HTML"><span class="secno">3.2. </span><span class="content">Modifications to the HTML specification</span><a class="self-link" href="#sec-modifications-HTML"></a></h3>
@@ -1920,6 +1920,12 @@ This allows developers to detect support for the API.</p>
     <li><a href="#ref-for-concept-event-dispatch">3.1. Modifications to the DOM specification</a>
    </ul>
   </aside>
+  <aside class="dfn-panel" data-for="term-for-dom-event-istrusted">
+   <a href="https://dom.spec.whatwg.org/#dom-event-istrusted">https://dom.spec.whatwg.org/#dom-event-istrusted</a><b>Referenced in:</b>
+   <ul>
+    <li><a href="#ref-for-dom-event-istrusted">3.1. Modifications to the DOM specification</a>
+   </ul>
+  </aside>
   <aside class="dfn-panel" data-for="term-for-dom-event-type">
    <a href="https://dom.spec.whatwg.org/#dom-event-type">https://dom.spec.whatwg.org/#dom-event-type</a><b>Referenced in:</b>
    <ul>
@@ -2066,6 +2072,7 @@ This allows developers to detect support for the API.</p>
      <li><span class="dfn-paneled" id="term-for-concept-document" style="color:initial">document</span>
      <li><span class="dfn-paneled" id="term-for-dom-element-id" style="color:initial">element id</span>
      <li><span class="dfn-paneled" id="term-for-concept-event-dispatch" style="color:initial">event dispatch algorithm</span>
+     <li><span class="dfn-paneled" id="term-for-dom-event-istrusted" style="color:initial">isTrusted</span>
      <li><span class="dfn-paneled" id="term-for-dom-event-type" style="color:initial">type</span>
     </ul>
    <li>

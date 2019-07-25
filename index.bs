@@ -116,7 +116,7 @@ The {{PerformanceEntry/entryType}} attribute's getter must return the {{DOMStrin
 
 The {{PerformanceEntry/name}} attribute's getter must return the value it was initialized to.
 
-The {{PerformanceEntry/startTime}} attribute's getter must return 0.
+The {{PerformanceEntry/startTime}} attribute's getter must return the value of the <a>context object</a>'s <a>renderTime</a> if it is not 0, and the value of the <a>context object</a>'s <a>loadTime</a> otherwise.
 
 The {{PerformanceEntry/duration}} attribute's getter must return 0.
 

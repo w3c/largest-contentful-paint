@@ -75,13 +75,16 @@ Note that occlusion is not taken into account due to implementation efficiency c
 
 ### Image instrinsic size
 
-Sometimes, small images may be scaled to fit a larger portion of the viewport. This is usually the case for background images which do not represent key content of the website but still occupy a large portion of it. To address this problem, we have a heuristic to penalize the size of certain images. The formula is as follows:
+Images are sometimes upscaled to occupy a larger portion of the viewport than their natural dimensions, resulting in blurriness.
+Due to that, those images content may be less significant from a user's perspective.
+In order to address that, LCP employs a heuristic to compensate for such upscaling.
+The formula for that heuristic is as follows:
 
 ```
-image_size = visual_size * min(display_size, intrinsic_size) / display_size
+image_size = visual_size * min(display_size, natural_size) / display_size
 ```
-`image_size` is the size of the image, as considered by the LCP algorithm. It is computed from the `visual_size`, the screen size occupied by the image. It is penalized when the `intrinsic_size` of the image is lower than its `display_size`, i.e., when the image has been stretched to occupy a larger portion of the viewport than the number of pixels it encodes.
 
+`image_size` is the size of the image, as considered by the LCP algorithm. It is computed from the `visual_size`, the screen size occupied by the image. It is penalized when the `natural_size` of the image is lower than its `display_size`, i.e., when the image has been upscaled to occupy a larger portion of the viewport than the number of pixels it encodes.
 
 ### Interaction with user input 
 

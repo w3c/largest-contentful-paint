@@ -1213,9 +1213,9 @@ Possible extra rowspan handling
 	}
 </style>
   <link href="https://www.w3.org/StyleSheets/TR/2016/W3C-ED" rel="stylesheet">
-  <meta content="Bikeshed version b9c59eccbcc25454195a0043aa99cbc393f9772d" name="generator">
+  <meta content="Bikeshed version 450e0499b28bb4c684052ad936ad1e7d36c4eac5" name="generator">
   <link href="https://wicg.github.io/largest-contentful-paint" rel="canonical">
-  <meta content="d49e0f80f81a8f84b35c0f37c21878fd32a81eb7" name="document-revision">
+  <meta content="3c973efe991537fb9b1ace7ecad409123f3a77fe" name="document-revision">
 <style>/* style-md-lists */
 
 /* This is a weird hack for me not yet following the commonmark spec
@@ -1473,7 +1473,7 @@ c-[il] { color: #000000 } /* Literal.Number.Integer.Long */
   <div class="head">
    <p data-fill-with="logo"></p>
    <h1 class="p-name no-ref" id="title">Largest Contentful Paint</h1>
-   <h2 class="no-num no-toc no-ref heading settled" id="subtitle"><span class="content">Editor’s Draft, <time class="dt-updated" datetime="2019-07-25">25 July 2019</time></span></h2>
+   <h2 class="no-num no-toc no-ref heading settled" id="subtitle"><span class="content">Editor’s Draft, <time class="dt-updated" datetime="2019-08-14">14 August 2019</time></span></h2>
    <div data-fill-with="spec-metadata">
     <dl>
      <dt>This version:
@@ -1623,7 +1623,7 @@ This allows developers to detect support for the API.</p>
      <dd data-md>
       <p><var>intersectionRect</var>, a <code class="idl"><a data-link-type="idl" href="https://drafts.fxtf.org/geometry-1/#domrectreadonly" id="ref-for-domrectreadonly">DOMRectReadOnly</a></code></p>
      <dd data-md>
-      <p><var>request</var>, a <code class="idl"><a data-link-type="idl" href="https://fetch.spec.whatwg.org/#request" id="ref-for-request">Request</a></code></p>
+      <p><var>imageRequest</var>, a <code class="idl"><a data-link-type="idl" href="https://fetch.spec.whatwg.org/#request" id="ref-for-request">Request</a></code></p>
      <dd data-md>
       <p><var>renderTime</var>, a DOMHighResTimestamp</p>
      <dd data-md>
@@ -1645,7 +1645,7 @@ This allows developers to detect support for the API.</p>
        <li data-md>
         <p>Let <var>url</var> be the empty string.</p>
        <li data-md>
-        <p>If <var>request</var> is not null, set <var>url</var> to be <var>request</var>’s <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#dom-request-url" id="ref-for-dom-request-url">request URL</a>.</p>
+        <p>If <var>imageRequest</var> is not null, set <var>url</var> to be <var>imageRequest</var>’s <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#dom-request-url" id="ref-for-dom-request-url">request URL</a>.</p>
        <li data-md>
         <p>Let <var>id</var> be <var>element</var>’s <a class="idl-code" data-link-type="attribute" href="https://dom.spec.whatwg.org#dom-element-id" id="ref-for-dom-element-id">element id</a>.</p>
        <li data-md>
@@ -1653,7 +1653,23 @@ This allows developers to detect support for the API.</p>
        <li data-md>
         <p>Let <var>height</var> be <var>intersectionRect</var>’s <code class="idl"><a data-link-type="idl" href="https://drafts.fxtf.org/geometry-1/#dom-domrectreadonly-height" id="ref-for-dom-domrectreadonly-height">height</a></code>.</p>
        <li data-md>
-        <p>Let <var>size</var> be <var>width</var>*<var>height</var>.</p>
+        <p>Let <var>size</var> be <code class="highlight"><var>width</var> <c- o>*</c-> <var>height</var></code>.</p>
+       <li data-md>
+        <p>If <var>imageRequest</var> is not null, run the following steps:</p>
+        <ol>
+         <li data-md>
+          <p>Let <var>naturalWidth</var> and <var>naturalHeight</var> be the outputs of running the same steps for an <code class="highlight"><a data-link-type="element" href="https://html.spec.whatwg.org/multipage/embedded-content.html#the-img-element" id="ref-for-the-img-element">img</a></code>'s <code class="idl"><a data-link-type="idl" href="https://html.spec.whatwg.org/multipage/webappapis.html#dom-img-naturalwidth" id="ref-for-dom-img-naturalwidth">naturalWidth</a></code> and <code class="idl"><a data-link-type="idl" href="https://html.spec.whatwg.org/multipage/webappapis.html#dom-img-naturalheight" id="ref-for-dom-img-naturalheight">naturalHeight</a></code> attribute getters, but using <var>imageRequest</var> as the image.</p>
+         <li data-md>
+          <p>Let <var>naturalSize</var> be <code class="highlight"><var>naturalWidth</var> <c- o>*</c-> <var>naturalHeight</var></code>.</p>
+         <li data-md>
+          <p>Let <var>displayWidth</var> and <var>displayHeight</var> be the outputs of running the same steps for an <code class="highlight"><a data-link-type="element" href="https://html.spec.whatwg.org/multipage/embedded-content.html#the-img-element" id="ref-for-the-img-element①">img</a></code>'s <code class="idl"><a data-link-type="idl" href="https://html.spec.whatwg.org/multipage/webappapis.html#dom-img-width" id="ref-for-dom-img-width">width</a></code> and <code class="idl"><a data-link-type="idl" href="https://html.spec.whatwg.org/multipage/webappapis.html#dom-img-height" id="ref-for-dom-img-height">height</a></code> attribute getters, but using <var>imageRequest</var> as the image.</p>
+         <li data-md>
+          <p>Let <var>displaySize</var> be <code class="highlight"><var>displayWidth</var> <c- o>*</c-> <var>displayHeight</var></code>.</p>
+         <li data-md>
+          <p>Let <var>penaltyFactor</var> be <code class="highlight">min<c- p>(</c-><var>displaySize</var><c- p>,</c-> <var>naturalSize</var><c- p>)</c-> <c- o>/</c-> <var>displaySize</var></code>.</p>
+         <li data-md>
+          <p>Multiply <var>size</var> by <var>penaltyFactor</var>.</p>
+        </ol>
        <li data-md>
         <p>If <var>size</var> is smaller or equals <var>largest</var>, return.</p>
        <li data-md>
@@ -1994,11 +2010,41 @@ This allows developers to detect support for the API.</p>
     <li><a href="#ref-for-window②">3.2. Modifications to the HTML specification</a>
    </ul>
   </aside>
+  <aside class="dfn-panel" data-for="term-for-dom-img-height">
+   <a href="https://html.spec.whatwg.org/multipage/webappapis.html#dom-img-height">https://html.spec.whatwg.org/multipage/webappapis.html#dom-img-height</a><b>Referenced in:</b>
+   <ul>
+    <li><a href="#ref-for-dom-img-height">3. Processing model</a>
+   </ul>
+  </aside>
+  <aside class="dfn-panel" data-for="term-for-the-img-element">
+   <a href="https://html.spec.whatwg.org/multipage/embedded-content.html#the-img-element">https://html.spec.whatwg.org/multipage/embedded-content.html#the-img-element</a><b>Referenced in:</b>
+   <ul>
+    <li><a href="#ref-for-the-img-element">3. Processing model</a> <a href="#ref-for-the-img-element①">(2)</a>
+   </ul>
+  </aside>
+  <aside class="dfn-panel" data-for="term-for-dom-img-naturalheight">
+   <a href="https://html.spec.whatwg.org/multipage/webappapis.html#dom-img-naturalheight">https://html.spec.whatwg.org/multipage/webappapis.html#dom-img-naturalheight</a><b>Referenced in:</b>
+   <ul>
+    <li><a href="#ref-for-dom-img-naturalheight">3. Processing model</a>
+   </ul>
+  </aside>
+  <aside class="dfn-panel" data-for="term-for-dom-img-naturalwidth">
+   <a href="https://html.spec.whatwg.org/multipage/webappapis.html#dom-img-naturalwidth">https://html.spec.whatwg.org/multipage/webappapis.html#dom-img-naturalwidth</a><b>Referenced in:</b>
+   <ul>
+    <li><a href="#ref-for-dom-img-naturalwidth">3. Processing model</a>
+   </ul>
+  </aside>
   <aside class="dfn-panel" data-for="term-for-concept-relevant-global">
    <a href="https://html.spec.whatwg.org/multipage/webappapis.html#concept-relevant-global">https://html.spec.whatwg.org/multipage/webappapis.html#concept-relevant-global</a><b>Referenced in:</b>
    <ul>
     <li><a href="#ref-for-concept-relevant-global">3. Processing model</a>
     <li><a href="#ref-for-concept-relevant-global①">3.1. Modifications to the DOM specification</a> <a href="#ref-for-concept-relevant-global②">(2)</a>
+   </ul>
+  </aside>
+  <aside class="dfn-panel" data-for="term-for-dom-img-width">
+   <a href="https://html.spec.whatwg.org/multipage/webappapis.html#dom-img-width">https://html.spec.whatwg.org/multipage/webappapis.html#dom-img-width</a><b>Referenced in:</b>
+   <ul>
+    <li><a href="#ref-for-dom-img-width">3. Processing model</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="term-for-the-performanceentry-interface">
@@ -2108,7 +2154,12 @@ This allows developers to detect support for the API.</p>
     <a data-link-type="biblio">[HTML]</a> defines the following terms:
     <ul>
      <li><span class="dfn-paneled" id="term-for-window" style="color:initial">Window</span>
+     <li><span class="dfn-paneled" id="term-for-dom-img-height" style="color:initial">height</span>
+     <li><span class="dfn-paneled" id="term-for-the-img-element" style="color:initial">img</span>
+     <li><span class="dfn-paneled" id="term-for-dom-img-naturalheight" style="color:initial">naturalHeight</span>
+     <li><span class="dfn-paneled" id="term-for-dom-img-naturalwidth" style="color:initial">naturalWidth</span>
      <li><span class="dfn-paneled" id="term-for-concept-relevant-global" style="color:initial">relevant global object</span>
+     <li><span class="dfn-paneled" id="term-for-dom-img-width" style="color:initial">width</span>
     </ul>
    <li>
     <a data-link-type="biblio">[performance-timeline-2]</a> defines the following terms:

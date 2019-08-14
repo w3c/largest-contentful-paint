@@ -73,6 +73,19 @@ In the context of LCP, the size of an element refers to the visual size, which i
 
 Note that occlusion is not taken into account due to implementation efficiency concerns. It may be added in the future if those concerns are alleviated.
 
+### Image instrinsic size
+
+Images are sometimes upscaled to occupy a larger portion of the viewport than their natural dimensions, resulting in blurriness.
+Due to that, those images content may be less significant from a user's perspective.
+In order to address that, LCP employs a heuristic to compensate for such upscaling.
+The formula for that heuristic is as follows:
+
+```
+image_size = visual_size * min(display_size, natural_size) / display_size
+```
+
+`image_size` is the size of the image, as considered by the LCP algorithm. It is computed from the `visual_size`, the screen size occupied by the image. It is penalized when the `natural_size` of the image is lower than its `display_size`, i.e., when the image has been upscaled to occupy a larger portion of the viewport than the number of pixels it encodes.
+
 ### Interaction with user input 
 
 The design of the metric has also considered the fact that user inputs may cause pages to show different content. Because of different ways users may interact with the page, the same page may produce different LCPs.

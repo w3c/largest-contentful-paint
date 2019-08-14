@@ -73,6 +73,16 @@ In the context of LCP, the size of an element refers to the visual size, which i
 
 Note that occlusion is not taken into account due to implementation efficiency concerns. It may be added in the future if those concerns are alleviated.
 
+### Image instrinsic size
+
+Sometimes, small images may be scaled to fit a larger portion of the viewport. This is usually the case for background images which do not represent key content of the website but still occupy a large portion of it. To address this problem, we have a heuristic to penalize the size of certain images. The formula is as follows:
+
+```
+image_size = visual_size * min(display_size, intrinsic_size) / display_size
+```
+`image_size` is the size of the image, as considered by the LCP algorithm. It is computed from the `visual_size`, the screen size occupied by the image. It is penalized when the `intrinsic_size` of the image is lower than its `display_size`, i.e., when the image has been stretched to occupy a larger portion of the viewport than the number of pixels it encodes.
+
+
 ### Interaction with user input 
 
 The design of the metric has also considered the fact that user inputs may cause pages to show different content. Because of different ways users may interact with the page, the same page may produce different LCPs.

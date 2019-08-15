@@ -1215,7 +1215,7 @@ Possible extra rowspan handling
   <link href="https://www.w3.org/StyleSheets/TR/2016/W3C-ED" rel="stylesheet">
   <meta content="Bikeshed version 450e0499b28bb4c684052ad936ad1e7d36c4eac5" name="generator">
   <link href="https://wicg.github.io/largest-contentful-paint" rel="canonical">
-  <meta content="d5d259e5301af0d78a014eafb21ba8c76a93b03e" name="document-revision">
+  <meta content="7dc65ba3b30c51a55ab164ea17791eda6962ec6a" name="document-revision">
 <style>/* style-md-lists */
 
 /* This is a weird hack for me not yet following the commonmark spec
@@ -1473,7 +1473,7 @@ c-[il] { color: #000000 } /* Literal.Number.Integer.Long */
   <div class="head">
    <p data-fill-with="logo"></p>
    <h1 class="p-name no-ref" id="title">Largest Contentful Paint</h1>
-   <h2 class="no-num no-toc no-ref heading settled" id="subtitle"><span class="content">Editor’s Draft, <time class="dt-updated" datetime="2019-08-14">14 August 2019</time></span></h2>
+   <h2 class="no-num no-toc no-ref heading settled" id="subtitle"><span class="content">Editor’s Draft, <time class="dt-updated" datetime="2019-08-15">15 August 2019</time></span></h2>
    <div data-fill-with="spec-metadata">
     <dl>
      <dt>This version:
@@ -1584,6 +1584,7 @@ observer<c- p>.</c->observe<c- p>({</c->entryTypes<c- o>:</c-> <c- p>[</c-><c- t
     <c- b>readonly</c-> <c- b>attribute</c-> <a class="idl-code" data-link-type="interface" href="https://heycam.github.io/webidl/#idl-DOMString" id="ref-for-idl-DOMString"><c- b>DOMString</c-></a> <dfn class="dfn-paneled idl-code" data-dfn-for="LargestContentfulPaint" data-dfn-type="attribute" data-export data-readonly data-type="DOMString" id="dom-largestcontentfulpaint-id"><code class="highlight"><c- g>id</c-></code></dfn>;
     <c- b>readonly</c-> <c- b>attribute</c-> <a class="idl-code" data-link-type="interface" href="https://heycam.github.io/webidl/#idl-DOMString" id="ref-for-idl-DOMString①"><c- b>DOMString</c-></a> <dfn class="dfn-paneled idl-code" data-dfn-for="LargestContentfulPaint" data-dfn-type="attribute" data-export data-readonly data-type="DOMString" id="dom-largestcontentfulpaint-url"><code class="highlight"><c- g>url</c-></code></dfn>;
     <c- b>readonly</c-> <c- b>attribute</c-> <a class="n" data-link-type="idl-name" href="https://dom.spec.whatwg.org/#element" id="ref-for-element"><c- n>Element</c-></a>? <dfn class="dfn-paneled idl-code" data-dfn-for="LargestContentfulPaint" data-dfn-type="attribute" data-export data-readonly data-type="Element?" id="dom-largestcontentfulpaint-element"><code class="highlight"><c- g>element</c-></code></dfn>;
+    [<a class="idl-code" data-link-type="extended-attribute" href="https://heycam.github.io/webidl/#Default" id="ref-for-Default"><c- g>Default</c-></a>] <a class="idl-code" data-link-type="interface" href="https://heycam.github.io/webidl/#idl-object" id="ref-for-idl-object"><c- b>object</c-></a> <dfn class="idl-code" data-dfn-for="LargestContentfulPaint" data-dfn-type="method" data-export data-lt="toJSON()" id="dom-largestcontentfulpaint-tojson"><code class="highlight"><c- g>toJSON</c-></code><a class="self-link" href="#dom-largestcontentfulpaint-tojson"></a></dfn>();
 };
 </pre>
    <p>Each <code class="idl"><a data-link-type="idl" href="#largestcontentfulpaint" id="ref-for-largestcontentfulpaint①">LargestContentfulPaint</a></code> object has these associated concepts:</p>
@@ -1881,6 +1882,7 @@ This allows developers to detect support for the API.</p>
      <li><a href="#dom-largestcontentfulpaint-size">attribute for LargestContentfulPaint</a><span>, in §2.1</span>
      <li><a href="#size">definition of</a><span>, in §2.1</span>
     </ul>
+   <li><a href="#dom-largestcontentfulpaint-tojson">toJSON()</a><span>, in §2.1</span>
    <li>
     url
     <ul>
@@ -2095,6 +2097,18 @@ This allows developers to detect support for the API.</p>
     <li><a href="#ref-for-idl-DOMString">2.1. LargestContentfulPaint interface</a> <a href="#ref-for-idl-DOMString①">(2)</a> <a href="#ref-for-idl-DOMString②">(3)</a>
    </ul>
   </aside>
+  <aside class="dfn-panel" data-for="term-for-Default">
+   <a href="https://heycam.github.io/webidl/#Default">https://heycam.github.io/webidl/#Default</a><b>Referenced in:</b>
+   <ul>
+    <li><a href="#ref-for-Default">2.1. LargestContentfulPaint interface</a>
+   </ul>
+  </aside>
+  <aside class="dfn-panel" data-for="term-for-idl-object">
+   <a href="https://heycam.github.io/webidl/#idl-object">https://heycam.github.io/webidl/#idl-object</a><b>Referenced in:</b>
+   <ul>
+    <li><a href="#ref-for-idl-object">2.1. LargestContentfulPaint interface</a>
+   </ul>
+  </aside>
   <aside class="dfn-panel" data-for="term-for-idl-unsigned-long">
    <a href="https://heycam.github.io/webidl/#idl-unsigned-long">https://heycam.github.io/webidl/#idl-unsigned-long</a><b>Referenced in:</b>
    <ul>
@@ -2176,6 +2190,8 @@ This allows developers to detect support for the API.</p>
     <a data-link-type="biblio">[WebIDL]</a> defines the following terms:
     <ul>
      <li><span class="dfn-paneled" id="term-for-idl-DOMString" style="color:initial">DOMString</span>
+     <li><span class="dfn-paneled" id="term-for-Default" style="color:initial">Default</span>
+     <li><span class="dfn-paneled" id="term-for-idl-object" style="color:initial">object</span>
      <li><span class="dfn-paneled" id="term-for-idl-unsigned-long" style="color:initial">unsigned long</span>
     </ul>
   </ul>
@@ -2213,6 +2229,7 @@ This allows developers to detect support for the API.</p>
     <c- b>readonly</c-> <c- b>attribute</c-> <a class="idl-code" data-link-type="interface" href="https://heycam.github.io/webidl/#idl-DOMString" id="ref-for-idl-DOMString③"><c- b>DOMString</c-></a> <a data-readonly data-type="DOMString" href="#dom-largestcontentfulpaint-id"><code class="highlight"><c- g>id</c-></code></a>;
     <c- b>readonly</c-> <c- b>attribute</c-> <a class="idl-code" data-link-type="interface" href="https://heycam.github.io/webidl/#idl-DOMString" id="ref-for-idl-DOMString①①"><c- b>DOMString</c-></a> <a data-readonly data-type="DOMString" href="#dom-largestcontentfulpaint-url"><code class="highlight"><c- g>url</c-></code></a>;
     <c- b>readonly</c-> <c- b>attribute</c-> <a class="n" data-link-type="idl-name" href="https://dom.spec.whatwg.org/#element" id="ref-for-element④"><c- n>Element</c-></a>? <a data-readonly data-type="Element?" href="#dom-largestcontentfulpaint-element"><code class="highlight"><c- g>element</c-></code></a>;
+    [<a class="idl-code" data-link-type="extended-attribute" href="https://heycam.github.io/webidl/#Default" id="ref-for-Default①"><c- g>Default</c-></a>] <a class="idl-code" data-link-type="interface" href="https://heycam.github.io/webidl/#idl-object" id="ref-for-idl-object①"><c- b>object</c-></a> <a href="#dom-largestcontentfulpaint-tojson"><code class="highlight"><c- g>toJSON</c-></code></a>();
 };
 
 </pre>

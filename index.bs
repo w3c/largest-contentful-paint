@@ -99,6 +99,7 @@ Largest Contentful Paint involves the following new interface:
 ------------------------------------------------------------------------
 
 <pre class="idl">
+[Exposed=Window]
 interface LargestContentfulPaint : PerformanceEntry {
     readonly attribute DOMHighResTimeStamp renderTime;
     readonly attribute DOMHighResTimeStamp loadTime;

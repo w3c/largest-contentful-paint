@@ -148,6 +148,8 @@ It also adds an associated <dfn>content map</dfn>, which is initially an empty <
 * The key will be a <a>pair</a> with an {{Element}} as the first item and a {{Request}} as the second item. This allows identifying the content. The second item will be null for text content.
 * The value will be a map which contains information that is required to fill up the {{LargestContentfulPaint}} entry. This allows exposing a new {{LargestContentfulPaint}} entry when content is removed from the page.
 
+Note: A user agent probably wants to implement the {{Document}}'s associated concepts using a priority queue or binary search tree to avoid the O(n) cost of finding the largest size within <a>content map</a> when <a>largest content</a> is removed.
+
 Processing model {#sec-processing-model}
 ========================================
 
@@ -185,10 +187,10 @@ In order to <dfn export>potentially add a {{LargestContentfulPaint}} entry</dfn>
             1. Let |displaySize| be <code>|displayWidth| * |displayHeight|</code>.
             1. Let |penaltyFactor| be <code>min(|displaySize|, |naturalSize|) / |displaySize|</code>.
             1. Multiply |size| by |penaltyFactor|.
-        1. Let |map| be a map with |map|["size"] = |size|, |map|["url"] = |url|, |map|["id"] = |id|, |map|["renderTime"] = |renderTime|, and |map|["loadTime"] = |loadTime|.
-        1. Add a new entry with |contentIdentifier| as the key and |map| as the value to |document|'s [=content map=].
+        1. Let |contentInfo| be a map with |contentInfo|["size"] = |size|, |contentInfo|["url"] = |url|, |contentInfo|["id"] = |id|, |contentInfo|["renderTime"] = |renderTime|, and |contentInfo|["loadTime"] = |loadTime|.
+        1. Add a new entry with |contentIdentifier| as the key and |contentInfo| as the value to |document|'s [=content map=].
         1. If |size| is smaller or equal to |document|'s [=largest contentful paint size=], return.
-        1. <a>Create a LargestContentfulPaint entry</a> with |element| and |map| as inputs.
+        1. <a>Create a LargestContentfulPaint entry</a> with |element| and |contentInfo| as inputs.
 </div>
 
 Remove element content {#sec-remove-element-content}
@@ -204,10 +206,10 @@ In order to <dfn>remove element content</dfn>, the user agent must run the follo
         1. For each |entry| of |document|'s [=content map=]:
             1. If |entry|'s key is a <a>pair</a> whose first item is equal to |element|, <a for=map>remove</a> |entry| from |document|'s [=content map=].
         1. If |document|'s [=largest content=] is a <a>pair</a> whose first item is not equal to |element|, then return.
-        1. Let |largestSize| be 0, let |largestContentIdentifier| be null, and let |map| be null.
+        1. Let |largestSize| be 0, let |largestContentIdentifier| be null, and let |largestContentInfo| be null.
         1. For each |key| → |value| of |document|'s [=content map=]:
-            1. If |value|["size"] is greater than |largestSize|, set |largestSize| to |value|["size"], |largestContentIdentifier| to |key|, and |map| to |value|.
-        1. If |largestContentIdentifier| is not null, <a>create a LargestContentfulPaint entry</a> with |largestContentIdentifier| and |map| as inputs.
+            1. If |value|["size"] is greater than |largestSize|, set |largestSize| to |value|["size"], |largestContentIdentifier| to |key|, and |largestContentInfo| to |value|.
+        1. If |largestContentIdentifier| is not null, <a>create a LargestContentfulPaint entry</a> with |largestContentIdentifier| and |largestContentInfo| as inputs.
 </div>
 
 Create a LargestContentfulPaint entry {#sec-create-entry}
@@ -218,17 +220,17 @@ In order to <dfn>create a {{LargestContentfulPaint}} entry</dfn>, the user agent
 <div algorithm="LargestContentfulPaint create-entry">
     : Input
     ::  |contentIdentifier|, a <a>pair</a>
-    ::  |map|, a <a>map</a>
+    ::  |contentInfo|, a <a>map</a>
     : Output
     ::  None
         1. Set |document|'s [=largest content=] to |contentIdentifier|.
-        1. Set |document|'s [=largest contentful paint size=] to |map|["size"].
+        1. Set |document|'s [=largest contentful paint size=] to |contentInfo|["size"].
         1. Let |entry| be a new {{LargestContentfulPaint}} entry, with it's
-               {{LargestContentfulPaint/size}} set to |map|["size"],
-               {{LargestContentfulPaint/url}} set to |map|["url"],
-               {{LargestContentfulPaint/id}} set to |map|["id"],
-               {{LargestContentfulPaint/renderTime}} set to |map|["renderTime"],
-               {{LargestContentfulPaint/loadTime}} set to |map|["loadTime"],
+               {{LargestContentfulPaint/size}} set to |contentInfo|["size"],
+               {{LargestContentfulPaint/url}} set to |contentInfo|["url"],
+               {{LargestContentfulPaint/id}} set to |contentInfo|["id"],
+               {{LargestContentfulPaint/renderTime}} set to |contentInfo|["renderTime"],
+               {{LargestContentfulPaint/loadTime}} set to |contentInfo|["loadTime"],
                and its {{LargestContentfulPaint/element}} set to |contentIdentifier|'s first item.
         1. [=Queue the PerformanceEntry=] |entry|.
 </div>

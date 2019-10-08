@@ -254,6 +254,8 @@ Modifications to the DOM specification {#sec-modifications-DOM}
     * Call the algorithm to <a>remove element content</a> passing in |node| and |node|'s <a>node document</a>.
 </div>
 
+Issue(41): background image changes or changes in image <code>src</code> should trigger removal from the {{Document}}'s <a>content map</a>.
+
 Modifications to the HTML specification {#sec-modifications-HTML}
 ----------------------------------------
 <em>This section will be removed once the [[HTML]] specification has been modified.</em>

@@ -110,7 +110,7 @@ It’s possible that the last candidate returned would be a premature result, be
 
 ### Ignore removed elements
 
-In order to avoid considering  ephemeral elements (such as splash screens) as the largest contentful paint, LCP ignores removed elements. If a content element is removed from the DOM tree, the element is excluded from being an LCP candidate.
+In order to avoid considering  ephemeral elements (such as splash screens) as the largest contentful paint, LCP ignores removed elements. If a content element is removed from the DOM tree, the element is excluded from being an LCP candidate. This means that if the currently largest element is removed then a new candidate (the new largest) needs to be exposed to the user.
 
 ## API shape
 

@@ -1,6 +1,6 @@
 <pre class=metadata>
 Title: Largest Contentful Paint
-Status: ED
+Status: CG-DRAFT
 Shortname: largest-contentful-paint
 Group: WICG
 Level: 1

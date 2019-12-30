@@ -184,6 +184,9 @@ As heuristics for other metrics have shortcomings, some of the heuristics that L
 
 * Complex UI structures such as image carousels may be mis-represented by LCP. Since the element's first paint is the one taken into account, images that are painted outside the viewport and slide in will be ignored. Images painted in the viewport but that then slide out will be considered.
 
+* Early termination of the algorithm needs to be considered carefully in order to track performance meaningfully. For example, suppose that there is a page with text and a large image, where the text loads quickly and the image loads slowly. A performance improvement might compress images so they load much more quickly, allowing more users to see that image before interacting. This results in larger LCPs because before the text would be reported as the LCP more often.
+If the text is added before the image, the user agent may report it as the LCP, and then won't report anything when the image starts loading. If they are both added at the same time, the user agent will detect that the image is larger and not report any LCP. So for that particular page, we could consider no LCP reported or text reported as 'early aborts'. The image optimization should reduce the number of aborts and improve LCP for non-aborted loads.
+
 # Security & privacy considerations
 
 This API relies on Element Timing for its underlying primitives. It does not seem to expose any sensitive information beyond what Element Timing already enables.

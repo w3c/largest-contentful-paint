@@ -56,7 +56,7 @@ Introduction {#sec-intro}
 <em>This section is non-normative.</em>
 The LargestContentfulPaint API enables developers to gain visibility into the loading and rendering process of the web pages, in order for them to be able to optimize it.
 
-Developers today don't have a reliable metric that correlated with their user's visual rendering experience. Existing metrics such as First Paint and First Contentful Paint focus on initial rendering, but don't take into account the importance of the painted content, and therefore may indicate times in which the user still does not consider the page useful.
+Developers today don't have a reliable metric that correlates with their user's visual rendering experience. Existing metrics such as First Paint and First Contentful Paint focus on initial rendering, but don't take into account the importance of the painted content, and therefore may indicate times in which the user still does not consider the page useful.
 
 Largest Contentful Paint (LCP) aims to be a new page-load metric that:
 * better correlates with user experience than the existing page-load metrics

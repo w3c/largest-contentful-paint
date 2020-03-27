@@ -73,7 +73,7 @@ Elements exposed {#sec-elements-exposed}
 
 The Largest Contentful Paint API will only expose element types that are already <a>exposed</a> by the Element Timing API. In this case, there is no need to annotate them with the <code>elementtiming</code> attribute.
 
-Largest content {#largest-content}
+Largest content {#sec-largest-content}
 ------------------------
 
 The algorithm used for this API keeps track of the content seen so far. Whenever a new largest content is found, a new entry is created for it. Whenever content is removed, that content is no longer considered by the algorithm. In particular, if the content removed was the largest, then a new entry is created for the new largest. The algorithm terminates whenever scroll or input events occur, since those are likely to introduce new content into the website.
@@ -204,7 +204,7 @@ In order to <dfn export>potentially add a {{LargestContentfulPaint}} entry</dfn>
         1. Let |contentInfo| be a map with |contentInfo|["size"] = |size|, |contentInfo|["url"] = |url|, |contentInfo|["id"] = |id|, |contentInfo|["renderTime"] = |renderTime|, and |contentInfo|["loadTime"] = |loadTime|.
         1. Add a new entry with |contentIdentifier| as the key and |contentInfo| as the value to |document|'s [=content map=].
         1. If |size| is smaller or equal to |document|'s [=largest contentful paint size=], return.
-        1. <a>Create a LargestContentfulPaint entry</a> with |element| and |contentInfo| as inputs.
+        1. <a>Create a LargestContentfulPaint entry</a> with |element|, |contentInfo|, and |document| as inputs.
 </div>
 
 Remove element content {#sec-remove-element-content}
@@ -223,7 +223,7 @@ In order to <dfn>remove element content</dfn>, the user agent must run the follo
         1. Let |largestSize| be 0, let |largestContentIdentifier| be null, and let |largestContentInfo| be null.
         1. For each |key| → |value| of |document|'s [=content map=]:
             1. If |value|["size"] is greater than |largestSize|, set |largestSize| to |value|["size"], |largestContentIdentifier| to |key|, and |largestContentInfo| to |value|.
-        1. If |largestContentIdentifier| is not null, <a>create a LargestContentfulPaint entry</a> with |largestContentIdentifier| and |largestContentInfo| as inputs.
+        1. If |largestContentIdentifier| is not null, <a>create a LargestContentfulPaint entry</a> with |largestContentIdentifier|, |largestContentInfo|, and |document| as inputs.
 </div>
 
 Create a LargestContentfulPaint entry {#sec-create-entry}
@@ -235,17 +235,18 @@ In order to <dfn>create a {{LargestContentfulPaint}} entry</dfn>, the user agent
     : Input
     ::  |contentIdentifier|, a <a>pair</a>
     ::  |contentInfo|, a <a>map</a>
+    ::  |document|, a {{Document}}
     : Output
     ::  None
         1. Set |document|'s [=largest content=] to |contentIdentifier|.
         1. Set |document|'s [=largest contentful paint size=] to |contentInfo|["size"].
-        1. Let |entry| be a new {{LargestContentfulPaint}} entry, with it's
-               {{LargestContentfulPaint/size}} set to |contentInfo|["size"],
-               {{LargestContentfulPaint/url}} set to |contentInfo|["url"],
-               {{LargestContentfulPaint/id}} set to |contentInfo|["id"],
-               {{LargestContentfulPaint/renderTime}} set to |contentInfo|["renderTime"],
-               {{LargestContentfulPaint/loadTime}} set to |contentInfo|["loadTime"],
-               and its {{LargestContentfulPaint/element}} set to |contentIdentifier|'s first item.
+        1. Let |entry| be a new {{LargestContentfulPaint}} entry with |document|'s [=relevant realm=], with its
+            * {{LargestContentfulPaint/size}} set to |contentInfo|["size"],
+            * {{LargestContentfulPaint/url}} set to |contentInfo|["url"],
+            * {{LargestContentfulPaint/id}} set to |contentInfo|["id"],
+            * {{LargestContentfulPaint/renderTime}} set to |contentInfo|["renderTime"],
+            * {{LargestContentfulPaint/loadTime}} set to |contentInfo|["loadTime"],
+            * and {{LargestContentfulPaint/element}} set to |contentIdentifier|'s first item.
         1. [=Queue the PerformanceEntry=] |entry|.
 </div>
 

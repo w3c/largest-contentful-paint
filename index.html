@@ -1222,9 +1222,9 @@ Possible extra rowspan handling
 	}
 </style>
   <link href="https://www.w3.org/StyleSheets/TR/2016/cg-draft" rel="stylesheet">
-  <meta content="Bikeshed version d335102a, updated Mon Mar 23 20:16:06 2020 -0700" name="generator">
+  <meta content="Bikeshed version 959d006d, updated Sat Mar 28 12:38:37 2020 -0700" name="generator">
   <link href="https://wicg.github.io/largest-contentful-paint" rel="canonical">
-  <meta content="f481c8e6dfdeccec1a9a781c8a5319f00200e727" name="document-revision">
+  <meta content="6a68896cc24e27d540b62b0c231fe7af61f8ce42" name="document-revision">
 <style>/* style-autolinks */
 
 .css.css, .property.property, .descriptor.descriptor {
@@ -1482,7 +1482,7 @@ c-[il] { color: #000000 } /* Literal.Number.Integer.Long */
   <div class="head">
    <p data-fill-with="logo"></p>
    <h1 class="p-name no-ref" id="title">Largest Contentful Paint</h1>
-   <h2 class="no-num no-toc no-ref heading settled" id="subtitle"><span class="content">Draft Community Group Report, <time class="dt-updated" datetime="2020-03-24">24 March 2020</time></span></h2>
+   <h2 class="no-num no-toc no-ref heading settled" id="subtitle"><span class="content">Draft Community Group Report, <time class="dt-updated" datetime="2020-03-30">30 March 2020</time></span></h2>
    <div data-fill-with="spec-metadata">
     <dl>
      <dt>This version:
@@ -1525,7 +1525,7 @@ A human-readable <a href="http://www.w3.org/community/about/agreements/cla-deed/
      <a href="#sec-intro"><span class="secno">1</span> <span class="content">Introduction</span></a>
      <ol class="toc">
       <li><a href="#sec-elements-exposed"><span class="secno">1.1</span> <span class="content">Elements exposed</span></a>
-      <li><a href="#largest-content"><span class="secno">1.2</span> <span class="content">Largest content</span></a>
+      <li><a href="#sec-largest-content"><span class="secno">1.2</span> <span class="content">Largest content</span></a>
       <li><a href="#sec-example"><span class="secno">1.3</span> <span class="content">Usage example</span></a>
       <li><a href="#limitations"><span class="secno">1.4</span> <span class="content">Limitations</span></a>
      </ol>
@@ -1577,7 +1577,7 @@ A human-readable <a href="http://www.w3.org/community/about/agreements/cla-deed/
    <p>The API relies heavily on <a data-link-type="biblio" href="#biblio-element-timing">[ELEMENT-TIMING]</a>, which can be thought of as the low-level primitive that this high-level feature is built on top of. For cases where the content creators are willing to annotate their content and indicate the important points in the page’s loading cycle, Element Timing is the API that will provide them more control over the elements that get reported.</p>
    <h3 class="heading settled" data-level="1.1" id="sec-elements-exposed"><span class="secno">1.1. </span><span class="content">Elements exposed</span><a class="self-link" href="#sec-elements-exposed"></a></h3>
    <p>The Largest Contentful Paint API will only expose element types that are already <a data-link-type="dfn" href="https://wicg.github.io/element-timing/#sec-elements-exposed" id="ref-for-sec-elements-exposed">exposed</a> by the Element Timing API. In this case, there is no need to annotate them with the <code class="highlight">elementtiming</code> attribute.</p>
-   <h3 class="heading settled" data-level="1.2" id="largest-content"><span class="secno">1.2. </span><span class="content">Largest content</span><a class="self-link" href="#largest-content"></a></h3>
+   <h3 class="heading settled" data-level="1.2" id="sec-largest-content"><span class="secno">1.2. </span><span class="content">Largest content</span><a class="self-link" href="#sec-largest-content"></a></h3>
    <p>The algorithm used for this API keeps track of the content seen so far. Whenever a new largest content is found, a new entry is created for it. Whenever content is removed, that content is no longer considered by the algorithm. In particular, if the content removed was the largest, then a new entry is created for the new largest. The algorithm terminates whenever scroll or input events occur, since those are likely to introduce new content into the website.</p>
    <h3 class="heading settled" data-level="1.3" id="sec-example"><span class="secno">1.3. </span><span class="content">Usage example</span><a class="self-link" href="#sec-example"></a></h3>
    <p>The following example shows an image and a large body of text. The developer then registers an observer that gets candidate entries for the largest paint while the page is loading.</p>
@@ -1641,7 +1641,7 @@ observer<c- p>.</c->observe<c- p>({</c->entryTypes<c- o>:</c-> <c- p>[</c-><c- t
    <p>The <code class="idl"><a data-link-type="idl" href="#dom-largestcontentfulpaint-url" id="ref-for-dom-largestcontentfulpaint-url">url</a></code> attribute must return the value of the <a data-link-type="dfn" href="https://dom.spec.whatwg.org/#context-object" id="ref-for-context-object⑥">context object</a>’s <a data-link-type="dfn" href="#url" id="ref-for-url">url</a>.</p>
    <p>The <code class="idl"><a data-link-type="idl" href="#dom-largestcontentfulpaint-element" id="ref-for-dom-largestcontentfulpaint-element">element</a></code> attribute’s getter must return the value returned by running the <a data-link-type="dfn" href="https://wicg.github.io/element-timing/#get-an-element" id="ref-for-get-an-element">get an element</a> algorithm with <a data-link-type="dfn" href="#element" id="ref-for-element②">element</a> and null as inputs.</p>
    <p class="note" role="note"><span>Note:</span> The above algorithm defines that an element that is no longer <a data-link-type="dfn" href="https://dom.spec.whatwg.org/#concept-tree-descendant" id="ref-for-concept-tree-descendant">descendant</a> of the <code class="idl"><a data-link-type="idl" href="https://dom.spec.whatwg.org/#document" id="ref-for-document">Document</a></code> will no longer be returned by <code class="idl"><a data-link-type="idl" href="#dom-largestcontentfulpaint-element" id="ref-for-dom-largestcontentfulpaint-element①">element</a></code>'s attribute getter, including elements that are inside a shadow DOM.</p>
-   <p>This specification also extends <code class="idl"><a data-link-type="idl" href="https://dom.spec.whatwg.org/#document" id="ref-for-document①">Document</a></code> by adding to it a <dfn class="dfn-paneled" data-dfn-type="dfn" data-noexport id="largest-contentful-paint-size">largest contentful paint size</dfn> concept, initially set to 0, and a <dfn class="dfn-paneled" data-dfn-type="dfn" data-noexport id="largest-content①">largest content</dfn>, initially set to null.
+   <p>This specification also extends <code class="idl"><a data-link-type="idl" href="https://dom.spec.whatwg.org/#document" id="ref-for-document①">Document</a></code> by adding to it a <dfn class="dfn-paneled" data-dfn-type="dfn" data-noexport id="largest-contentful-paint-size">largest contentful paint size</dfn> concept, initially set to 0, and a <dfn class="dfn-paneled" data-dfn-type="dfn" data-noexport id="largest-content">largest content</dfn>, initially set to null.
 It also adds an associated <dfn class="dfn-paneled" data-dfn-type="dfn" data-noexport id="content-map">content map</dfn>, which is initially an empty <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#ordered-map" id="ref-for-ordered-map">map</a>. The <a data-link-type="dfn" href="#content-map" id="ref-for-content-map">content map</a> will be filled with entries with the following format:</p>
    <ul>
     <li data-md>
@@ -1649,7 +1649,7 @@ It also adds an associated <dfn class="dfn-paneled" data-dfn-type="dfn" data-noe
     <li data-md>
      <p>The value will be a map which contains information that is required to fill up the <code class="idl"><a data-link-type="idl" href="#largestcontentfulpaint" id="ref-for-largestcontentfulpaint②">LargestContentfulPaint</a></code> entry. This allows exposing a new <code class="idl"><a data-link-type="idl" href="#largestcontentfulpaint" id="ref-for-largestcontentfulpaint③">LargestContentfulPaint</a></code> entry when content is removed from the page.</p>
    </ul>
-   <p class="note" role="note"><span>Note:</span> A user agent probably wants to implement the <code class="idl"><a data-link-type="idl" href="https://dom.spec.whatwg.org/#document" id="ref-for-document②">Document</a></code>'s associated concepts using a priority queue or binary search tree to avoid the O(n) cost of finding the largest size within <a data-link-type="dfn" href="#content-map" id="ref-for-content-map①">content map</a> when <a data-link-type="dfn" href="#largest-content①" id="ref-for-largest-content①">largest content</a> is removed.</p>
+   <p class="note" role="note"><span>Note:</span> A user agent probably wants to implement the <code class="idl"><a data-link-type="idl" href="https://dom.spec.whatwg.org/#document" id="ref-for-document②">Document</a></code>'s associated concepts using a priority queue or binary search tree to avoid the O(n) cost of finding the largest size within <a data-link-type="dfn" href="#content-map" id="ref-for-content-map①">content map</a> when <a data-link-type="dfn" href="#largest-content" id="ref-for-largest-content">largest content</a> is removed.</p>
    <h2 class="heading settled" data-level="3" id="sec-processing-model"><span class="secno">3. </span><span class="content">Processing model</span><a class="self-link" href="#sec-processing-model"></a></h2>
    <h3 class="heading settled" data-level="3.1" id="sec-add-lcp-entry"><span class="secno">3.1. </span><span class="content">Potentially add LargestContentfulPaint entry</span><a class="self-link" href="#sec-add-lcp-entry"></a></h3>
    <p class="note" role="note"><span>Note:</span> A user agent implementing the Largest Contentful Paint API would need to include <code class="highlight"><c- u>"largest-contentful-paint"</c-></code> in <code class="idl"><a data-link-type="idl" href="https://w3c.github.io/performance-timeline/#supportedentrytypes-attribute" id="ref-for-supportedentrytypes-attribute">supportedEntryTypes</a></code> for <code class="idl"><a data-link-type="idl" href="https://html.spec.whatwg.org/multipage/window-object.html#window" id="ref-for-window">Window</a></code> contexts.
@@ -1717,7 +1717,7 @@ This allows developers to detect support for the API.</p>
        <li data-md>
         <p>If <var>size</var> is smaller or equal to <var>document</var>’s <a data-link-type="dfn" href="#largest-contentful-paint-size" id="ref-for-largest-contentful-paint-size">largest contentful paint size</a>, return.</p>
        <li data-md>
-        <p><a data-link-type="dfn" href="#create-a-largestcontentfulpaint-entry" id="ref-for-create-a-largestcontentfulpaint-entry">Create a LargestContentfulPaint entry</a> with <var>element</var> and <var>contentInfo</var> as inputs.</p>
+        <p><a data-link-type="dfn" href="#create-a-largestcontentfulpaint-entry" id="ref-for-create-a-largestcontentfulpaint-entry">Create a LargestContentfulPaint entry</a> with <var>element</var>, <var>contentInfo</var>, and <var>document</var> as inputs.</p>
       </ol>
     </dl>
    </div>
@@ -1741,7 +1741,7 @@ This allows developers to detect support for the API.</p>
           <p>If <var>entry</var>’s key is a <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#pair" id="ref-for-pair②">pair</a> whose first item is equal to <var>element</var>, <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#map-remove" id="ref-for-map-remove">remove</a> <var>entry</var> from <var>document</var>’s <a data-link-type="dfn" href="#content-map" id="ref-for-content-map⑤">content map</a>.</p>
         </ol>
        <li data-md>
-        <p>If <var>document</var>’s <a data-link-type="dfn" href="#largest-content①" id="ref-for-largest-content①①">largest content</a> is a <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#pair" id="ref-for-pair③">pair</a> whose first item is not equal to <var>element</var>, then return.</p>
+        <p>If <var>document</var>’s <a data-link-type="dfn" href="#largest-content" id="ref-for-largest-content①">largest content</a> is a <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#pair" id="ref-for-pair③">pair</a> whose first item is not equal to <var>element</var>, then return.</p>
        <li data-md>
         <p>Let <var>largestSize</var> be 0, let <var>largestContentIdentifier</var> be null, and let <var>largestContentInfo</var> be null.</p>
        <li data-md>
@@ -1751,7 +1751,7 @@ This allows developers to detect support for the API.</p>
           <p>If <var>value</var>["size"] is greater than <var>largestSize</var>, set <var>largestSize</var> to <var>value</var>["size"], <var>largestContentIdentifier</var> to <var>key</var>, and <var>largestContentInfo</var> to <var>value</var>.</p>
         </ol>
        <li data-md>
-        <p>If <var>largestContentIdentifier</var> is not null, <a data-link-type="dfn" href="#create-a-largestcontentfulpaint-entry" id="ref-for-create-a-largestcontentfulpaint-entry①">create a LargestContentfulPaint entry</a> with <var>largestContentIdentifier</var> and <var>largestContentInfo</var> as inputs.</p>
+        <p>If <var>largestContentIdentifier</var> is not null, <a data-link-type="dfn" href="#create-a-largestcontentfulpaint-entry" id="ref-for-create-a-largestcontentfulpaint-entry①">create a LargestContentfulPaint entry</a> with <var>largestContentIdentifier</var>, <var>largestContentInfo</var>, and <var>document</var> as inputs.</p>
       </ol>
     </dl>
    </div>
@@ -1764,17 +1764,32 @@ This allows developers to detect support for the API.</p>
       <p><var>contentIdentifier</var>, a <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#pair" id="ref-for-pair④">pair</a></p>
      <dd data-md>
       <p><var>contentInfo</var>, a <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#ordered-map" id="ref-for-ordered-map①">map</a></p>
+     <dd data-md>
+      <p><var>document</var>, a <code class="idl"><a data-link-type="idl" href="https://dom.spec.whatwg.org/#document" id="ref-for-document③">Document</a></code></p>
      <dt data-md>Output
      <dd data-md>
       <p>None</p>
       <ol>
        <li data-md>
-        <p>Set <var>document</var>’s <a data-link-type="dfn" href="#largest-content①" id="ref-for-largest-content①②">largest content</a> to <var>contentIdentifier</var>.</p>
+        <p>Set <var>document</var>’s <a data-link-type="dfn" href="#largest-content" id="ref-for-largest-content②">largest content</a> to <var>contentIdentifier</var>.</p>
        <li data-md>
         <p>Set <var>document</var>’s <a data-link-type="dfn" href="#largest-contentful-paint-size" id="ref-for-largest-contentful-paint-size①">largest contentful paint size</a> to <var>contentInfo</var>["size"].</p>
        <li data-md>
-        <p>Let <var>entry</var> be a new <code class="idl"><a data-link-type="idl" href="#largestcontentfulpaint" id="ref-for-largestcontentfulpaint⑥">LargestContentfulPaint</a></code> entry, with it’s <code class="idl"><a data-link-type="idl" href="#dom-largestcontentfulpaint-size" id="ref-for-dom-largestcontentfulpaint-size①">size</a></code> set to <var>contentInfo</var>["size"], <code class="idl"><a data-link-type="idl" href="#dom-largestcontentfulpaint-url" id="ref-for-dom-largestcontentfulpaint-url①">url</a></code> set to <var>contentInfo</var>["url"], <code class="idl"><a data-link-type="idl" href="#dom-largestcontentfulpaint-id" id="ref-for-dom-largestcontentfulpaint-id①">id</a></code> set to <var>contentInfo</var>["id"], <code class="idl"><a data-link-type="idl" href="#dom-largestcontentfulpaint-rendertime" id="ref-for-dom-largestcontentfulpaint-rendertime①">renderTime</a></code> set to <var>contentInfo</var>["renderTime"], <code class="idl"><a data-link-type="idl" href="#dom-largestcontentfulpaint-loadtime" id="ref-for-dom-largestcontentfulpaint-loadtime①">loadTime</a></code> set to <var>contentInfo</var>["loadTime"],
-   and its <code class="idl"><a data-link-type="idl" href="#dom-largestcontentfulpaint-element" id="ref-for-dom-largestcontentfulpaint-element②">element</a></code> set to <var>contentIdentifier</var>’s first item.</p>
+        <p>Let <var>entry</var> be a new <code class="idl"><a data-link-type="idl" href="#largestcontentfulpaint" id="ref-for-largestcontentfulpaint⑥">LargestContentfulPaint</a></code> entry with <var>document</var>’s <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/webappapis.html#concept-relevant-realm" id="ref-for-concept-relevant-realm">relevant realm</a>, with its</p>
+        <ul>
+         <li data-md>
+          <p><code class="idl"><a data-link-type="idl" href="#dom-largestcontentfulpaint-size" id="ref-for-dom-largestcontentfulpaint-size①">size</a></code> set to <var>contentInfo</var>["size"],</p>
+         <li data-md>
+          <p><code class="idl"><a data-link-type="idl" href="#dom-largestcontentfulpaint-url" id="ref-for-dom-largestcontentfulpaint-url①">url</a></code> set to <var>contentInfo</var>["url"],</p>
+         <li data-md>
+          <p><code class="idl"><a data-link-type="idl" href="#dom-largestcontentfulpaint-id" id="ref-for-dom-largestcontentfulpaint-id①">id</a></code> set to <var>contentInfo</var>["id"],</p>
+         <li data-md>
+          <p><code class="idl"><a data-link-type="idl" href="#dom-largestcontentfulpaint-rendertime" id="ref-for-dom-largestcontentfulpaint-rendertime①">renderTime</a></code> set to <var>contentInfo</var>["renderTime"],</p>
+         <li data-md>
+          <p><code class="idl"><a data-link-type="idl" href="#dom-largestcontentfulpaint-loadtime" id="ref-for-dom-largestcontentfulpaint-loadtime①">loadTime</a></code> set to <var>contentInfo</var>["loadTime"],</p>
+         <li data-md>
+          <p>and <code class="idl"><a data-link-type="idl" href="#dom-largestcontentfulpaint-element" id="ref-for-dom-largestcontentfulpaint-element②">element</a></code> set to <var>contentIdentifier</var>’s first item.</p>
+        </ul>
        <li data-md>
         <p><a data-link-type="dfn" href="https://w3c.github.io/performance-timeline/#dfn-queue-a-performanceentry" id="ref-for-dfn-queue-a-performanceentry">Queue the PerformanceEntry</a> <var>entry</var>.</p>
       </ol>
@@ -1797,7 +1812,7 @@ This allows developers to detect support for the API.</p>
       <p>Call the algorithm to <a data-link-type="dfn" href="#remove-element-content" id="ref-for-remove-element-content">remove element content</a> passing in <var>node</var> and <var>node</var>’s <a data-link-type="dfn" href="https://dom.spec.whatwg.org/#concept-node-document" id="ref-for-concept-node-document">node document</a>.</p>
     </ul>
    </div>
-   <p class="issue" id="issue-9d1c0e2b"><a class="self-link" href="#issue-9d1c0e2b"></a> background image changes or changes in image <code class="highlight">src</code> should trigger removal from the <code class="idl"><a data-link-type="idl" href="https://dom.spec.whatwg.org/#document" id="ref-for-document③">Document</a></code>'s <a data-link-type="dfn" href="#content-map" id="ref-for-content-map⑦">content map</a>. <a href="https://github.com/WICG/largest-contentful-paint/issues/41">&lt;https://github.com/WICG/largest-contentful-paint/issues/41></a></p>
+   <p class="issue" id="issue-9d1c0e2b"><a class="self-link" href="#issue-9d1c0e2b"></a> background image changes or changes in image <code class="highlight">src</code> should trigger removal from the <code class="idl"><a data-link-type="idl" href="https://dom.spec.whatwg.org/#document" id="ref-for-document④">Document</a></code>'s <a data-link-type="dfn" href="#content-map" id="ref-for-content-map⑦">content map</a>. <a href="https://github.com/WICG/largest-contentful-paint/issues/41">&lt;https://github.com/WICG/largest-contentful-paint/issues/41></a></p>
    <h3 class="heading settled" data-level="3.5" id="sec-modifications-HTML"><span class="secno">3.5. </span><span class="content">Modifications to the HTML specification</span><a class="self-link" href="#sec-modifications-HTML"></a></h3>
     <em>This section will be removed once the <a data-link-type="biblio" href="#biblio-html">[HTML]</a> specification has been modified.</em> 
    <p>Each <code class="idl"><a data-link-type="idl" href="https://html.spec.whatwg.org/multipage/window-object.html#window" id="ref-for-window②">Window</a></code> has <dfn class="dfn-paneled" data-dfn-type="dfn" data-noexport id="has-dispatched-scroll-event">has dispatched scroll event</dfn>, a boolean which is initially set to false.</p>
@@ -1968,7 +1983,7 @@ This allows developers to detect support for the API.</p>
      <li><a href="#dom-largestcontentfulpaint-id">attribute for LargestContentfulPaint</a><span>, in §2.1</span>
      <li><a href="#id">definition of</a><span>, in §2.1</span>
     </ul>
-   <li><a href="#largest-content①">largest content</a><span>, in §2.1</span>
+   <li><a href="#largest-content">largest content</a><span>, in §2.1</span>
    <li><a href="#largestcontentfulpaint">LargestContentfulPaint</a><span>, in §2.1</span>
    <li><a href="#largest-contentful-paint-size">largest contentful paint size</a><span>, in §2.1</span>
    <li>
@@ -2009,7 +2024,8 @@ This allows developers to detect support for the API.</p>
    <a href="https://dom.spec.whatwg.org/#document">https://dom.spec.whatwg.org/#document</a><b>Referenced in:</b>
    <ul>
     <li><a href="#ref-for-document">2.1. LargestContentfulPaint interface</a> <a href="#ref-for-document①">(2)</a> <a href="#ref-for-document②">(3)</a>
-    <li><a href="#ref-for-document③">3.4. Modifications to the DOM specification</a>
+    <li><a href="#ref-for-document③">3.3. Create a LargestContentfulPaint entry</a>
+    <li><a href="#ref-for-document④">3.4. Modifications to the DOM specification</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="term-for-element">
@@ -2165,6 +2181,12 @@ This allows developers to detect support for the API.</p>
    <ul>
     <li><a href="#ref-for-concept-relevant-global">3.1. Potentially add LargestContentfulPaint entry</a>
     <li><a href="#ref-for-concept-relevant-global①">3.4. Modifications to the DOM specification</a> <a href="#ref-for-concept-relevant-global②">(2)</a>
+   </ul>
+  </aside>
+  <aside class="dfn-panel" data-for="term-for-concept-relevant-realm">
+   <a href="https://html.spec.whatwg.org/multipage/webappapis.html#concept-relevant-realm">https://html.spec.whatwg.org/multipage/webappapis.html#concept-relevant-realm</a><b>Referenced in:</b>
+   <ul>
+    <li><a href="#ref-for-concept-relevant-realm">3.3. Create a LargestContentfulPaint entry</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="term-for-dom-img-width">
@@ -2333,6 +2355,7 @@ This allows developers to detect support for the API.</p>
      <li><span class="dfn-paneled" id="term-for-dom-img-naturalheight" style="color:initial">naturalHeight</span>
      <li><span class="dfn-paneled" id="term-for-dom-img-naturalwidth" style="color:initial">naturalWidth</span>
      <li><span class="dfn-paneled" id="term-for-concept-relevant-global" style="color:initial">relevant global object</span>
+     <li><span class="dfn-paneled" id="term-for-concept-relevant-realm" style="color:initial">relevant realm</span>
      <li><span class="dfn-paneled" id="term-for-dom-img-width" style="color:initial">width</span>
     </ul>
    <li>
@@ -2504,12 +2527,12 @@ This allows developers to detect support for the API.</p>
     <li><a href="#ref-for-largest-contentful-paint-size①">3.3. Create a LargestContentfulPaint entry</a>
    </ul>
   </aside>
-  <aside class="dfn-panel" data-for="largest-content①">
-   <b><a href="#largest-content①">#largest-content①</a></b><b>Referenced in:</b>
+  <aside class="dfn-panel" data-for="largest-content">
+   <b><a href="#largest-content">#largest-content</a></b><b>Referenced in:</b>
    <ul>
-    <li><a href="#ref-for-largest-content①">2.1. LargestContentfulPaint interface</a>
-    <li><a href="#ref-for-largest-content①①">3.2. Remove element content</a>
-    <li><a href="#ref-for-largest-content①②">3.3. Create a LargestContentfulPaint entry</a>
+    <li><a href="#ref-for-largest-content">2.1. LargestContentfulPaint interface</a>
+    <li><a href="#ref-for-largest-content①">3.2. Remove element content</a>
+    <li><a href="#ref-for-largest-content②">3.3. Create a LargestContentfulPaint entry</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="content-map">

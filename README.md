@@ -20,7 +20,7 @@ LCP is the high-level metric, with [Element Timing](https://github.com/WICG/Elem
 
 ### Why largest and contentful 
 
-In order to better correlate with user experience, we designed LCP to represent the speed of delivering **main content** on the screen. While the main content is important to the user experience, what the main content is is highly subjective and different users can come up with different answers. As an approximation, LCP uses the largest contentful element to represent the main content.
+In order to better correlate with user experience, we designed LCP to represent the speed of delivering **main content** on the screen. While the main content is important to the user experience, what the main content is highly subjective and different users can come up with different answers. As an approximation, LCP uses the largest contentful element to represent the main content.
 
 Historically, we’ve tried complex heuristics to determine when the page has meaningfully painted, as in [First Meaningful Paint](https://docs.google.com/document/d/1BR94tJdZLsin5poeet0XoTW60M0SjvOJQttKT-JK8HI) (FMP) metric. In practice, these heuristics have worked well for ~80% of the content. But they often produce strange, hard-to-explain outlier results in the remaining cases. LCP is a simple, practical approach to estimating a time that represents a meaningful paint for users, without heavily relying on complex heuristics. With LCP, we don’t observe the outliers encountered with FMP.
 

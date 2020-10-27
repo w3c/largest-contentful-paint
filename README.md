@@ -108,9 +108,9 @@ During a page load, with page content constantly changing, LCP may have a differ
 It’s possible that the last candidate returned would be a premature result, because the measurement was aborted (due to the user navigating away or due to user input. This will cause a skew in the results due to elements that load after the algorithm terminates. This ‘abort bias’ is inherent to any metric that is conditionally recorded only if the page visit reaches the point in time where the metric is observed. While a single sample may be affected by abort bias, aggregating a large number of samples can mitigate this problem. We find that using aggregate statistics for higher percentiles, such as 90th, avoids bias due to these early aborts.
 
 
-### Ignore removed elements
+### Removed elements
 
-In order to avoid considering  ephemeral elements (such as splash screens) as the largest contentful paint, LCP ignores removed elements. If a content element is removed from the DOM tree, the element is excluded from being an LCP candidate. This means that if the currently largest element is removed then a new candidate (the new largest) needs to be exposed to the user.
+In order to correctly compute LCP in cases such as image carousels, the LCP algorithm considers removed elements. If a content element is removed from the DOM tree, the element is not excluded from being an LCP candidate. See examples [here](https://github.com/anniesullie/LCP_Examples/tree/master/removed_from_dom).
 
 ## API shape
 
@@ -169,7 +169,7 @@ While FCP focuses on the speed of delivering the first paint, LCP focuses on the
 
 Compared to FCP, LCP includes an important factor related to the user experience - the element’s visual size. As FCP does not consider whether elements are painted out of viewport, it may choose a paint that’s out of users’ awareness to represent page speed. In addition, FCP may be triggered by a trivial element appearing significantly earlier than the main content. LCP improves on FCP for identifying time to the main (largest) content.
 
-LCP is also aware of content removal. As FCP does not ignore removed content, it may choose a splash screen to represent page speed, while page content may appear much later. LCP excludes the splash screen after the splash screen is removed from page, so that it can target the page content that users care about to represent page speed. 
+LCP includes content removal, so image carousels are handled correctly regardless of how they are implemented. This also means that DOM relayouts do not re-trigger LCP. These relayouts do not cause the previously visible largest content to stop being visible to the user: they only change the inner workings of the site and memory management of the user agent. Thus, including content removal means that LCP is more accurate when such relayouts happen.
 
 Compared with FMP which relies on [complex heuristics](https://docs.google.com/document/d/1BR94tJdZLsin5poeet0XoTW60M0SjvOJQttKT-JK8HI/edit), LCP uses simpler heuristics, which makes its results easier to interpret and easier for various browser vendors to implement.
 
@@ -182,10 +182,10 @@ As heuristics for other metrics have shortcomings, some of the heuristics that L
 
 * LCP is deactivated after user input. If main content shows up after any user input, then the largest element that LCP uses won’t reflect the main content.
 
-* Complex UI structures such as image carousels may be mis-represented by LCP. Since the element's first paint is the one taken into account, images that are painted outside the viewport and slide in will be ignored. Images painted in the viewport but that then slide out will be considered.
-
 * Early termination of the algorithm needs to be considered carefully in order to track performance meaningfully. For example, suppose that there is a page with text and a large image, where the text loads quickly and the image loads slowly. A performance improvement might compress images so they load much more quickly, allowing more users to see that image before interacting. This results in larger LCPs because before the text would be reported as the LCP more often.
 If the text is added before the image, the user agent may report it as the LCP, and then won't report anything when the image starts loading. If they are both added at the same time, the user agent will detect that the image is larger and not report any LCP. So for that particular page, we could consider no LCP reported or text reported as 'early aborts'. The image optimization should reduce the number of aborts and improve LCP for non-aborted loads.
+
+* LCP may be incorrectly reported as a splash screen if it is large, despite it being removed. This is a tradeoff between handling splash screens correctly vs handling image carousels correctly, and for the majority of cases we notice that splash screens are still not the LCP.
 
 # Security & privacy considerations
 

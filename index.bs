@@ -75,7 +75,7 @@ The Largest Contentful Paint API will only expose element types that are already
 Largest content {#sec-largest-content}
 ------------------------
 
-The algorithm used for this API keeps track of the content seen so far. Whenever a new largest content is found, a new entry is created for it. Content that is removed is still considered by the algorithm. In particular, if the content removed was the largest, then a new entry is created only if something larger is ever added. The algorithm terminates whenever scroll or input events occur, since those are likely to introduce new content into the website.
+The algorithm used for this API keeps track of the content seen so far. Whenever a new largest content is found, a new entry is created for it. Content that is removed is still considered by the algorithm. In particular, if the content removed was the largest, then a new entry is created only if larger content is ever added. The algorithm terminates whenever scroll or input events occur, since those are likely to introduce new content into the website.
 
 Usage example {#sec-example}
 ------------------------
@@ -159,7 +159,7 @@ Note: The above algorithm defines that an element that is no longer <a>descendan
 This specification also extends {{Document}} by adding to it a <dfn>largest contentful paint size</dfn> concept, initially set to 0.
 It also adds an associated <dfn>content set</dfn>, which is initially an empty <a spec=infra for=/>set</a>. The [=content set=] will be filled with <a>pairs</a> with an {{Element}} as the first item and a {{Request}} as the second item. This is used for performance, to enable the algorithm to only consider each content once.
 
-Note: The user agent needs to ensure to maintain the [=content set=] so that removed content does not introduce memory leaks. In particular, it can tie the lifetime of the <a>pairs</a> to weak pointers to the {{Element|Elements}} so that it can be cleaned up sometime after the {{Element|Elements}} are removed. Since the <a spec=infra for=/>set</a> is not exposed to web developers, this does not expose garbage collection timing.
+Note: The user agent needs to maintain the [=content set=] so that removed content does not introduce memory leaks. In particular, it can tie the lifetime of the <a>pairs</a> to weak pointers to the {{Element|Elements}} so that it can be cleaned up sometime after the {{Element|Elements}} are removed. Since the <a spec=infra for=/>set</a> is not exposed to web developers, this does not expose garbage collection timing.
 
 Processing model {#sec-processing-model}
 ========================================

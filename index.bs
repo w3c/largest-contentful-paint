@@ -138,19 +138,19 @@ The {{PerformanceEntry/entryType}} attribute's getter must return the {{DOMStrin
 
 The {{PerformanceEntry/name}} attribute's getter must return the empty string.
 
-The {{PerformanceEntry/startTime}} attribute's getter must return the value of the <a>context object</a>'s <a>renderTime</a> if it is not 0, and the value of the <a>context object</a>'s <a>loadTime</a> otherwise.
+The {{PerformanceEntry/startTime}} attribute's getter must return the value of <a>this</a>'s <a>renderTime</a> if it is not 0, and the value of <a>this</a>'s <a>loadTime</a> otherwise.
 
 The {{PerformanceEntry/duration}} attribute's getter must return 0.
 
-The {{LargestContentfulPaint/renderTime}} attribute must return the value of the <a>context object</a>'s <a>renderTime</a>.
+The {{LargestContentfulPaint/renderTime}} attribute must return the value of <a>this</a>'s <a>renderTime</a>.
 
-The {{LargestContentfulPaint/loadTime}} attribute must return the value of the <a>context object</a>'s <a>loadTime</a>.
+The {{LargestContentfulPaint/loadTime}} attribute must return the value of <a>this</a>'s <a>loadTime</a>.
 
-The {{LargestContentfulPaint/size}} attribute must return the value of the <a>context object</a>'s <a>size</a>.
+The {{LargestContentfulPaint/size}} attribute must return the value of <a>this</a>'s <a>size</a>.
 
-The {{LargestContentfulPaint/id}} attribute must return the value of the <a>context object</a>'s <a>id</a>.
+The {{LargestContentfulPaint/id}} attribute must return the value of <a>this</a>'s <a>id</a>.
 
-The {{LargestContentfulPaint/url}} attribute must return the value of the <a>context object</a>'s <a>url</a>.
+The {{LargestContentfulPaint/url}} attribute must return the value of <a>this</a>'s <a>url</a>.
 
 The {{LargestContentfulPaint/element}} attribute's getter must return the value returned by running the <a>get an element</a> algorithm with <a>element</a> and null as inputs.
 

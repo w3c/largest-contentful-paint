@@ -11,6 +11,7 @@ Repository: https://github.com/WICG/largest-contentful-paint
 Test Suite: https://github.com/web-platform-tests/wpt/tree/master/largest-contentful-paint
 Abstract: This document defines an API that enables monitoring the largest paint an element triggered on screen.
 Default Highlight: js
+Include Mdn Panels: no
 </pre>
 
 <pre class=anchors>

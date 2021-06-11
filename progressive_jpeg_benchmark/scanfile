@@ -1,0 +1,19 @@
+# 1st scan - 7 bits of the DC component for YCbCr
+0,1,2: 0-0,   0, 1 ;
+# 2nd scan - 6 bits of the first 5 coefficients of the Y Luminance AC component
+0:     1-5,   0, 2 ;
+# 3rd & 4th scans - 6 bits of all coefficients of the CrCb Chrominance AC components
+2:   1-63,  0, 2 ;
+1:   1-63,  0, 2 ;
+# 5th scan - 6 bits of the rest of the coefficients of the Y Luminance AC component
+0:     6-63,  0, 2 ;
+# 6th, 7th & 8th scan - 1 bit of all the coefficients of the YCbCr AC components
+2: 1-63,  2, 1 ;
+1: 1-63,  2, 1 ;
+0: 1-63,  2, 1 ;
+# 9th scan - The last bit of the DC component for YCbCr
+0,1,2: 0-0,   1, 0 ;
+# 10th, 11th & 12th scans - The last bit of the AC component for YCbCr
+2: 1-63,  1, 0 ;
+1: 1-63,  1, 0 ;
+0: 1-63,  1, 0 ;

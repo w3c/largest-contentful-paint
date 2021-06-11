@@ -1,12 +1,12 @@
 #!/bin/sh
 
 # Create dir
-#mkdir -p images/original
-#cd images/original
+mkdir -p images/original
+cd images/original
 
 # Download all images
-#cat ../../image_benchmark_urls | xargs curl --remote-name-all
-#cd ../../
+cat ../../image_benchmark_urls | xargs curl --remote-name-all
+cd ../../
 
 # Modify all images to our progressive scan
 mkdir images/progressive

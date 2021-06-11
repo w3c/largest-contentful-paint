@@ -1,0 +1,88 @@
+<!doctype html>
+<html>
+<head>
+<script src="urls.js"></script>
+<style>
+.original { border: solid blue 4px; }
+.truncated { border: solid red 4px; }
+</style>
+</head>
+<body>
+<p>
+<input type="radio" id="no_comparison" name="scans" checked value="0">
+<label for="no_comparison">No Comparison</label>
+</p>
+<p>
+<input type="radio" id="three_scans" name="scans" value="3">
+<label for="three_scans">3 scans - truncate the last bit of AC components</label>
+</p>
+<p>
+<input type="radio" id="four_scans" name="scans" value="4">
+<label for="four_scans">4 scans - truncate the last bit of AC and DC components</label>
+</p>
+<p>
+<input type="radio" id="seven_scans" name="scans" value="7">
+<label for="seven_scans">7 scans - truncate the last bit of DC components and the last 2 bits of AC components - <b>Recommended</b></label>
+</p>
+<p>
+<input type="radio" id="eight_scans" name="scans" value="8">
+<label for="eight_scans">8 scans - Truncate all of the above + a large majority of the AC luminance bits, only leaving the first 5 coefficients</label>
+</p>
+<p>
+<input type="radio" id="ten_scans" name="scans" value="10">
+<label for="ten_scans">10 scans - All of the above + all of the AC chroma bits</label>
+</p>
+<p>
+<input type="radio" id="eleven_scans" name="scans" value="11">
+<label for="eleven_scans">11 scans - Only leave the 7 bits of the DC component</label>
+</p>
+<p>
+Original image is in blue, truncated image is in red
+</p>
+TODO: General stats about the images at current level: size savings, ssim scores, butteraugli scores
+<script>
+const addParagraph = num => {
+  const paragraph = document.createElement("p");
+  paragraph.id = "comparison_" + num;
+  document.body.appendChild(paragraph);
+  return paragraph;
+};
+const getParagraph = num => {
+  return document.getElementById("comparison_" + num);
+};
+const addImage = (num, paragraph, type, dir) => {
+  const image = new Image();
+  image.src = dir + urls[num];
+  image.id = type + "_" + num;
+  image.className = type;
+  paragraph.appendChild(image);
+};
+const initialize = () => {
+  for (let i = 0; i < urls.length; ++i) {
+    const paragraph = addParagraph(i);
+    addImage(i, paragraph, "original", "images/progressive/");
+  }
+}
+const compare = () => {
+  const old_images = document.getElementsByClassName("truncated");
+  while(old_images.length) {
+    let img = old_images[0];
+    img.parentNode.removeChild(img);
+  }
+  const truncation_level = document.querySelector('input[name="scans"]:checked').value;
+  if (truncation_level != "0") {
+    for (let i = 0; i < urls.length; ++i) {
+      const paragraph = getParagraph(i);
+      addImage(i, paragraph, "truncated", "images/truncated_" + truncation_level + "/");
+      // TODO: For each image add its own SSIM scores and data savings.
+    }
+  }
+}
+initialize();
+const inputs = document.getElementsByTagName("input");
+for (input of inputs) {
+  input.addEventListener("change", compare);
+}
+</script>
+</body>
+</html>

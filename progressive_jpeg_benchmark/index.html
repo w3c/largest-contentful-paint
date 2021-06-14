@@ -5,7 +5,6 @@
 <style>
 .original { border: solid blue 4px; }
 .truncated { border: solid red 4px; }
-
 </style>
 </head>
 <body>
@@ -40,8 +39,16 @@
 <p>
 Original image is in blue, truncated image is in red
 </p>
-TODO: General stats about the images at current level: size savings, ssim scores, butteraugli scores
+<div id="original_result">
+</div>
+<div id="truncated_result">
+</div>
 <script>
+setInterval(()=>{
+  document.getElementById("original_result").innerHTML = document.weights["original"];
+  document.getElementById("truncated_result").innerHTML = document.weights["truncated"];
+}, 500);
+
 const addParagraph = num => {
   const paragraph = document.createElement("p");
   paragraph.id = "comparison_" + num;
@@ -56,15 +63,30 @@ const addImage = (num, paragraph, type, dir) => {
   image.src = dir + urls[num];
   image.id = type + "_" + num;
   image.className = type;
+  image.addEventListener("load", event => {
+    const img = event.target;
+    const absolute = (new URL(img.src, document.baseURI)).href;
+    const entry = performance.getEntriesByName(absolute)[0];
+    if (!entry) {
+      return;
+    }
+    img.weight = entry.encodedBodySize;
+    document.weights[img.className] += img.weight;
+    const text = document.createTextNode(img.className + ": " + img.weight);
+    img.parentNode.insertBefore(text, img);
+  });
   paragraph.appendChild(image);
 };
 const initialize = () => {
+document.weights = {};
+  document.weights["original"] = 0;
   for (let i = 0; i < urls.length; ++i) {
     const paragraph = addParagraph(i);
     addImage(i, paragraph, "original", "images/progressive/");
   }
 }
 const compare = () => {
+  document.weights["truncated"] = 0;
   const old_images = document.getElementsByClassName("truncated");
   while(old_images.length) {
     let img = old_images[0];

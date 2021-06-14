@@ -21,6 +21,4 @@ for trunc in 3 4 7 8 10 11  ;do
 done
 
 # Create a list of URLs in JSON format
-printf "const urls = [ " > urls.js
-for f in `ls images/progressive/` ;do printf '"%s", ' "$f";done >> urls.js
-printf "]" >> urls.js
+./calculate_stats.py > urls.js

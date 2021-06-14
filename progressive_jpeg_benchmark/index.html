@@ -36,53 +36,62 @@
 <input type="radio" id="eleven_scans" name="scans" value="11">
 <label for="eleven_scans">11 scans - Only leave the 7 bits of the DC component</label>
 </p>
+<hr/>
 <p>
 Original image is in blue, truncated image is in red
 </p>
-<div id="original_result">
-</div>
-<div id="truncated_result">
-</div>
+<p>Total original bytes:
+<span id="original_result"></span>
+</p>
+<p> Truncated bytes:
+<span id="truncated_result"></span>
+<p>Savings:
+<span id="savings"></span>
+<hr/>
 <script>
+// TODO: Should do actual data binding here..
 setInterval(()=>{
   document.getElementById("original_result").innerHTML = document.weights["original"];
-  document.getElementById("truncated_result").innerHTML = document.weights["truncated"];
+  if (document.weights["truncated"]) {
+    document.getElementById("truncated_result").innerHTML = document.weights["truncated"];
+    const savings = 1 - (document.weights["truncated"]/document.weights["original"]);
+    document.getElementById("savings").innerHTML = Math.round(savings * 10000) / 100 + "%";
+  }
 }, 500);
 
-const addParagraph = num => {
-  const paragraph = document.createElement("p");
-  paragraph.id = "comparison_" + num;
-  document.body.appendChild(paragraph);
-  return paragraph;
+const addParent = num => {
+  const parent = document.createElement("div");
+  parent.id = "comparison_" + num;
+  document.body.appendChild(parent);
+  return parent;
 };
-const getParagraph = num => {
+
+const getParent = num => {
   return document.getElementById("comparison_" + num);
 };
-const addImage = (num, paragraph, type, dir) => {
+
+const addImage = (num, parent, type, dir, level) => {
   const image = new Image();
-  image.src = dir + urls[num];
+  image.src = dir + urls[num]["url"];
   image.id = type + "_" + num;
   image.className = type;
-  image.addEventListener("load", event => {
-    const img = event.target;
-    const absolute = (new URL(img.src, document.baseURI)).href;
-    const entry = performance.getEntriesByName(absolute)[0];
-    if (!entry) {
-      return;
-    }
-    img.weight = entry.encodedBodySize;
-    document.weights[img.className] += img.weight;
-    const text = document.createTextNode(img.className + ": " + img.weight);
-    img.parentNode.insertBefore(text, img);
-  });
-  paragraph.appendChild(image);
+  if (type == "original") {
+    image.weight = urls[num]["original_size"];
+  } else {
+    image.weight = urls[num]["truncated_sizes"][level];
+  }
+  document.weights[image.className] += image.weight;
+  const paragraph = document.createElement("p");
+  paragraph.innerHTML = image.className + ": " + image.weight;
+  parent.appendChild(paragraph);
+  parent.appendChild(image);
 };
 const initialize = () => {
 document.weights = {};
   document.weights["original"] = 0;
   for (let i = 0; i < urls.length; ++i) {
-    const paragraph = addParagraph(i);
-    addImage(i, paragraph, "original", "images/progressive/");
+    const parent = addParent(i);
+    addImage(i, parent, "original", "images/progressive/");
   }
 }
 const compare = () => {
@@ -90,14 +99,14 @@ const compare = () => {
   const old_images = document.getElementsByClassName("truncated");
   while(old_images.length) {
     let img = old_images[0];
+    img.parentNode.removeChild(img.previousSibling);
     img.parentNode.removeChild(img);
   }
   const truncation_level = document.querySelector('input[name="scans"]:checked').value;
   if (truncation_level != "0") {
     for (let i = 0; i < urls.length; ++i) {
-      const paragraph = getParagraph(i);
-      addImage(i, paragraph, "truncated", "images/truncated_" + truncation_level + "/");
-      // TODO: For each image add its own SSIM scores and data savings.
+      const parent = getParent(i);
+      addImage(i, parent, "truncated", "images/truncated_" + truncation_level + "/", truncation_level);
     }
   }
 }

@@ -31,6 +31,7 @@ LCP uses the largest element to approximate the main content on the page. As [vi
 
 The use of **initial** size affects pages where the elements move, such as animated image carousels. In such carousels, for images that are initially outside the viewport and that "slide" into it, LCP may define their size as their painted size when they are first added to the DOM, which will be 0. The same issue also applies to interstitials or dialog boxes that slide into the viewport.
 
+The *size* values used and returned by the API are in layout units squared, which is consistent with most web APIs.
 
 ### Contentful: text, image, background images, videos’ poster-images 
 

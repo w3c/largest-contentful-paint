@@ -48,6 +48,8 @@ urlPrefix: https://html.spec.whatwg.org/multipage/webappapis.html; spec: html;
         text: naturalHeight; url: #dom-img-naturalheight;
         text: width; url: #dom-img-width;
         text: height; url: #dom-img-height;
+urlPrefix: https://drafts.csswg.org/cssom-view/; spec: CSSOM-VIEW;
+    type: dfn; text: viewport; url: viewport;
 </pre>
 
 Introduction {#sec-intro}
@@ -193,6 +195,10 @@ In order to <dfn export>potentially add a {{LargestContentfulPaint}} entry</dfn>
         1. Let |width| be |intersectionRect|'s {{DOMRectReadOnly/width}}.
         1. Let |height| be |intersectionRect|'s {{DOMRectReadOnly/height}}.
         1. Let |size| be <code>|width| * |height|</code>.
+        1. Let |root| be |document|'s <a for="Document">browsing context</a>'s <a>top-level browsing context</a>'s <a>active document</a>.
+        1. Let |rootWidth| be |root|'s <a>viewport</a>'s width, excluding any scrollbars.
+        1. Let |rootHeight| be |root|'s <a>viewport</a>'s height, excluding any scrollbars.
+        1. If |size| is equal to |rootWidth| times |rootHeight|, return.
         1. If |imageRequest| is not null, run the following steps:
             1. Let |naturalWidth| and |naturalHeight| be the outputs of running the same steps for an <{img}>'s {{img/naturalWidth}} and {{img/naturalHeight}} attribute getters, but using |imageRequest| as the image.
             1. Let |naturalSize| be <code>|naturalWidth| * |naturalHeight|</code>.

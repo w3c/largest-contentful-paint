@@ -4,7 +4,7 @@
   <title>Largest Contentful Paint</title>
   <meta content="width=device-width, initial-scale=1, shrink-to-fit=no" name="viewport">
   <link href="https://www.w3.org/StyleSheets/TR/2016/cg-draft" rel="stylesheet">
-  <meta content="Bikeshed version 5c7bc9381, updated Wed May 12 18:18:08 2021 -0700" name="generator">
+  <meta content="Bikeshed version a210b7d86, updated Thu Sep 16 13:45:19 2021 -0700" name="generator">
   <link href="https://wicg.github.io/largest-contentful-paint" rel="canonical">
 <style>/* style-autolinks */
 
@@ -577,7 +577,7 @@ c-[il] { color: #000000 } /* Literal.Number.Integer.Long */
   <div class="head">
    <p data-fill-with="logo"><a class="logo" href="https://www.w3.org/"> <img alt="W3C" height="48" src="https://www.w3.org/StyleSheets/TR/2016/logos/W3C" width="72"> </a> </p>
    <h1 class="p-name no-ref" id="title">Largest Contentful Paint</h1>
-   <h2 class="no-num no-toc no-ref heading settled" id="profile-and-date"><span class="content">Draft Community Group Report, <time class="dt-updated" datetime="2021-05-19">19 May 2021</time></span></h2>
+   <h2 class="no-num no-toc no-ref heading settled" id="profile-and-date"><span class="content">Draft Community Group Report, <time class="dt-updated" datetime="2021-09-30">30 September 2021</time></span></h2>
    <div data-fill-with="spec-metadata">
     <dl>
      <dt>This version:
@@ -788,6 +788,14 @@ This allows developers to detect support for the API.</p>
        <li data-md>
         <p>Let <var>size</var> be <code class="highlight"><var>width</var> <c- o>*</c-> <var>height</var></code>.</p>
        <li data-md>
+        <p>Let <var>root</var> be <var>document</var>’s <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/browsers.html#concept-document-bc" id="ref-for-concept-document-bc">browsing context</a>’s <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/browsers.html#top-level-browsing-context" id="ref-for-top-level-browsing-context">top-level browsing context</a>’s <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/browsers.html#active-document" id="ref-for-active-document">active document</a>.</p>
+       <li data-md>
+        <p>Let <var>rootWidth</var> be <var>root</var>’s <a data-link-type="dfn" href="https://drafts.csswg.org/cssom-view/#viewport" id="ref-for-viewport">viewport</a>’s width, excluding any scrollbars.</p>
+       <li data-md>
+        <p>Let <var>rootHeight</var> be <var>root</var>’s <a data-link-type="dfn" href="https://drafts.csswg.org/cssom-view/#viewport" id="ref-for-viewport①">viewport</a>’s height, excluding any scrollbars.</p>
+       <li data-md>
+        <p>If <var>size</var> is equal to <var>rootWidth</var> times <var>rootHeight</var>, return.</p>
+       <li data-md>
         <p>If <var>imageRequest</var> is not null, run the following steps:</p>
         <ol>
          <li data-md>
@@ -909,54 +917,60 @@ This allows developers to detect support for the API.</p>
   <h2 class="no-num no-ref heading settled" id="index"><span class="content">Index</span><a class="self-link" href="#index"></a></h2>
   <h3 class="no-num no-ref heading settled" id="index-defined-here"><span class="content">Terms defined by this specification</span><a class="self-link" href="#index-defined-here"></a></h3>
   <ul class="index">
-   <li><a href="#content-set">content set</a><span>, in §2.1</span>
-   <li><a href="#create-a-largestcontentfulpaint-entry">create a LargestContentfulPaint entry</a><span>, in §3.2</span>
+   <li><a href="#content-set">content set</a><span>, in § 2.1</span>
+   <li><a href="#create-a-largestcontentfulpaint-entry">create a LargestContentfulPaint entry</a><span>, in § 3.2</span>
    <li>
     element
     <ul>
-     <li><a href="#dom-largestcontentfulpaint-element">attribute for LargestContentfulPaint</a><span>, in §2.1</span>
-     <li><a href="#element">definition of</a><span>, in §2.1</span>
+     <li><a href="#dom-largestcontentfulpaint-element">attribute for LargestContentfulPaint</a><span>, in § 2.1</span>
+     <li><a href="#element">definition of</a><span>, in § 2.1</span>
     </ul>
-   <li><a href="#has-dispatched-scroll-event">has dispatched scroll event</a><span>, in §3.4</span>
+   <li><a href="#has-dispatched-scroll-event">has dispatched scroll event</a><span>, in § 3.4</span>
    <li>
     id
     <ul>
-     <li><a href="#dom-largestcontentfulpaint-id">attribute for LargestContentfulPaint</a><span>, in §2.1</span>
-     <li><a href="#id">definition of</a><span>, in §2.1</span>
+     <li><a href="#dom-largestcontentfulpaint-id">attribute for LargestContentfulPaint</a><span>, in § 2.1</span>
+     <li><a href="#id">definition of</a><span>, in § 2.1</span>
     </ul>
-   <li><a href="#largestcontentfulpaint">LargestContentfulPaint</a><span>, in §2.1</span>
-   <li><a href="#largest-contentful-paint-size">largest contentful paint size</a><span>, in §2.1</span>
+   <li><a href="#largestcontentfulpaint">LargestContentfulPaint</a><span>, in § 2.1</span>
+   <li><a href="#largest-contentful-paint-size">largest contentful paint size</a><span>, in § 2.1</span>
    <li>
     loadTime
     <ul>
-     <li><a href="#dom-largestcontentfulpaint-loadtime">attribute for LargestContentfulPaint</a><span>, in §2.1</span>
-     <li><a href="#loadtime">definition of</a><span>, in §2.1</span>
+     <li><a href="#dom-largestcontentfulpaint-loadtime">attribute for LargestContentfulPaint</a><span>, in § 2.1</span>
+     <li><a href="#loadtime">definition of</a><span>, in § 2.1</span>
     </ul>
-   <li><a href="#potentially-add-a-largestcontentfulpaint-entry">potentially add a LargestContentfulPaint entry</a><span>, in §3.1</span>
+   <li><a href="#potentially-add-a-largestcontentfulpaint-entry">potentially add a LargestContentfulPaint entry</a><span>, in § 3.1</span>
    <li>
     renderTime
     <ul>
-     <li><a href="#dom-largestcontentfulpaint-rendertime">attribute for LargestContentfulPaint</a><span>, in §2.1</span>
-     <li><a href="#rendertime">definition of</a><span>, in §2.1</span>
+     <li><a href="#dom-largestcontentfulpaint-rendertime">attribute for LargestContentfulPaint</a><span>, in § 2.1</span>
+     <li><a href="#rendertime">definition of</a><span>, in § 2.1</span>
     </ul>
    <li>
     size
     <ul>
-     <li><a href="#dom-largestcontentfulpaint-size">attribute for LargestContentfulPaint</a><span>, in §2.1</span>
-     <li><a href="#size">definition of</a><span>, in §2.1</span>
+     <li><a href="#dom-largestcontentfulpaint-size">attribute for LargestContentfulPaint</a><span>, in § 2.1</span>
+     <li><a href="#size">definition of</a><span>, in § 2.1</span>
     </ul>
-   <li><a href="#dom-largestcontentfulpaint-tojson">toJSON()</a><span>, in §2.1</span>
+   <li><a href="#dom-largestcontentfulpaint-tojson">toJSON()</a><span>, in § 2.1</span>
    <li>
     url
     <ul>
-     <li><a href="#dom-largestcontentfulpaint-url">attribute for LargestContentfulPaint</a><span>, in §2.1</span>
-     <li><a href="#url">definition of</a><span>, in §2.1</span>
+     <li><a href="#dom-largestcontentfulpaint-url">attribute for LargestContentfulPaint</a><span>, in § 2.1</span>
+     <li><a href="#url">definition of</a><span>, in § 2.1</span>
     </ul>
   </ul>
   <aside class="dfn-panel" data-for="term-for-eventdef-document-scroll">
    <a href="https://drafts.csswg.org/cssom-view-1/#eventdef-document-scroll">https://drafts.csswg.org/cssom-view-1/#eventdef-document-scroll</a><b>Referenced in:</b>
    <ul>
     <li><a href="#ref-for-eventdef-document-scroll">3.3. Modifications to the DOM specification</a>
+   </ul>
+  </aside>
+  <aside class="dfn-panel" data-for="term-for-viewport">
+   <a href="https://drafts.csswg.org/cssom-view/#viewport">https://drafts.csswg.org/cssom-view/#viewport</a><b>Referenced in:</b>
+   <ul>
+    <li><a href="#ref-for-viewport">3.1. Potentially add LargestContentfulPaint entry</a> <a href="#ref-for-viewport①">(2)</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="term-for-document">
@@ -1071,6 +1085,18 @@ This allows developers to detect support for the API.</p>
     <li><a href="#ref-for-window②">3.4. Modifications to the HTML specification</a>
    </ul>
   </aside>
+  <aside class="dfn-panel" data-for="term-for-active-document">
+   <a href="https://html.spec.whatwg.org/multipage/browsers.html#active-document">https://html.spec.whatwg.org/multipage/browsers.html#active-document</a><b>Referenced in:</b>
+   <ul>
+    <li><a href="#ref-for-active-document">3.1. Potentially add LargestContentfulPaint entry</a>
+   </ul>
+  </aside>
+  <aside class="dfn-panel" data-for="term-for-concept-document-bc">
+   <a href="https://html.spec.whatwg.org/multipage/browsers.html#concept-document-bc">https://html.spec.whatwg.org/multipage/browsers.html#concept-document-bc</a><b>Referenced in:</b>
+   <ul>
+    <li><a href="#ref-for-concept-document-bc">3.1. Potentially add LargestContentfulPaint entry</a>
+   </ul>
+  </aside>
   <aside class="dfn-panel" data-for="term-for-dom-img-height">
    <a href="https://html.spec.whatwg.org/multipage/webappapis.html#dom-img-height">https://html.spec.whatwg.org/multipage/webappapis.html#dom-img-height</a><b>Referenced in:</b>
    <ul>
@@ -1106,6 +1132,12 @@ This allows developers to detect support for the API.</p>
    <a href="https://html.spec.whatwg.org/multipage/webappapis.html#concept-relevant-realm">https://html.spec.whatwg.org/multipage/webappapis.html#concept-relevant-realm</a><b>Referenced in:</b>
    <ul>
     <li><a href="#ref-for-concept-relevant-realm">3.2. Create a LargestContentfulPaint entry</a>
+   </ul>
+  </aside>
+  <aside class="dfn-panel" data-for="term-for-top-level-browsing-context">
+   <a href="https://html.spec.whatwg.org/multipage/browsers.html#top-level-browsing-context">https://html.spec.whatwg.org/multipage/browsers.html#top-level-browsing-context</a><b>Referenced in:</b>
+   <ul>
+    <li><a href="#ref-for-top-level-browsing-context">3.1. Potentially add LargestContentfulPaint entry</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="term-for-dom-img-width">
@@ -1230,6 +1262,7 @@ This allows developers to detect support for the API.</p>
     <a data-link-type="biblio">[cssom-view-1]</a> defines the following terms:
     <ul>
      <li><span class="dfn-paneled" id="term-for-eventdef-document-scroll">scroll</span>
+     <li><span class="dfn-paneled" id="term-for-viewport">viewport</span>
     </ul>
    <li>
     <a data-link-type="biblio">[DOM]</a> defines the following terms:
@@ -1276,12 +1309,15 @@ This allows developers to detect support for the API.</p>
     <a data-link-type="biblio">[HTML]</a> defines the following terms:
     <ul>
      <li><span class="dfn-paneled" id="term-for-window">Window</span>
+     <li><span class="dfn-paneled" id="term-for-active-document">active document</span>
+     <li><span class="dfn-paneled" id="term-for-concept-document-bc">browsing context</span>
      <li><span class="dfn-paneled" id="term-for-dom-img-height">height</span>
      <li><span class="dfn-paneled" id="term-for-the-img-element">img</span>
      <li><span class="dfn-paneled" id="term-for-dom-img-naturalheight">naturalHeight</span>
      <li><span class="dfn-paneled" id="term-for-dom-img-naturalwidth">naturalWidth</span>
      <li><span class="dfn-paneled" id="term-for-concept-relevant-global">relevant global object</span>
      <li><span class="dfn-paneled" id="term-for-concept-relevant-realm">relevant realm</span>
+     <li><span class="dfn-paneled" id="term-for-top-level-browsing-context">top-level browsing context</span>
      <li><span class="dfn-paneled" id="term-for-dom-img-width">width</span>
     </ul>
    <li>
@@ -1319,29 +1355,29 @@ This allows developers to detect support for the API.</p>
   <h3 class="no-num no-ref heading settled" id="normative"><span class="content">Normative References</span><a class="self-link" href="#normative"></a></h3>
   <dl>
    <dt id="biblio-cssom-view-1">[CSSOM-VIEW-1]
-   <dd>Simon Pieters. <a href="https://www.w3.org/TR/cssom-view-1/">CSSOM View Module</a>. 17 March 2016. WD. URL: <a href="https://www.w3.org/TR/cssom-view-1/">https://www.w3.org/TR/cssom-view-1/</a>
+   <dd>Simon Pieters. <a href="https://www.w3.org/TR/cssom-view-1/"><cite>CSSOM View Module</cite></a>. 17 March 2016. WD. URL: <a href="https://www.w3.org/TR/cssom-view-1/">https://www.w3.org/TR/cssom-view-1/</a>
    <dt id="biblio-dom">[DOM]
-   <dd>Anne van Kesteren. <a href="https://dom.spec.whatwg.org/">DOM Standard</a>. Living Standard. URL: <a href="https://dom.spec.whatwg.org/">https://dom.spec.whatwg.org/</a>
+   <dd>Anne van Kesteren. <a href="https://dom.spec.whatwg.org/"><cite>DOM Standard</cite></a>. Living Standard. URL: <a href="https://dom.spec.whatwg.org/">https://dom.spec.whatwg.org/</a>
    <dt id="biblio-element-timing">[ELEMENT-TIMING]
-   <dd><a href="https://wicg.github.io/element-timing/">Element Timing API</a>. cg-draft. URL: <a href="https://wicg.github.io/element-timing/">https://wicg.github.io/element-timing/</a>
+   <dd><a href="https://wicg.github.io/element-timing/"><cite>Element Timing API</cite></a>. cg-draft. URL: <a href="https://wicg.github.io/element-timing/">https://wicg.github.io/element-timing/</a>
    <dt id="biblio-event-timing">[EVENT-TIMING]
-   <dd><a href="https://wicg.github.io/event-timing/">Event Timing API</a>. cg-draft. URL: <a href="https://wicg.github.io/event-timing/">https://wicg.github.io/event-timing/</a>
+   <dd><a href="https://wicg.github.io/event-timing/"><cite>Event Timing API</cite></a>. cg-draft. URL: <a href="https://wicg.github.io/event-timing/">https://wicg.github.io/event-timing/</a>
    <dt id="biblio-fetch">[FETCH]
-   <dd>Anne van Kesteren. <a href="https://fetch.spec.whatwg.org/">Fetch Standard</a>. Living Standard. URL: <a href="https://fetch.spec.whatwg.org/">https://fetch.spec.whatwg.org/</a>
+   <dd>Anne van Kesteren. <a href="https://fetch.spec.whatwg.org/"><cite>Fetch Standard</cite></a>. Living Standard. URL: <a href="https://fetch.spec.whatwg.org/">https://fetch.spec.whatwg.org/</a>
    <dt id="biblio-geometry-1">[GEOMETRY-1]
-   <dd>Simon Pieters; Chris Harrelson. <a href="https://www.w3.org/TR/geometry-1/">Geometry Interfaces Module Level 1</a>. 4 December 2018. CR. URL: <a href="https://www.w3.org/TR/geometry-1/">https://www.w3.org/TR/geometry-1/</a>
+   <dd>Simon Pieters; Chris Harrelson. <a href="https://www.w3.org/TR/geometry-1/"><cite>Geometry Interfaces Module Level 1</cite></a>. 4 December 2018. CR. URL: <a href="https://www.w3.org/TR/geometry-1/">https://www.w3.org/TR/geometry-1/</a>
    <dt id="biblio-hr-time-3">[HR-TIME-3]
-   <dd>Yoav Weiss; et al. <a href="https://www.w3.org/TR/hr-time-3/">High Resolution Time</a>. 24 March 2021. WD. URL: <a href="https://www.w3.org/TR/hr-time-3/">https://www.w3.org/TR/hr-time-3/</a>
+   <dd>Yoav Weiss; et al. <a href="https://www.w3.org/TR/hr-time-3/"><cite>High Resolution Time</cite></a>. 15 July 2021. WD. URL: <a href="https://www.w3.org/TR/hr-time-3/">https://www.w3.org/TR/hr-time-3/</a>
    <dt id="biblio-html">[HTML]
-   <dd>Anne van Kesteren; et al. <a href="https://html.spec.whatwg.org/multipage/">HTML Standard</a>. Living Standard. URL: <a href="https://html.spec.whatwg.org/multipage/">https://html.spec.whatwg.org/multipage/</a>
+   <dd>Anne van Kesteren; et al. <a href="https://html.spec.whatwg.org/multipage/"><cite>HTML Standard</cite></a>. Living Standard. URL: <a href="https://html.spec.whatwg.org/multipage/">https://html.spec.whatwg.org/multipage/</a>
    <dt id="biblio-infra">[INFRA]
-   <dd>Anne van Kesteren; Domenic Denicola. <a href="https://infra.spec.whatwg.org/">Infra Standard</a>. Living Standard. URL: <a href="https://infra.spec.whatwg.org/">https://infra.spec.whatwg.org/</a>
+   <dd>Anne van Kesteren; Domenic Denicola. <a href="https://infra.spec.whatwg.org/"><cite>Infra Standard</cite></a>. Living Standard. URL: <a href="https://infra.spec.whatwg.org/">https://infra.spec.whatwg.org/</a>
    <dt id="biblio-performance-timeline-2">[PERFORMANCE-TIMELINE-2]
-   <dd>Ilya Grigorik. <a href="https://www.w3.org/TR/performance-timeline-2/">Performance Timeline Level 2</a>. 24 October 2019. WD. URL: <a href="https://www.w3.org/TR/performance-timeline-2/">https://www.w3.org/TR/performance-timeline-2/</a>
+   <dd>Nicolas Pena Moreno; Ilya Grigorik. <a href="https://www.w3.org/TR/performance-timeline-2/"><cite>Performance Timeline Level 2</cite></a>. 19 August 2021. WD. URL: <a href="https://www.w3.org/TR/performance-timeline-2/">https://www.w3.org/TR/performance-timeline-2/</a>
    <dt id="biblio-rfc2119">[RFC2119]
-   <dd>S. Bradner. <a href="https://tools.ietf.org/html/rfc2119">Key words for use in RFCs to Indicate Requirement Levels</a>. March 1997. Best Current Practice. URL: <a href="https://tools.ietf.org/html/rfc2119">https://tools.ietf.org/html/rfc2119</a>
+   <dd>S. Bradner. <a href="https://datatracker.ietf.org/doc/html/rfc2119"><cite>Key words for use in RFCs to Indicate Requirement Levels</cite></a>. March 1997. Best Current Practice. URL: <a href="https://datatracker.ietf.org/doc/html/rfc2119">https://datatracker.ietf.org/doc/html/rfc2119</a>
    <dt id="biblio-webidl">[WebIDL]
-   <dd>Boris Zbarsky. <a href="https://heycam.github.io/webidl/">Web IDL</a>. 15 December 2016. ED. URL: <a href="https://heycam.github.io/webidl/">https://heycam.github.io/webidl/</a>
+   <dd>Boris Zbarsky. <a href="https://heycam.github.io/webidl/"><cite>Web IDL</cite></a>. 15 December 2016. ED. URL: <a href="https://heycam.github.io/webidl/">https://heycam.github.io/webidl/</a>
   </dl>
   <h2 class="no-num no-ref heading settled" id="idl-index"><span class="content">IDL Index</span><a class="self-link" href="#idl-index"></a></h2>
 <pre class="idl highlight def">[<a class="idl-code" data-link-type="extended-attribute" href="https://heycam.github.io/webidl/#Exposed"><c- g>Exposed</c-></a>=<c- n>Window</c->]

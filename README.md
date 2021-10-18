@@ -11,14 +11,14 @@ Largest Contentful Paint (LCP) aims to be a new page-load metric that correlates
 At the same time, LCP does not try to be respresentative of the user's entire rendering journey. That's something that the lower-level [Element-Timing](https://wicg.github.io/element-timing/) can help developers accomplish.
 
 
-## What is Largest Contentful Paint 
+## What is Largest Contentful Paint
 
 Largest Contentful Paint (LCP) is a new page load metric which describes the speed of delivering the largest contentful element to the screen.
 
-LCP is the high-level metric, with [Element Timing](https://github.com/WICG/Element-Timing) being its low-level primitive. LCP aims to provide a meaningful result even for developers that won't go through the trouble of annotating their sites, which is a requirement to use Element Timing. 
+LCP is the high-level metric, with [Element Timing](https://github.com/WICG/Element-Timing) being its low-level primitive. LCP aims to provide a meaningful result even for developers that won't go through the trouble of annotating their sites, which is a requirement to use Element Timing.
 
 
-### Why largest and contentful 
+### Why largest and contentful
 
 In order to better correlate with user experience, we designed LCP to represent the speed of delivering **main content** on the screen. While the main content is important to the user experience, its definition is highly subjective and different users can come up with different answers. As an approximation, LCP uses the largest contentful element to represent the main content.
 
@@ -31,9 +31,9 @@ LCP uses the largest element to approximate the main content on the page. As [vi
 
 The use of **initial** size affects pages where the elements move, such as animated image carousels. In such carousels, for images that are initially outside the viewport and that "slide" into it, LCP may define their size as their painted size when they are first added to the DOM, which will be 0. The same issue also applies to interstitials or dialog boxes that slide into the viewport.
 
-The *size* values used and returned by the API are in layout units squared, which is consistent with most web APIs.
+The *size* values used and returned by the API are in device-independent pixels squared.
 
-### Contentful: text, image, background images, videos’ poster-images 
+### Contentful: text, image, background images, videos’ poster-images
 
 The contentful elements in LCP’s context include two main groups - textual and pictorial.
 
@@ -51,7 +51,7 @@ Pictorial elements are described in the <a href="https://github.com/WICG/element
 In the future, we may add canvas and video elements to the group of contentful elements.
 
 
-#### Contentful style-background-images 
+#### Contentful style-background-images
 
 Background images can serve a role as background or as part of the contents of the page. LCP uses simple heuristics to exclude background images with a background role, as they are less relevant to user experience than those used as content of the page.
 
@@ -59,12 +59,12 @@ The heuristics to identify a background-purposed image may include:
 * Document position - background images of the document's `<body>` or its `<html>` are more likely to serve as a background for the page.
 * Background image that's not fetched - a CSS background image that's either a [cross fade](https://drafts.csswg.org/css-images-4/#funcdef-cross-fade) or a [gradient](https://drafts.csswg.org/css-images-4/#typedef-gradient) is considered background for the page.
 
-### Paint: first paint 
+### Paint: first paint
 
 We have different definitions of first paint time for textual and pictorial elements. For pictorial elements, the first paint time refers to the first paint after the image is fully loaded. For text, the first paint time is the first paint of the text at its earliest font. In other words, if a text element with a default font is repainted after its web-font is loaded, the first paint time refers to that of the default font.
 
 
-### Visual size 
+### Visual size
 
 In the context of LCP, the size of an element refers to the visual size, which is the size visible to users. In terms of visibility, the metric has included the following factors:
 
@@ -87,7 +87,7 @@ image_size = visual_size * min(display_size, natural_size) / display_size
 
 `image_size` is the size of the image, as considered by the LCP algorithm. It is computed from the `visual_size`, the screen size occupied by the image. It is penalized when the `natural_size` of the image is lower than its `display_size`, i.e., when the image has been upscaled to occupy a larger portion of the viewport than the number of pixels it encodes.
 
-### Interaction with user input 
+### Interaction with user input
 
 The design of the metric has also considered the fact that user inputs may cause pages to show different content. Because of different ways users may interact with the page, the same page may produce different LCPs.
 

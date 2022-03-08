@@ -1,8 +1,8 @@
 <pre class=metadata>
 Title: Largest Contentful Paint
-Status: CG-DRAFT
+Status: ED
 Shortname: largest-contentful-paint
-Group: WICG
+Group: webperf
 Level: 1
 Editor: Yoav Weiss, Google https://google.com, yoavweiss@chromium.org
 Editor: Nicolás Peña Moreno, Google https://google.com, npm@chromium.org

@@ -160,9 +160,9 @@ The {{LargestContentfulPaint/element}} attribute's getter must return the value 
 Note: The above algorithm defines that an element that is no longer <a>descendant</a> of the {{Document}} will no longer be returned by {{LargestContentfulPaint/element}}'s attribute getter, including elements that are inside a shadow DOM.
 
 This specification also extends {{Document}} by adding to it a <dfn>largest contentful paint size</dfn> concept, initially set to 0.
-It also adds an associated <dfn>content set</dfn>, which is initially an empty <a spec=infra for=/>set</a>. The [=content set=] will be filled with <a>pairs</a> with an {{Element}} as the first item and a {{Request}} as the second item. This is used for performance, to enable the algorithm to only consider each content once.
+It also adds an associated <dfn>content set</dfn>, which is initially an empty <a spec=infra for=/>set</a>. The [=content set=] will be filled with ({{Element}}, {{Request}}) <a>tuples</a>. This is used for performance, to enable the algorithm to only consider each content once.
 
-Note: The user agent needs to maintain the [=content set=] so that removed content does not introduce memory leaks. In particular, it can tie the lifetime of the <a>pairs</a> to weak pointers to the {{Element|Elements}} so that it can be cleaned up sometime after the {{Element|Elements}} are removed. Since the <a spec=infra for=/>set</a> is not exposed to web developers, this does not expose garbage collection timing.
+Note: The user agent needs to maintain the [=content set=] so that removed content does not introduce memory leaks. In particular, it can tie the lifetime of the <a>tuples</a> to weak pointers to the {{Element|Elements}} so that it can be cleaned up sometime after the {{Element|Elements}} are removed. Since the <a spec=infra for=/>set</a> is not exposed to web developers, this does not expose garbage collection timing.
 
 Processing model {#sec-processing-model}
 ========================================
@@ -184,7 +184,7 @@ In order to <dfn export>potentially add a {{LargestContentfulPaint}} entry</dfn>
     ::  |document|, a <a>Document</a>
     : Output
     ::  None
-        1. Let |contentIdentifier| be the <a>pair</a> (|element|, |imageRequest|).
+        1. Let |contentIdentifier| be the <a>tuple</a> (|element|, |imageRequest|).
         1. If |document|'s [=content set=] <a for=set>contains</a> |contentIdentifier|, return.
         1. <a for=set>Append</a> |contentIdentifier| to |document|'s [=content set=]
         1. Let |window| be |document|’s [=relevant global object=].

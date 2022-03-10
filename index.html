@@ -1,10 +1,12 @@
 <!doctype html><html lang="en">
  <head>
   <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
-  <title>Largest Contentful Paint</title>
   <meta content="width=device-width, initial-scale=1, shrink-to-fit=no" name="viewport">
-  <link href="https://www.w3.org/StyleSheets/TR/2016/cg-draft" rel="stylesheet">
-  <meta content="Bikeshed version d7036035b, updated Fri Oct 8 17:07:11 2021 -0700" name="generator">
+  <title>Largest Contentful Paint</title>
+  <meta content="ED" name="w3c-status">
+  <link href="https://www.w3.org/StyleSheets/TR/2021/W3C-ED" rel="stylesheet">
+  <link href="https://www.w3.org/2008/site/images/favicon.ico" rel="icon">
+  <meta content="Bikeshed version fb1e763a4, updated Tue Mar 1 13:13:50 2022 -0800" name="generator">
   <link href="https://wicg.github.io/largest-contentful-paint" rel="canonical">
 <style>/* style-autolinks */
 
@@ -585,40 +587,41 @@ c-[il] { color: #000000 } /* Literal.Number.Integer.Long */
 </style>
  <body class="h-entry">
   <div class="head">
-   <p data-fill-with="logo"><a class="logo" href="https://www.w3.org/"> <img alt="W3C" height="48" src="https://www.w3.org/StyleSheets/TR/2016/logos/W3C" width="72"> </a> </p>
+   <p data-fill-with="logo"><a class="logo" href="https://www.w3.org/"> <img alt="W3C" height="48" src="https://www.w3.org/StyleSheets/TR/2021/logos/W3C" width="72"> </a> </p>
    <h1 class="p-name no-ref" id="title">Largest Contentful Paint</h1>
-   <h2 class="no-num no-toc no-ref heading settled" id="profile-and-date"><span class="content">Draft Community Group Report, <time class="dt-updated" datetime="2021-10-19">19 October 2021</time></span></h2>
-   <div data-fill-with="spec-metadata">
-    <dl>
-     <dt>This version:
-     <dd><a class="u-url" href="https://wicg.github.io/largest-contentful-paint">https://wicg.github.io/largest-contentful-paint</a>
-     <dt>Test Suite:
-     <dd><a href="https://github.com/web-platform-tests/wpt/tree/master/largest-contentful-paint">https://github.com/web-platform-tests/wpt/tree/master/largest-contentful-paint</a>
-     <dt>Issue Tracking:
-     <dd><a href="https://github.com/WICG/largest-contentful-paint/issues/">GitHub</a>
-     <dt class="editor">Editors:
-     <dd class="editor p-author h-card vcard"><a class="p-name fn u-email email" href="mailto:yoavweiss@chromium.org">Yoav Weiss</a> (<a class="p-org org" href="https://google.com">Google</a>)
-     <dd class="editor p-author h-card vcard"><a class="p-name fn u-email email" href="mailto:npm@chromium.org">Nicolás Peña Moreno</a> (<a class="p-org org" href="https://google.com">Google</a>)
-    </dl>
-   </div>
+   <p id="w3c-state"><a href="https://www.w3.org/standards/types#ED">Editor’s Draft</a>, <time class="dt-updated" datetime="2022-03-09">9 March 2022</time></p>
+   <details open>
+    <summary>More details about this document</summary>
+    <div data-fill-with="spec-metadata">
+     <dl>
+      <dt>This version:
+      <dd><a class="u-url" href="https://wicg.github.io/largest-contentful-paint">https://wicg.github.io/largest-contentful-paint</a>
+      <dt>Test Suite:
+      <dd><a href="https://github.com/web-platform-tests/wpt/tree/master/largest-contentful-paint">https://github.com/web-platform-tests/wpt/tree/master/largest-contentful-paint</a>
+      <dt>Issue Tracking:
+      <dd><a href="https://github.com/WICG/largest-contentful-paint/issues/">GitHub</a>
+      <dt class="editor">Editors:
+      <dd class="editor p-author h-card vcard"><a class="p-name fn u-email email" href="mailto:yoavweiss@chromium.org">Yoav Weiss</a> (<a class="p-org org" href="https://google.com">Google</a>)
+      <dd class="editor p-author h-card vcard"><a class="p-name fn u-email email" href="mailto:npm@chromium.org">Nicolás Peña Moreno</a> (<a class="p-org org" href="https://google.com">Google</a>)
+     </dl>
+    </div>
+   </details>
    <div data-fill-with="warning"></div>
-   <p class="copyright" data-fill-with="copyright"><a href="http://www.w3.org/Consortium/Legal/ipr-notice#Copyright">Copyright</a> © 2021 the Contributors to the Largest Contentful Paint Specification, published by the <a href="https://www.w3.org/community/wicg/">Web Platform Incubator Community Group</a> under the <a href="https://www.w3.org/community/about/agreements/cla/">W3C Community Contributor License Agreement (CLA)</a>.
-A human-readable <a href="http://www.w3.org/community/about/agreements/cla-deed/">summary</a> is available. </p>
+   <p class="copyright" data-fill-with="copyright"><a href="https://www.w3.org/Consortium/Legal/ipr-notice#Copyright">Copyright</a> © 2022 <a href="https://www.w3.org/"><abbr title="World Wide Web Consortium">W3C</abbr></a><sup>®</sup> (<a href="https://www.csail.mit.edu/"><abbr title="Massachusetts Institute of Technology">MIT</abbr></a>, <a href="https://www.ercim.eu/"><abbr title="European Research Consortium for Informatics and Mathematics">ERCIM</abbr></a>, <a href="https://www.keio.ac.jp/">Keio</a>, <a href="https://ev.buaa.edu.cn/">Beihang</a>). W3C <a href="https://www.w3.org/Consortium/Legal/ipr-notice#Legal_Disclaimer">liability</a>, <a href="https://www.w3.org/Consortium/Legal/ipr-notice#W3C_Trademarks">trademark</a> and <a href="https://www.w3.org/Consortium/Legal/2015/copyright-software-and-document" rel="license">permissive document license</a> rules apply. </p>
    <hr title="Separator for header">
   </div>
   <div class="p-summary" data-fill-with="abstract">
    <h2 class="no-num no-toc no-ref heading settled" id="abstract"><span class="content">Abstract</span></h2>
    <p>This document defines an API that enables monitoring the largest paint an element triggered on screen.</p>
   </div>
-  <div data-fill-with="at-risk"></div>
-  <h2 class="no-num no-toc no-ref heading settled" id="status"><span class="content">Status of this document</span></h2>
+  <h2 class="no-num no-toc no-ref heading settled" id="sotd"><span class="content">Status of this document</span></h2>
   <div data-fill-with="status">
-   <p> This specification was published by the <a href="https://www.w3.org/community/wicg/">Web Platform Incubator Community Group</a>.
-  It is not a W3C Standard nor is it on the W3C Standards Track.
-
-  Please note that under the <a href="https://www.w3.org/community/about/agreements/cla/">W3C Community Contributor License Agreement (CLA)</a> there is a limited opt-out and other conditions apply.
-
-  Learn more about <a href="http://www.w3.org/community/">W3C Community and Business Groups</a>. </p>
+   <p> This is a public copy of the editors’ draft.
+	It is provided for discussion only and may change at any moment.
+	Its publication here does not imply endorsement of its contents by W3C.
+	Don’t cite this document other than as work in progress. </p>
+   <p><a href="https://github.com/WICG/largest-contentful-paint/issues">GitHub Issues</a> are preferred for discussion of this specification. </p>
+   <p>This document is governed by the <a href="https://www.w3.org/2021/Process-20211102/" id="w3c_process_revision">2 November 2021 W3C Process Document</a>. </p>
    <p></p>
   </div>
   <div data-fill-with="at-risk"></div>
@@ -692,7 +695,7 @@ A human-readable <a href="http://www.w3.org/community/about/agreements/cla-deed/
 <c- p>&lt;</c-><c- f>p</c-> <c- e>id</c-><c- o>=</c-><c- s>'large-paragraph'</c-><c- p>></c->This is large body of text.<c- p>&lt;/</c-><c- f>p</c-><c- p>></c->
 ...
 <c- p>&lt;</c-><c- f>script</c-><c- p>></c->
-<c- a>const</c-> observer <c- o>=</c-> <c- k>new</c-> PerformanceObserver<c- p>((</c->list<c- p>)</c-> <c- p>=></c-> <c- p>{</c->
+<c- a>const</c-> observer <c- o>=</c-> <c- ow>new</c-> PerformanceObserver<c- p>((</c->list<c- p>)</c-> <c- p>=></c-> <c- p>{</c->
   <c- a>let</c-> perfEntries <c- o>=</c-> list<c- p>.</c->getEntries<c- p>();</c->
   <c- a>let</c-> lastEntry <c- o>=</c-> perfEntries<c- p>[</c->perfEntries<c- p>.</c->length <c- o>-</c-> <c- mf>1</c-><c- p>];</c->
   <c- c1>// Process the latest candidate for largest contentful paint</c->
@@ -749,8 +752,8 @@ observer<c- p>.</c->observe<c- p>({</c->entryTypes<c- o>:</c-> <c- p>[</c-><c- t
    <p>The <code class="idl"><a data-link-type="idl" href="#dom-largestcontentfulpaint-element" id="ref-for-dom-largestcontentfulpaint-element">element</a></code> attribute’s getter must return the value returned by running the <a data-link-type="dfn" href="https://wicg.github.io/element-timing/#get-an-element" id="ref-for-get-an-element">get an element</a> algorithm with <a data-link-type="dfn" href="#element" id="ref-for-element②">element</a> and null as inputs.</p>
    <p class="note" role="note"><span>Note:</span> The above algorithm defines that an element that is no longer <a data-link-type="dfn" href="https://dom.spec.whatwg.org/#concept-tree-descendant" id="ref-for-concept-tree-descendant">descendant</a> of the <code class="idl"><a data-link-type="idl" href="https://dom.spec.whatwg.org/#document" id="ref-for-document">Document</a></code> will no longer be returned by <code class="idl"><a data-link-type="idl" href="#dom-largestcontentfulpaint-element" id="ref-for-dom-largestcontentfulpaint-element①">element</a></code>'s attribute getter, including elements that are inside a shadow DOM.</p>
    <p>This specification also extends <code class="idl"><a data-link-type="idl" href="https://dom.spec.whatwg.org/#document" id="ref-for-document①">Document</a></code> by adding to it a <dfn class="dfn-paneled" data-dfn-type="dfn" data-noexport id="largest-contentful-paint-size">largest contentful paint size</dfn> concept, initially set to 0.
-It also adds an associated <dfn class="dfn-paneled" data-dfn-type="dfn" data-noexport id="content-set">content set</dfn>, which is initially an empty <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#ordered-set" id="ref-for-ordered-set">set</a>. The <a data-link-type="dfn" href="#content-set" id="ref-for-content-set">content set</a> will be filled with <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#pair" id="ref-for-pair">pairs</a> with an <code class="idl"><a data-link-type="idl" href="https://dom.spec.whatwg.org/#element" id="ref-for-element③">Element</a></code> as the first item and a <code class="idl"><a data-link-type="idl" href="https://fetch.spec.whatwg.org/#request" id="ref-for-request">Request</a></code> as the second item. This is used for performance, to enable the algorithm to only consider each content once.</p>
-   <p class="note" role="note"><span>Note:</span> The user agent needs to maintain the <a data-link-type="dfn" href="#content-set" id="ref-for-content-set①">content set</a> so that removed content does not introduce memory leaks. In particular, it can tie the lifetime of the <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#pair" id="ref-for-pair①">pairs</a> to weak pointers to the <code class="idl"><a data-link-type="idl" href="https://dom.spec.whatwg.org/#element" id="ref-for-element④">Elements</a></code> so that it can be cleaned up sometime after the <code class="idl"><a data-link-type="idl" href="https://dom.spec.whatwg.org/#element" id="ref-for-element⑤">Elements</a></code> are removed. Since the <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#ordered-set" id="ref-for-ordered-set①">set</a> is not exposed to web developers, this does not expose garbage collection timing.</p>
+It also adds an associated <dfn class="dfn-paneled" data-dfn-type="dfn" data-noexport id="content-set">content set</dfn>, which is initially an empty <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#ordered-set" id="ref-for-ordered-set">set</a>. The <a data-link-type="dfn" href="#content-set" id="ref-for-content-set">content set</a> will be filled with (<code class="idl"><a data-link-type="idl" href="https://dom.spec.whatwg.org/#element" id="ref-for-element③">Element</a></code>, <code class="idl"><a data-link-type="idl" href="https://fetch.spec.whatwg.org/#request" id="ref-for-request">Request</a></code>) <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#tuple" id="ref-for-tuple">tuples</a>. This is used for performance, to enable the algorithm to only consider each content once.</p>
+   <p class="note" role="note"><span>Note:</span> The user agent needs to maintain the <a data-link-type="dfn" href="#content-set" id="ref-for-content-set①">content set</a> so that removed content does not introduce memory leaks. In particular, it can tie the lifetime of the <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#tuple" id="ref-for-tuple①">tuples</a> to weak pointers to the <code class="idl"><a data-link-type="idl" href="https://dom.spec.whatwg.org/#element" id="ref-for-element④">Elements</a></code> so that it can be cleaned up sometime after the <code class="idl"><a data-link-type="idl" href="https://dom.spec.whatwg.org/#element" id="ref-for-element⑤">Elements</a></code> are removed. Since the <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#ordered-set" id="ref-for-ordered-set①">set</a> is not exposed to web developers, this does not expose garbage collection timing.</p>
    <h2 class="heading settled" data-level="3" id="sec-processing-model"><span class="secno">3. </span><span class="content">Processing model</span><a class="self-link" href="#sec-processing-model"></a></h2>
    <h3 class="heading settled" data-level="3.1" id="sec-add-lcp-entry"><span class="secno">3.1. </span><span class="content">Potentially add LargestContentfulPaint entry</span><a class="self-link" href="#sec-add-lcp-entry"></a></h3>
    <p class="note" role="note"><span>Note:</span> A user agent implementing the Largest Contentful Paint API would need to include <code class="highlight"><c- u>"largest-contentful-paint"</c-></code> in <code class="idl"><a data-link-type="idl" href="https://w3c.github.io/performance-timeline/#supportedentrytypes-attribute" id="ref-for-supportedentrytypes-attribute">supportedEntryTypes</a></code> for <code class="idl"><a data-link-type="idl" href="https://html.spec.whatwg.org/multipage/window-object.html#window" id="ref-for-window">Window</a></code> contexts.
@@ -776,7 +779,7 @@ This allows developers to detect support for the API.</p>
       <p>None</p>
       <ol>
        <li data-md>
-        <p>Let <var>contentIdentifier</var> be the <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#pair" id="ref-for-pair②">pair</a> (<var>element</var>, <var>imageRequest</var>).</p>
+        <p>Let <var>contentIdentifier</var> be the <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#tuple" id="ref-for-tuple②">tuple</a> (<var>element</var>, <var>imageRequest</var>).</p>
        <li data-md>
         <p>If <var>document</var>’s <a data-link-type="dfn" href="#content-set" id="ref-for-content-set②">content set</a> <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#list-contain" id="ref-for-list-contain">contains</a> <var>contentIdentifier</var>, return.</p>
        <li data-md>
@@ -923,7 +926,7 @@ This allows developers to detect support for the API.</p>
     and are not intended to be performant.
     Implementers are encouraged to optimize. </p>
   </div>
-<script src="https://www.w3.org/scripts/TR/2016/fixup.js"></script>
+<script src="https://www.w3.org/scripts/TR/2021/fixup.js"></script>
   <h2 class="no-num no-ref heading settled" id="index"><span class="content">Index</span><a class="self-link" href="#index"></a></h2>
   <h3 class="no-num no-ref heading settled" id="index-defined-here"><span class="content">Terms defined by this specification</span><a class="self-link" href="#index-defined-here"></a></h3>
   <ul class="index">
@@ -1175,17 +1178,17 @@ This allows developers to detect support for the API.</p>
     <li><a href="#ref-for-ordered-map①">3.2. Create a LargestContentfulPaint entry</a>
    </ul>
   </aside>
-  <aside class="dfn-panel" data-for="term-for-pair">
-   <a href="https://infra.spec.whatwg.org/#pair">https://infra.spec.whatwg.org/#pair</a><b>Referenced in:</b>
-   <ul>
-    <li><a href="#ref-for-pair">2.1. LargestContentfulPaint interface</a> <a href="#ref-for-pair①">(2)</a>
-    <li><a href="#ref-for-pair②">3.1. Potentially add LargestContentfulPaint entry</a>
-   </ul>
-  </aside>
   <aside class="dfn-panel" data-for="term-for-ordered-set">
    <a href="https://infra.spec.whatwg.org/#ordered-set">https://infra.spec.whatwg.org/#ordered-set</a><b>Referenced in:</b>
    <ul>
     <li><a href="#ref-for-ordered-set">2.1. LargestContentfulPaint interface</a> <a href="#ref-for-ordered-set①">(2)</a>
+   </ul>
+  </aside>
+  <aside class="dfn-panel" data-for="term-for-tuple">
+   <a href="https://infra.spec.whatwg.org/#tuple">https://infra.spec.whatwg.org/#tuple</a><b>Referenced in:</b>
+   <ul>
+    <li><a href="#ref-for-tuple">2.1. LargestContentfulPaint interface</a> <a href="#ref-for-tuple①">(2)</a>
+    <li><a href="#ref-for-tuple②">3.1. Potentially add LargestContentfulPaint entry</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="term-for-the-performanceentry-interface">
@@ -1336,11 +1339,11 @@ This allows developers to detect support for the API.</p>
      <li><span class="dfn-paneled" id="term-for-set-append">append</span>
      <li><span class="dfn-paneled" id="term-for-list-contain">contain</span>
      <li><span class="dfn-paneled" id="term-for-ordered-map">map</span>
-     <li><span class="dfn-paneled" id="term-for-pair">pair</span>
      <li><span class="dfn-paneled" id="term-for-ordered-set">set</span>
+     <li><span class="dfn-paneled" id="term-for-tuple">tuple</span>
     </ul>
    <li>
-    <a data-link-type="biblio">[performance-timeline-2]</a> defines the following terms:
+    <a data-link-type="biblio">[performance-timeline]</a> defines the following terms:
     <ul>
      <li><span class="dfn-paneled" id="term-for-the-performanceentry-interface">PerformanceEntry</span>
      <li><span class="dfn-paneled" id="term-for-dom-performanceentry-duration">duration</span>
@@ -1371,19 +1374,19 @@ This allows developers to detect support for the API.</p>
    <dt id="biblio-element-timing">[ELEMENT-TIMING]
    <dd><a href="https://wicg.github.io/element-timing/"><cite>Element Timing API</cite></a>. cg-draft. URL: <a href="https://wicg.github.io/element-timing/">https://wicg.github.io/element-timing/</a>
    <dt id="biblio-event-timing">[EVENT-TIMING]
-   <dd><a href="https://wicg.github.io/event-timing/"><cite>Event Timing API</cite></a>. cg-draft. URL: <a href="https://wicg.github.io/event-timing/">https://wicg.github.io/event-timing/</a>
+   <dd>Nicolás Peña Moreno; Tim Dresser. <a href="https://w3c.github.io/event-timing/"><cite>Event Timing API</cite></a>. ED. URL: <a href="https://w3c.github.io/event-timing/">https://w3c.github.io/event-timing/</a>
    <dt id="biblio-fetch">[FETCH]
    <dd>Anne van Kesteren. <a href="https://fetch.spec.whatwg.org/"><cite>Fetch Standard</cite></a>. Living Standard. URL: <a href="https://fetch.spec.whatwg.org/">https://fetch.spec.whatwg.org/</a>
    <dt id="biblio-geometry-1">[GEOMETRY-1]
    <dd>Simon Pieters; Chris Harrelson. <a href="https://www.w3.org/TR/geometry-1/"><cite>Geometry Interfaces Module Level 1</cite></a>. 4 December 2018. CR. URL: <a href="https://www.w3.org/TR/geometry-1/">https://www.w3.org/TR/geometry-1/</a>
    <dt id="biblio-hr-time-3">[HR-TIME-3]
-   <dd>Yoav Weiss; et al. <a href="https://www.w3.org/TR/hr-time-3/"><cite>High Resolution Time</cite></a>. 12 October 2021. WD. URL: <a href="https://www.w3.org/TR/hr-time-3/">https://www.w3.org/TR/hr-time-3/</a>
+   <dd>Yoav Weiss. <a href="https://www.w3.org/TR/hr-time-3/"><cite>High Resolution Time</cite></a>. 28 January 2022. WD. URL: <a href="https://www.w3.org/TR/hr-time-3/">https://www.w3.org/TR/hr-time-3/</a>
    <dt id="biblio-html">[HTML]
    <dd>Anne van Kesteren; et al. <a href="https://html.spec.whatwg.org/multipage/"><cite>HTML Standard</cite></a>. Living Standard. URL: <a href="https://html.spec.whatwg.org/multipage/">https://html.spec.whatwg.org/multipage/</a>
    <dt id="biblio-infra">[INFRA]
    <dd>Anne van Kesteren; Domenic Denicola. <a href="https://infra.spec.whatwg.org/"><cite>Infra Standard</cite></a>. Living Standard. URL: <a href="https://infra.spec.whatwg.org/">https://infra.spec.whatwg.org/</a>
-   <dt id="biblio-performance-timeline-2">[PERFORMANCE-TIMELINE-2]
-   <dd>Nicolas Pena Moreno; Ilya Grigorik. <a href="https://www.w3.org/TR/performance-timeline-2/"><cite>Performance Timeline Level 2</cite></a>. 19 August 2021. WD. URL: <a href="https://www.w3.org/TR/performance-timeline-2/">https://www.w3.org/TR/performance-timeline-2/</a>
+   <dt id="biblio-performance-timeline">[PERFORMANCE-TIMELINE]
+   <dd>Nicolas Pena Moreno. <a href="https://www.w3.org/TR/performance-timeline/"><cite>Performance Timeline</cite></a>. 2 December 2021. CR. URL: <a href="https://www.w3.org/TR/performance-timeline/">https://www.w3.org/TR/performance-timeline/</a>
    <dt id="biblio-rfc2119">[RFC2119]
    <dd>S. Bradner. <a href="https://datatracker.ietf.org/doc/html/rfc2119"><cite>Key words for use in RFCs to Indicate Requirement Levels</cite></a>. March 1997. Best Current Practice. URL: <a href="https://datatracker.ietf.org/doc/html/rfc2119">https://datatracker.ietf.org/doc/html/rfc2119</a>
    <dt id="biblio-webidl">[WEBIDL]

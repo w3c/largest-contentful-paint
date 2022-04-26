@@ -199,13 +199,13 @@ In order to <dfn export>potentially add a {{LargestContentfulPaint}} entry</dfn>
         1. Let |rootWidth| be |root|'s <a>viewport</a>'s width, excluding any scrollbars.
         1. Let |rootHeight| be |root|'s <a>viewport</a>'s height, excluding any scrollbars.
         1. If |size| is equal to |rootWidth| times |rootHeight|, return.
-        1. If |imageRequest| is not null, run the following steps:
-            1. Let |naturalWidth| and |naturalHeight| be the outputs of running the same steps for an <{img}>'s {{img/naturalWidth}} and {{img/naturalHeight}} attribute getters, but using |imageRequest| as the image.
-            1. Let |naturalSize| be <code>|naturalWidth| * |naturalHeight|</code>.
-            1. Let |displayWidth| and |displayHeight| be the outputs of running the same steps for an <{img}>'s {{img/width}} and {{img/height}} attribute getters, but using |imageRequest| as the image.
-            1. Let |displaySize| be <code>|displayWidth| * |displayHeight|</code>.
-            1. Let |penaltyFactor| be <code>min(|displaySize|, |naturalSize|) / |displaySize|</code>.
-            1. Multiply |size| by |penaltyFactor|.
+        1. If |imageRequest| is not null, run the following steps to reduce the computed size of upscaled images:
+            1. Let (|naturalWidth|, |naturalHeight|) be |imageRequest|'s [=natural dimension=].
+            1. Let (|concreteWidth|, |concreteHeight|) be |imageRequest|'s [=concrete object size=].
+            1. Let |naturalArea| be <code>|naturalWidth| * |naturalHeight|</code>.
+            1. Let |concreteArea| be <code>|concreteWidth| * |concreteHeight|</code>.
+            1. Let |scaleFactor| be <code>|concreteArea| / |naturalArea|</code>.
+            1. If |scaleFactor| is greater than 1, then divide |size| by |scaleFactor|.
         1. If |size| is less than or equal to |document|'s [=largest contentful paint size=], return.
         1. Let |contentInfo| be a <a>map</a> with |contentInfo|["size"] = |size|, |contentInfo|["url"] = |url|, |contentInfo|["id"] = |id|, |contentInfo|["renderTime"] = |renderTime|, |contentInfo|["loadTime"] = |loadTime|, and contentInfo["element"] = |element|.
         1. <a>Create a LargestContentfulPaint entry</a> with |contentInfo|, and |document| as inputs.

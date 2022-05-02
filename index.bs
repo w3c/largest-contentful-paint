@@ -201,7 +201,10 @@ In order to <dfn export>potentially add a {{LargestContentfulPaint}} entry</dfn>
         1. If |size| is equal to |rootWidth| times |rootHeight|, return.
         1. If |imageRequest| is not null, run the following steps to adjust for image position and upscaling:
             1. Let |concreteDimensions| be |imageRequest|'s [=concrete object size=] within |element|.
-            1. Let |visibleDimensions| be |concreteDimensions|, adjusted for positioning by <a data-xref-type="css-property">object-position</a> or <a data-xref-type="css-property">background-position</a> and |element|'s [=content box=].
+            1. Let |visibleDimensions| be |concreteDimensions|, adjusted for positioning by [=object-position=] or [=background-position=] and |element|'s [=content box=].
+
+               Note: some of those algorithms are not rigorously defined in CSS. The expected result is to get the actual position and size of the image in |element| as a {{DOMRectReadOnly}}.
+
             1. Let |clientContentRect| be the smallest {{DOMRectReadOnly}} containing |visibleDimensions| with |element|'s [=transforms=] applied.
             1. Let |intersectingClientContentRect| be the intersection of |clientContentRect| with |intersectionRect|.
             1. Set |size| to <code>|intersectingClientContentRect|'s {{DOMRectReadOnly/width}} * |intersectingClientContentRect|'s {{DOMRectReadOnly/height}}</code>.

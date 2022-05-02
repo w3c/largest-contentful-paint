@@ -201,7 +201,7 @@ In order to <dfn export>potentially add a {{LargestContentfulPaint}} entry</dfn>
         1. If |size| is equal to |rootWidth| times |rootHeight|, return.
         1. If |imageRequest| is not null, run the following steps to adjust for image position and upscaling:
             1. Let |concreteDimensions| be |imageRequest|'s [=concrete object size=] within |element|.
-            1. Let |visibleDimensions| be |concreteDimensions|, adjusted for positioning by [=object-position=] or [=background-position=] and |element|'s [=content box=].
+            1. Let |visibleDimensions| be |concreteDimensions|, adjusted for positioning by 'object-position' or 'background-position' and |element|'s [=content box=].
 
                Note: some of those algorithms are not rigorously defined in CSS. The expected result is to get the actual position and size of the image in |element| as a {{DOMRectReadOnly}}.
 

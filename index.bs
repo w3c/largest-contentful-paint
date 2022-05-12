@@ -3,7 +3,7 @@ Title: Largest Contentful Paint
 Status: ED
 Shortname: largest-contentful-paint
 Group: webperf
-Level: 1
+Level: none
 Editor: Yoav Weiss, Google https://google.com, yoavweiss@chromium.org, w3cid 58673
 Editor: Nicolás Peña Moreno, Google https://google.com, npm@chromium.org, w3cid 103755
 URL: https://wicg.github.io/largest-contentful-paint

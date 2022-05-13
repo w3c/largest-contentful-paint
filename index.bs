@@ -213,6 +213,7 @@ In order to <dfn export>potentially add a {{LargestContentfulPaint}} entry</dfn>
 
             1. Let (|naturalWidth|, |naturalHeight|) be |imageRequest|'s [=natural dimension=].
             1. Let |naturalArea| be <code>|naturalWidth| * |naturalHeight|</code>.
+            1. If |naturalArea| is 0, then return.
             1. Let |concreteArea| be <code>|concreteDimensions|'s {{DOMRectReadOnly/width}} * |concreteDimensions|'s {{DOMRectReadOnly/height}}</code>.
             1. Let |scaleFactor| be <code>|concreteArea| / |naturalArea|</code>.
             1. If |scaleFactor| is greater than 1, then divide |size| by |scaleFactor|.

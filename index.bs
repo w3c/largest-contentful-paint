@@ -244,7 +244,7 @@ Modifications to the DOM specification {#sec-modifications-DOM}
 
     Right after step 1, we add the following step:
 
-    * If |target|'s [=relevant global object=] is a {{Window}} object, <var ignore>event</var>'s {{Event/type}} is {{scroll}} and its {{Event/isTrusted}} is false, set |target|'s [=relevant global object=]'s [=has dispatched scroll event=] to true.
+    * If |target|'s [=relevant global object=] is a {{Window}} object, <var ignore>event</var>'s {{Event/type}} is {{scroll}} and its {{Event/isTrusted}} is true, set |target|'s [=relevant global object=]'s [=has dispatched scroll event=] to true.
 </div>
 
 Modifications to the HTML specification {#sec-modifications-HTML}

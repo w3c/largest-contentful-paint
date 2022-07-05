@@ -6,7 +6,7 @@
   <meta content="ED" name="w3c-status">
   <link href="https://www.w3.org/StyleSheets/TR/2021/W3C-ED" rel="stylesheet">
   <link href="https://www.w3.org/2008/site/images/favicon.ico" rel="icon">
-  <meta content="Bikeshed version fb1e763a4, updated Tue Mar 1 13:13:50 2022 -0800" name="generator">
+  <meta content="Bikeshed version d4e9716, updated Fri Jul 1 13:16:45 2022 -0700" name="generator">
   <link href="https://www.w3.org/TR/largest-contentful-paint/" rel="canonical">
 <style>/* style-autolinks */
 
@@ -589,7 +589,7 @@ c-[il] { color: #000000 } /* Literal.Number.Integer.Long */
   <div class="head">
    <p data-fill-with="logo"><a class="logo" href="https://www.w3.org/"> <img alt="W3C" height="48" src="https://www.w3.org/StyleSheets/TR/2021/logos/W3C" width="72"> </a> </p>
    <h1 class="p-name no-ref" id="title">Largest Contentful Paint</h1>
-   <p id="w3c-state"><a href="https://www.w3.org/standards/types#ED">Editor’s Draft</a>, <time class="dt-updated" datetime="2022-05-30">30 May 2022</time></p>
+   <p id="w3c-state"><a href="https://www.w3.org/standards/types#ED">Editor’s Draft</a>, <time class="dt-updated" datetime="2022-07-05">5 July 2022</time></p>
    <details open>
     <summary>More details about this document</summary>
     <div data-fill-with="spec-metadata">
@@ -878,7 +878,7 @@ This allows developers to detect support for the API.</p>
     <p>Right after step 1, we add the following step:</p>
     <ul>
      <li data-md>
-      <p>If <var>target</var>’s <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/webappapis.html#concept-relevant-global" id="ref-for-concept-relevant-global①">relevant global object</a> is a <code class="idl"><a data-link-type="idl" href="https://html.spec.whatwg.org/multipage/window-object.html#window" id="ref-for-window①">Window</a></code> object, <var>event</var>’s <code class="idl"><a data-link-type="idl" href="https://dom.spec.whatwg.org/#dom-event-type" id="ref-for-dom-event-type">type</a></code> is <code class="idl"><a data-link-type="idl" href="https://drafts.csswg.org/cssom-view-1/#eventdef-document-scroll" id="ref-for-eventdef-document-scroll">scroll</a></code> and its <code class="idl"><a data-link-type="idl" href="https://dom.spec.whatwg.org/#dom-event-istrusted" id="ref-for-dom-event-istrusted">isTrusted</a></code> is false, set <var>target</var>’s <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/webappapis.html#concept-relevant-global" id="ref-for-concept-relevant-global②">relevant global object</a>'s <a data-link-type="dfn" href="#has-dispatched-scroll-event" id="ref-for-has-dispatched-scroll-event①">has dispatched scroll event</a> to true.</p>
+      <p>If <var>target</var>’s <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/webappapis.html#concept-relevant-global" id="ref-for-concept-relevant-global①">relevant global object</a> is a <code class="idl"><a data-link-type="idl" href="https://html.spec.whatwg.org/multipage/window-object.html#window" id="ref-for-window①">Window</a></code> object, <var>event</var>’s <code class="idl"><a data-link-type="idl" href="https://dom.spec.whatwg.org/#dom-event-type" id="ref-for-dom-event-type">type</a></code> is <code class="idl"><a data-link-type="idl" href="https://drafts.csswg.org/cssom-view-1/#eventdef-document-scroll" id="ref-for-eventdef-document-scroll">scroll</a></code> and its <code class="idl"><a data-link-type="idl" href="https://dom.spec.whatwg.org/#dom-event-istrusted" id="ref-for-dom-event-istrusted">isTrusted</a></code> is true, set <var>target</var>’s <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/webappapis.html#concept-relevant-global" id="ref-for-concept-relevant-global②">relevant global object</a>'s <a data-link-type="dfn" href="#has-dispatched-scroll-event" id="ref-for-has-dispatched-scroll-event①">has dispatched scroll event</a> to true.</p>
     </ul>
    </div>
    <h3 class="heading settled" data-level="3.4" id="sec-modifications-HTML"><span class="secno">3.4. </span><span class="content">Modifications to the HTML specification</span><a class="self-link" href="#sec-modifications-HTML"></a></h3>
@@ -912,7 +912,7 @@ This allows developers to detect support for the API.</p>
     and are set apart from the normative text
     with <code class="highlight"><c- a>class</c-><c- o>=</c-><c- u>"note"</c-></code>,
     like this: </p>
-   <p class="note" role="note">Note, this is an informative note. </p>
+   <p class="note" role="note">Note, this is an informative note.</p>
    <h3 class="no-ref no-num heading settled" id="w3c-conformant-algorithms"><span class="content">Conformant Algorithms</span><a class="self-link" href="#w3c-conformant-algorithms"></a></h3>
    <p>Requirements phrased in the imperative as part of algorithms
     (such as "strip any leading space characters"
@@ -1298,7 +1298,7 @@ This allows developers to detect support for the API.</p>
      <li><span class="dfn-paneled" id="term-for-get-an-element">get an element</span>
     </ul>
    <li>
-    <a data-link-type="biblio">[EVENT-TIMING]</a> defines the following terms:
+    <a data-link-type="biblio">[event-timing]</a> defines the following terms:
     <ul>
      <li><span class="dfn-paneled" id="term-for-has-dispatched-input-event">has dispatched input event</span>
     </ul>
@@ -1376,7 +1376,7 @@ This allows developers to detect support for the API.</p>
    <dt id="biblio-element-timing">[ELEMENT-TIMING]
    <dd><a href="https://wicg.github.io/element-timing/"><cite>Element Timing API</cite></a>. cg-draft. URL: <a href="https://wicg.github.io/element-timing/">https://wicg.github.io/element-timing/</a>
    <dt id="biblio-event-timing">[EVENT-TIMING]
-   <dd>Nicolás Peña Moreno; Tim Dresser. <a href="https://w3c.github.io/event-timing/"><cite>Event Timing API</cite></a>. ED. URL: <a href="https://w3c.github.io/event-timing/">https://w3c.github.io/event-timing/</a>
+   <dd>Nicolas Pena Moreno; Tim Dresser. <a href="https://www.w3.org/TR/event-timing/"><cite>Event Timing API</cite></a>. 24 May 2022. WD. URL: <a href="https://www.w3.org/TR/event-timing/">https://www.w3.org/TR/event-timing/</a>
    <dt id="biblio-fetch">[FETCH]
    <dd>Anne van Kesteren. <a href="https://fetch.spec.whatwg.org/"><cite>Fetch Standard</cite></a>. Living Standard. URL: <a href="https://fetch.spec.whatwg.org/">https://fetch.spec.whatwg.org/</a>
    <dt id="biblio-geometry-1">[GEOMETRY-1]

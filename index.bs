@@ -200,13 +200,24 @@ In order to <dfn export>potentially add a {{LargestContentfulPaint}} entry</dfn>
         1. Let |rootWidth| be |root|'s <a>viewport</a>'s width, excluding any scrollbars.
         1. Let |rootHeight| be |root|'s <a>viewport</a>'s height, excluding any scrollbars.
         1. If |size| is equal to |rootWidth| times |rootHeight|, return.
-        1. If |imageRequest| is not null, run the following steps:
-            1. Let |naturalWidth| and |naturalHeight| be the outputs of running the same steps for an <{img}>'s {{img/naturalWidth}} and {{img/naturalHeight}} attribute getters, but using |imageRequest| as the image.
-            1. Let |naturalSize| be <code>|naturalWidth| * |naturalHeight|</code>.
-            1. Let |displayWidth| and |displayHeight| be the outputs of running the same steps for an <{img}>'s {{img/width}} and {{img/height}} attribute getters, but using |imageRequest| as the image.
-            1. Let |displaySize| be <code>|displayWidth| * |displayHeight|</code>.
-            1. Let |penaltyFactor| be <code>min(|displaySize|, |naturalSize|) / |displaySize|</code>.
-            1. Multiply |size| by |penaltyFactor|.
+        1. If |imageRequest| is not null, run the following steps to adjust for image position and upscaling:
+            1. Let |concreteDimensions| be |imageRequest|'s [=concrete object size=] within |element|.
+            1. Let |visibleDimensions| be |concreteDimensions|, adjusted for positioning by 'object-position' or 'background-position' and |element|'s [=content box=].
+
+               Note: some of those algorithms are not rigorously defined in CSS. The expected result is to get the actual position and size of the image in |element| as a {{DOMRectReadOnly}}.
+
+            1. Let |clientContentRect| be the smallest {{DOMRectReadOnly}} containing |visibleDimensions| with |element|'s [=transforms=] applied.
+            1. Let |intersectingClientContentRect| be the intersection of |clientContentRect| with |intersectionRect|.
+            1. Set |size| to <code>|intersectingClientContentRect|'s {{DOMRectReadOnly/width}} * |intersectingClientContentRect|'s {{DOMRectReadOnly/height}}</code>.
+
+               Note: this ensure that we only intersect with the image itself and not with the element's decorations.
+
+            1. Let |naturalArea| be <code>|imageRequest|'s [=natural width=] * |imageRequest|'s [=natural height=]</code>.
+            1. If |naturalArea| is 0, then return.
+            1. Let |boundingClientArea| be <code>|clientContentRect|'s {{DOMRectReadOnly/width}} * |clientContentRect|'s {{DOMRectReadOnly/height}}</code>.
+            1. Let |scaleFactor| be <code>|boundingClientArea| / |naturalArea|</code>.
+            1. If |scaleFactor| is greater than 1, then divide |size| by |scaleFactor|.
+
         1. If |size| is less than or equal to |document|'s [=largest contentful paint size=], return.
         1. Let |contentInfo| be a <a>map</a> with |contentInfo|["size"] = |size|, |contentInfo|["url"] = |url|, |contentInfo|["id"] = |id|, |contentInfo|["renderTime"] = |renderTime|, |contentInfo|["loadTime"] = |loadTime|, and contentInfo["element"] = |element|.
         1. <a>Create a LargestContentfulPaint entry</a> with |contentInfo|, and |document| as inputs.

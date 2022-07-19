@@ -6,7 +6,7 @@
   <meta content="ED" name="w3c-status">
   <link href="https://www.w3.org/StyleSheets/TR/2021/W3C-ED" rel="stylesheet">
   <link href="https://www.w3.org/2008/site/images/favicon.ico" rel="icon">
-  <meta content="Bikeshed version d4e9716, updated Fri Jul 1 13:16:45 2022 -0700" name="generator">
+  <meta content="Bikeshed version f1c9d5e, updated Fri Jul 15 11:39:35 2022 -0700" name="generator">
   <link href="https://www.w3.org/TR/largest-contentful-paint/" rel="canonical">
 <style>/* style-autolinks */
 
@@ -589,7 +589,7 @@ c-[il] { color: #000000 } /* Literal.Number.Integer.Long */
   <div class="head">
    <p data-fill-with="logo"><a class="logo" href="https://www.w3.org/"> <img alt="W3C" height="48" src="https://www.w3.org/StyleSheets/TR/2021/logos/W3C" width="72"> </a> </p>
    <h1 class="p-name no-ref" id="title">Largest Contentful Paint</h1>
-   <p id="w3c-state"><a href="https://www.w3.org/standards/types#ED">Editor’s Draft</a>, <time class="dt-updated" datetime="2022-07-05">5 July 2022</time></p>
+   <p id="w3c-state"><a href="https://www.w3.org/standards/types#ED">Editor’s Draft</a>, <time class="dt-updated" datetime="2022-07-19">19 July 2022</time></p>
    <details open>
     <summary>More details about this document</summary>
     <div data-fill-with="spec-metadata">
@@ -811,20 +811,34 @@ This allows developers to detect support for the API.</p>
        <li data-md>
         <p>If <var>size</var> is equal to <var>rootWidth</var> times <var>rootHeight</var>, return.</p>
        <li data-md>
-        <p>If <var>imageRequest</var> is not null, run the following steps:</p>
+        <p>If <var>imageRequest</var> is not null, run the following steps to adjust for image position and upscaling:</p>
         <ol>
          <li data-md>
-          <p>Let <var>naturalWidth</var> and <var>naturalHeight</var> be the outputs of running the same steps for an <code class="highlight"><a data-link-type="element" href="https://html.spec.whatwg.org/multipage/embedded-content.html#the-img-element" id="ref-for-the-img-element">img</a></code>'s <code class="idl"><a data-link-type="idl" href="https://html.spec.whatwg.org/multipage/webappapis.html#dom-img-naturalwidth" id="ref-for-dom-img-naturalwidth">naturalWidth</a></code> and <code class="idl"><a data-link-type="idl" href="https://html.spec.whatwg.org/multipage/webappapis.html#dom-img-naturalheight" id="ref-for-dom-img-naturalheight">naturalHeight</a></code> attribute getters, but using <var>imageRequest</var> as the image.</p>
+          <p>Let <var>concreteDimensions</var> be <var>imageRequest</var>’s <a data-link-type="dfn" href="https://drafts.csswg.org/css-images-3/#concrete-object-size" id="ref-for-concrete-object-size">concrete object size</a> within <var>element</var>.</p>
          <li data-md>
-          <p>Let <var>naturalSize</var> be <code class="highlight"><var>naturalWidth</var> <c- o>*</c-> <var>naturalHeight</var></code>.</p>
+          <p>Let <var>visibleDimensions</var> be <var>concreteDimensions</var>, adjusted for positioning by <a class="property css" data-link-type="property" href="https://drafts.csswg.org/css-images-3/#propdef-object-position" id="ref-for-propdef-object-position">object-position</a> or <a class="property css" data-link-type="property" href="https://drafts.csswg.org/css-backgrounds-3/#propdef-background-position" id="ref-for-propdef-background-position">background-position</a> and <var>element</var>’s <a data-link-type="dfn" href="https://drafts.csswg.org/css-box-4/#content-box" id="ref-for-content-box">content box</a>.</p>
+        </ol>
+        <p class="note" role="note"><span>Note:</span> some of those algorithms are not rigorously defined in CSS. The expected result is to get the actual position and size of the image in <var>element</var> as a <code class="idl"><a data-link-type="idl" href="https://drafts.fxtf.org/geometry-1/#domrectreadonly" id="ref-for-domrectreadonly①">DOMRectReadOnly</a></code>.</p>
+        <ol>
          <li data-md>
-          <p>Let <var>displayWidth</var> and <var>displayHeight</var> be the outputs of running the same steps for an <code class="highlight"><a data-link-type="element" href="https://html.spec.whatwg.org/multipage/embedded-content.html#the-img-element" id="ref-for-the-img-element①">img</a></code>'s <code class="idl"><a data-link-type="idl" href="https://html.spec.whatwg.org/multipage/webappapis.html#dom-img-width" id="ref-for-dom-img-width">width</a></code> and <code class="idl"><a data-link-type="idl" href="https://html.spec.whatwg.org/multipage/webappapis.html#dom-img-height" id="ref-for-dom-img-height">height</a></code> attribute getters, but using <var>imageRequest</var> as the image.</p>
+          <p>Let <var>clientContentRect</var> be the smallest <code class="idl"><a data-link-type="idl" href="https://drafts.fxtf.org/geometry-1/#domrectreadonly" id="ref-for-domrectreadonly②">DOMRectReadOnly</a></code> containing <var>visibleDimensions</var> with <var>element</var>’s <a data-link-type="dfn" href="https://streams.spec.whatwg.org/#generictransformstream-transform" id="ref-for-generictransformstream-transform">transforms</a> applied.</p>
          <li data-md>
-          <p>Let <var>displaySize</var> be <code class="highlight"><var>displayWidth</var> <c- o>*</c-> <var>displayHeight</var></code>.</p>
+          <p>Let <var>intersectingClientContentRect</var> be the intersection of <var>clientContentRect</var> with <var>intersectionRect</var>.</p>
          <li data-md>
-          <p>Let <var>penaltyFactor</var> be <code class="highlight">min<c- p>(</c-><var>displaySize</var><c- p>,</c-> <var>naturalSize</var><c- p>)</c-> <c- o>/</c-> <var>displaySize</var></code>.</p>
+          <p>Set <var>size</var> to <code class="highlight"><var>intersectingClientContentRect</var>’s <code class="idl"><a data-link-type="idl" href="https://drafts.fxtf.org/geometry-1/#dom-domrectreadonly-width" id="ref-for-dom-domrectreadonly-width①">width</a></code> <c- o>*</c-> <var>intersectingClientContentRect</var>’s <code class="idl"><a data-link-type="idl" href="https://drafts.fxtf.org/geometry-1/#dom-domrectreadonly-height" id="ref-for-dom-domrectreadonly-height①">height</a></code></code>.</p>
+        </ol>
+        <p class="note" role="note"><span>Note:</span> this ensure that we only intersect with the image itself and not with the element’s decorations.</p>
+        <ol>
          <li data-md>
-          <p>Multiply <var>size</var> by <var>penaltyFactor</var>.</p>
+          <p>Let <var>naturalArea</var> be <code class="highlight"><var>imageRequest</var>’s <a data-link-type="dfn" href="https://drafts.csswg.org/css-images-3/#natural-width" id="ref-for-natural-width">natural width</a> <c- o>*</c-> <var>imageRequest</var>’s <a data-link-type="dfn" href="https://drafts.csswg.org/css-images-3/#natural-height" id="ref-for-natural-height">natural height</a></code>.</p>
+         <li data-md>
+          <p>If <var>naturalArea</var> is 0, then return.</p>
+         <li data-md>
+          <p>Let <var>boundingClientArea</var> be <code class="highlight"><var>clientContentRect</var>’s <code class="idl"><a data-link-type="idl" href="https://drafts.fxtf.org/geometry-1/#dom-domrectreadonly-width" id="ref-for-dom-domrectreadonly-width②">width</a></code> <c- o>*</c-> <var>clientContentRect</var>’s <code class="idl"><a data-link-type="idl" href="https://drafts.fxtf.org/geometry-1/#dom-domrectreadonly-height" id="ref-for-dom-domrectreadonly-height②">height</a></code></code>.</p>
+         <li data-md>
+          <p>Let <var>scaleFactor</var> be <code class="highlight"><var>boundingClientArea</var> <c- o>/</c-> <var>naturalArea</var></code>.</p>
+         <li data-md>
+          <p>If <var>scaleFactor</var> is greater than 1, then divide <var>size</var> by <var>scaleFactor</var>.</p>
         </ol>
        <li data-md>
         <p>If <var>size</var> is less than or equal to <var>document</var>’s <a data-link-type="dfn" href="#largest-contentful-paint-size" id="ref-for-largest-contentful-paint-size">largest contentful paint size</a>, return.</p>
@@ -976,6 +990,42 @@ This allows developers to detect support for the API.</p>
      <li><a href="#url">definition of</a><span>, in § 2.1</span>
     </ul>
   </ul>
+  <aside class="dfn-panel" data-for="term-for-propdef-background-position">
+   <a href="https://drafts.csswg.org/css-backgrounds-3/#propdef-background-position">https://drafts.csswg.org/css-backgrounds-3/#propdef-background-position</a><b>Referenced in:</b>
+   <ul>
+    <li><a href="#ref-for-propdef-background-position">3.1. Potentially add LargestContentfulPaint entry</a>
+   </ul>
+  </aside>
+  <aside class="dfn-panel" data-for="term-for-content-box">
+   <a href="https://drafts.csswg.org/css-box-4/#content-box">https://drafts.csswg.org/css-box-4/#content-box</a><b>Referenced in:</b>
+   <ul>
+    <li><a href="#ref-for-content-box">3.1. Potentially add LargestContentfulPaint entry</a>
+   </ul>
+  </aside>
+  <aside class="dfn-panel" data-for="term-for-concrete-object-size">
+   <a href="https://drafts.csswg.org/css-images-3/#concrete-object-size">https://drafts.csswg.org/css-images-3/#concrete-object-size</a><b>Referenced in:</b>
+   <ul>
+    <li><a href="#ref-for-concrete-object-size">3.1. Potentially add LargestContentfulPaint entry</a>
+   </ul>
+  </aside>
+  <aside class="dfn-panel" data-for="term-for-natural-height">
+   <a href="https://drafts.csswg.org/css-images-3/#natural-height">https://drafts.csswg.org/css-images-3/#natural-height</a><b>Referenced in:</b>
+   <ul>
+    <li><a href="#ref-for-natural-height">3.1. Potentially add LargestContentfulPaint entry</a>
+   </ul>
+  </aside>
+  <aside class="dfn-panel" data-for="term-for-natural-width">
+   <a href="https://drafts.csswg.org/css-images-3/#natural-width">https://drafts.csswg.org/css-images-3/#natural-width</a><b>Referenced in:</b>
+   <ul>
+    <li><a href="#ref-for-natural-width">3.1. Potentially add LargestContentfulPaint entry</a>
+   </ul>
+  </aside>
+  <aside class="dfn-panel" data-for="term-for-propdef-object-position">
+   <a href="https://drafts.csswg.org/css-images-3/#propdef-object-position">https://drafts.csswg.org/css-images-3/#propdef-object-position</a><b>Referenced in:</b>
+   <ul>
+    <li><a href="#ref-for-propdef-object-position">3.1. Potentially add LargestContentfulPaint entry</a>
+   </ul>
+  </aside>
   <aside class="dfn-panel" data-for="term-for-eventdef-document-scroll">
    <a href="https://drafts.csswg.org/cssom-view-1/#eventdef-document-scroll">https://drafts.csswg.org/cssom-view-1/#eventdef-document-scroll</a><b>Referenced in:</b>
    <ul>
@@ -1071,19 +1121,19 @@ This allows developers to detect support for the API.</p>
   <aside class="dfn-panel" data-for="term-for-domrectreadonly">
    <a href="https://drafts.fxtf.org/geometry-1/#domrectreadonly">https://drafts.fxtf.org/geometry-1/#domrectreadonly</a><b>Referenced in:</b>
    <ul>
-    <li><a href="#ref-for-domrectreadonly">3.1. Potentially add LargestContentfulPaint entry</a>
+    <li><a href="#ref-for-domrectreadonly">3.1. Potentially add LargestContentfulPaint entry</a> <a href="#ref-for-domrectreadonly①">(2)</a> <a href="#ref-for-domrectreadonly②">(3)</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="term-for-dom-domrectreadonly-height">
    <a href="https://drafts.fxtf.org/geometry-1/#dom-domrectreadonly-height">https://drafts.fxtf.org/geometry-1/#dom-domrectreadonly-height</a><b>Referenced in:</b>
    <ul>
-    <li><a href="#ref-for-dom-domrectreadonly-height">3.1. Potentially add LargestContentfulPaint entry</a>
+    <li><a href="#ref-for-dom-domrectreadonly-height">3.1. Potentially add LargestContentfulPaint entry</a> <a href="#ref-for-dom-domrectreadonly-height①">(2)</a> <a href="#ref-for-dom-domrectreadonly-height②">(3)</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="term-for-dom-domrectreadonly-width">
    <a href="https://drafts.fxtf.org/geometry-1/#dom-domrectreadonly-width">https://drafts.fxtf.org/geometry-1/#dom-domrectreadonly-width</a><b>Referenced in:</b>
    <ul>
-    <li><a href="#ref-for-dom-domrectreadonly-width">3.1. Potentially add LargestContentfulPaint entry</a>
+    <li><a href="#ref-for-dom-domrectreadonly-width">3.1. Potentially add LargestContentfulPaint entry</a> <a href="#ref-for-dom-domrectreadonly-width①">(2)</a> <a href="#ref-for-dom-domrectreadonly-width②">(3)</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="term-for-dom-domhighrestimestamp">
@@ -1112,30 +1162,6 @@ This allows developers to detect support for the API.</p>
     <li><a href="#ref-for-concept-document-bc">3.1. Potentially add LargestContentfulPaint entry</a>
    </ul>
   </aside>
-  <aside class="dfn-panel" data-for="term-for-dom-img-height">
-   <a href="https://html.spec.whatwg.org/multipage/webappapis.html#dom-img-height">https://html.spec.whatwg.org/multipage/webappapis.html#dom-img-height</a><b>Referenced in:</b>
-   <ul>
-    <li><a href="#ref-for-dom-img-height">3.1. Potentially add LargestContentfulPaint entry</a>
-   </ul>
-  </aside>
-  <aside class="dfn-panel" data-for="term-for-the-img-element">
-   <a href="https://html.spec.whatwg.org/multipage/embedded-content.html#the-img-element">https://html.spec.whatwg.org/multipage/embedded-content.html#the-img-element</a><b>Referenced in:</b>
-   <ul>
-    <li><a href="#ref-for-the-img-element">3.1. Potentially add LargestContentfulPaint entry</a> <a href="#ref-for-the-img-element①">(2)</a>
-   </ul>
-  </aside>
-  <aside class="dfn-panel" data-for="term-for-dom-img-naturalheight">
-   <a href="https://html.spec.whatwg.org/multipage/webappapis.html#dom-img-naturalheight">https://html.spec.whatwg.org/multipage/webappapis.html#dom-img-naturalheight</a><b>Referenced in:</b>
-   <ul>
-    <li><a href="#ref-for-dom-img-naturalheight">3.1. Potentially add LargestContentfulPaint entry</a>
-   </ul>
-  </aside>
-  <aside class="dfn-panel" data-for="term-for-dom-img-naturalwidth">
-   <a href="https://html.spec.whatwg.org/multipage/webappapis.html#dom-img-naturalwidth">https://html.spec.whatwg.org/multipage/webappapis.html#dom-img-naturalwidth</a><b>Referenced in:</b>
-   <ul>
-    <li><a href="#ref-for-dom-img-naturalwidth">3.1. Potentially add LargestContentfulPaint entry</a>
-   </ul>
-  </aside>
   <aside class="dfn-panel" data-for="term-for-concept-relevant-global">
    <a href="https://html.spec.whatwg.org/multipage/webappapis.html#concept-relevant-global">https://html.spec.whatwg.org/multipage/webappapis.html#concept-relevant-global</a><b>Referenced in:</b>
    <ul>
@@ -1153,12 +1179,6 @@ This allows developers to detect support for the API.</p>
    <a href="https://html.spec.whatwg.org/multipage/browsers.html#top-level-browsing-context">https://html.spec.whatwg.org/multipage/browsers.html#top-level-browsing-context</a><b>Referenced in:</b>
    <ul>
     <li><a href="#ref-for-top-level-browsing-context">3.1. Potentially add LargestContentfulPaint entry</a>
-   </ul>
-  </aside>
-  <aside class="dfn-panel" data-for="term-for-dom-img-width">
-   <a href="https://html.spec.whatwg.org/multipage/webappapis.html#dom-img-width">https://html.spec.whatwg.org/multipage/webappapis.html#dom-img-width</a><b>Referenced in:</b>
-   <ul>
-    <li><a href="#ref-for-dom-img-width">3.1. Potentially add LargestContentfulPaint entry</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="term-for-set-append">
@@ -1235,6 +1255,12 @@ This allows developers to detect support for the API.</p>
     <li><a href="#ref-for-supportedentrytypes-attribute">3.1. Potentially add LargestContentfulPaint entry</a>
    </ul>
   </aside>
+  <aside class="dfn-panel" data-for="term-for-generictransformstream-transform">
+   <a href="https://streams.spec.whatwg.org/#generictransformstream-transform">https://streams.spec.whatwg.org/#generictransformstream-transform</a><b>Referenced in:</b>
+   <ul>
+    <li><a href="#ref-for-generictransformstream-transform">3.1. Potentially add LargestContentfulPaint entry</a>
+   </ul>
+  </aside>
   <aside class="dfn-panel" data-for="term-for-idl-DOMString">
    <a href="https://webidl.spec.whatwg.org/#idl-DOMString">https://webidl.spec.whatwg.org/#idl-DOMString</a><b>Referenced in:</b>
    <ul>
@@ -1274,7 +1300,25 @@ This allows developers to detect support for the API.</p>
   <h3 class="no-num no-ref heading settled" id="index-defined-elsewhere"><span class="content">Terms defined by reference</span><a class="self-link" href="#index-defined-elsewhere"></a></h3>
   <ul class="index">
    <li>
-    <a data-link-type="biblio">[cssom-view-1]</a> defines the following terms:
+    <a data-link-type="biblio">[CSS-BACKGROUNDS-3]</a> defines the following terms:
+    <ul>
+     <li><span class="dfn-paneled" id="term-for-propdef-background-position">background-position</span>
+    </ul>
+   <li>
+    <a data-link-type="biblio">[CSS-BOX-4]</a> defines the following terms:
+    <ul>
+     <li><span class="dfn-paneled" id="term-for-content-box">content box</span>
+    </ul>
+   <li>
+    <a data-link-type="biblio">[CSS-IMAGES-3]</a> defines the following terms:
+    <ul>
+     <li><span class="dfn-paneled" id="term-for-concrete-object-size">concrete object size</span>
+     <li><span class="dfn-paneled" id="term-for-natural-height">natural height</span>
+     <li><span class="dfn-paneled" id="term-for-natural-width">natural width</span>
+     <li><span class="dfn-paneled" id="term-for-propdef-object-position">object-position</span>
+    </ul>
+   <li>
+    <a data-link-type="biblio">[CSSOM-VIEW-1]</a> defines the following terms:
     <ul>
      <li><span class="dfn-paneled" id="term-for-eventdef-document-scroll">scroll</span>
      <li><span class="dfn-paneled" id="term-for-viewport">viewport</span>
@@ -1298,7 +1342,7 @@ This allows developers to detect support for the API.</p>
      <li><span class="dfn-paneled" id="term-for-get-an-element">get an element</span>
     </ul>
    <li>
-    <a data-link-type="biblio">[event-timing]</a> defines the following terms:
+    <a data-link-type="biblio">[EVENT-TIMING]</a> defines the following terms:
     <ul>
      <li><span class="dfn-paneled" id="term-for-has-dispatched-input-event">has dispatched input event</span>
     </ul>
@@ -1309,14 +1353,14 @@ This allows developers to detect support for the API.</p>
      <li><span class="dfn-paneled" id="term-for-dom-request-url">request url</span>
     </ul>
    <li>
-    <a data-link-type="biblio">[geometry-1]</a> defines the following terms:
+    <a data-link-type="biblio">[GEOMETRY-1]</a> defines the following terms:
     <ul>
      <li><span class="dfn-paneled" id="term-for-domrectreadonly">DOMRectReadOnly</span>
      <li><span class="dfn-paneled" id="term-for-dom-domrectreadonly-height">height</span>
      <li><span class="dfn-paneled" id="term-for-dom-domrectreadonly-width">width</span>
     </ul>
    <li>
-    <a data-link-type="biblio">[hr-time-3]</a> defines the following terms:
+    <a data-link-type="biblio">[HR-TIME-3]</a> defines the following terms:
     <ul>
      <li><span class="dfn-paneled" id="term-for-dom-domhighrestimestamp">DOMHighResTimeStamp</span>
     </ul>
@@ -1326,14 +1370,9 @@ This allows developers to detect support for the API.</p>
      <li><span class="dfn-paneled" id="term-for-window">Window</span>
      <li><span class="dfn-paneled" id="term-for-active-document">active document</span>
      <li><span class="dfn-paneled" id="term-for-concept-document-bc">browsing context</span>
-     <li><span class="dfn-paneled" id="term-for-dom-img-height">height</span>
-     <li><span class="dfn-paneled" id="term-for-the-img-element">img</span>
-     <li><span class="dfn-paneled" id="term-for-dom-img-naturalheight">naturalHeight</span>
-     <li><span class="dfn-paneled" id="term-for-dom-img-naturalwidth">naturalWidth</span>
      <li><span class="dfn-paneled" id="term-for-concept-relevant-global">relevant global object</span>
      <li><span class="dfn-paneled" id="term-for-concept-relevant-realm">relevant realm</span>
      <li><span class="dfn-paneled" id="term-for-top-level-browsing-context">top-level browsing context</span>
-     <li><span class="dfn-paneled" id="term-for-dom-img-width">width</span>
     </ul>
    <li>
     <a data-link-type="biblio">[INFRA]</a> defines the following terms:
@@ -1345,7 +1384,7 @@ This allows developers to detect support for the API.</p>
      <li><span class="dfn-paneled" id="term-for-tuple">tuple</span>
     </ul>
    <li>
-    <a data-link-type="biblio">[performance-timeline]</a> defines the following terms:
+    <a data-link-type="biblio">[PERFORMANCE-TIMELINE]</a> defines the following terms:
     <ul>
      <li><span class="dfn-paneled" id="term-for-the-performanceentry-interface">PerformanceEntry</span>
      <li><span class="dfn-paneled" id="term-for-dom-performanceentry-duration">duration</span>
@@ -1354,6 +1393,11 @@ This allows developers to detect support for the API.</p>
      <li><span class="dfn-paneled" id="term-for-dfn-queue-a-performanceentry">queue the performanceentry</span>
      <li><span class="dfn-paneled" id="term-for-dom-performanceentry-starttime">startTime</span>
      <li><span class="dfn-paneled" id="term-for-supportedentrytypes-attribute">supportedEntryTypes</span>
+    </ul>
+   <li>
+    <a data-link-type="biblio">[STREAMS]</a> defines the following terms:
+    <ul>
+     <li><span class="dfn-paneled" id="term-for-generictransformstream-transform">transform</span>
     </ul>
    <li>
     <a data-link-type="biblio">[WEBIDL]</a> defines the following terms:
@@ -1369,28 +1413,36 @@ This allows developers to detect support for the API.</p>
   <h2 class="no-num no-ref heading settled" id="references"><span class="content">References</span><a class="self-link" href="#references"></a></h2>
   <h3 class="no-num no-ref heading settled" id="normative"><span class="content">Normative References</span><a class="self-link" href="#normative"></a></h3>
   <dl>
+   <dt id="biblio-css-backgrounds-3">[CSS-BACKGROUNDS-3]
+   <dd>Bert Bos; Elika Etemad; Brad Kemper. <a href="https://drafts.csswg.org/css-backgrounds/"><cite>CSS Backgrounds and Borders Module Level 3</cite></a>. URL: <a href="https://drafts.csswg.org/css-backgrounds/">https://drafts.csswg.org/css-backgrounds/</a>
+   <dt id="biblio-css-box-4">[CSS-BOX-4]
+   <dd>Elika Etemad. <a href="https://drafts.csswg.org/css-box-4/"><cite>CSS Box Model Module Level 4</cite></a>. URL: <a href="https://drafts.csswg.org/css-box-4/">https://drafts.csswg.org/css-box-4/</a>
+   <dt id="biblio-css-images-3">[CSS-IMAGES-3]
+   <dd>Tab Atkins Jr.; Elika Etemad; Lea Verou. <a href="https://drafts.csswg.org/css-images-3/"><cite>CSS Images Module Level 3</cite></a>. URL: <a href="https://drafts.csswg.org/css-images-3/">https://drafts.csswg.org/css-images-3/</a>
    <dt id="biblio-cssom-view-1">[CSSOM-VIEW-1]
-   <dd>Simon Pieters. <a href="https://www.w3.org/TR/cssom-view-1/"><cite>CSSOM View Module</cite></a>. 17 March 2016. WD. URL: <a href="https://www.w3.org/TR/cssom-view-1/">https://www.w3.org/TR/cssom-view-1/</a>
+   <dd>Simon Pieters. <a href="https://drafts.csswg.org/cssom-view/"><cite>CSSOM View Module</cite></a>. URL: <a href="https://drafts.csswg.org/cssom-view/">https://drafts.csswg.org/cssom-view/</a>
    <dt id="biblio-dom">[DOM]
    <dd>Anne van Kesteren. <a href="https://dom.spec.whatwg.org/"><cite>DOM Standard</cite></a>. Living Standard. URL: <a href="https://dom.spec.whatwg.org/">https://dom.spec.whatwg.org/</a>
    <dt id="biblio-element-timing">[ELEMENT-TIMING]
    <dd><a href="https://wicg.github.io/element-timing/"><cite>Element Timing API</cite></a>. cg-draft. URL: <a href="https://wicg.github.io/element-timing/">https://wicg.github.io/element-timing/</a>
    <dt id="biblio-event-timing">[EVENT-TIMING]
-   <dd>Nicolas Pena Moreno; Tim Dresser. <a href="https://www.w3.org/TR/event-timing/"><cite>Event Timing API</cite></a>. 24 May 2022. WD. URL: <a href="https://www.w3.org/TR/event-timing/">https://www.w3.org/TR/event-timing/</a>
+   <dd>Nicolas Pena Moreno; Tim Dresser. <a href="https://w3c.github.io/event-timing"><cite>Event Timing API</cite></a>. URL: <a href="https://w3c.github.io/event-timing">https://w3c.github.io/event-timing</a>
    <dt id="biblio-fetch">[FETCH]
    <dd>Anne van Kesteren. <a href="https://fetch.spec.whatwg.org/"><cite>Fetch Standard</cite></a>. Living Standard. URL: <a href="https://fetch.spec.whatwg.org/">https://fetch.spec.whatwg.org/</a>
    <dt id="biblio-geometry-1">[GEOMETRY-1]
-   <dd>Simon Pieters; Chris Harrelson. <a href="https://www.w3.org/TR/geometry-1/"><cite>Geometry Interfaces Module Level 1</cite></a>. 4 December 2018. CR. URL: <a href="https://www.w3.org/TR/geometry-1/">https://www.w3.org/TR/geometry-1/</a>
+   <dd>Simon Pieters; Chris Harrelson. <a href="https://drafts.fxtf.org/geometry/"><cite>Geometry Interfaces Module Level 1</cite></a>. URL: <a href="https://drafts.fxtf.org/geometry/">https://drafts.fxtf.org/geometry/</a>
    <dt id="biblio-hr-time-3">[HR-TIME-3]
-   <dd>Yoav Weiss. <a href="https://www.w3.org/TR/hr-time-3/"><cite>High Resolution Time</cite></a>. 28 January 2022. WD. URL: <a href="https://www.w3.org/TR/hr-time-3/">https://www.w3.org/TR/hr-time-3/</a>
+   <dd>Yoav Weiss. <a href="https://w3c.github.io/hr-time/"><cite>High Resolution Time</cite></a>. URL: <a href="https://w3c.github.io/hr-time/">https://w3c.github.io/hr-time/</a>
    <dt id="biblio-html">[HTML]
    <dd>Anne van Kesteren; et al. <a href="https://html.spec.whatwg.org/multipage/"><cite>HTML Standard</cite></a>. Living Standard. URL: <a href="https://html.spec.whatwg.org/multipage/">https://html.spec.whatwg.org/multipage/</a>
    <dt id="biblio-infra">[INFRA]
    <dd>Anne van Kesteren; Domenic Denicola. <a href="https://infra.spec.whatwg.org/"><cite>Infra Standard</cite></a>. Living Standard. URL: <a href="https://infra.spec.whatwg.org/">https://infra.spec.whatwg.org/</a>
    <dt id="biblio-performance-timeline">[PERFORMANCE-TIMELINE]
-   <dd>Nicolas Pena Moreno. <a href="https://www.w3.org/TR/performance-timeline/"><cite>Performance Timeline</cite></a>. 2 December 2021. CR. URL: <a href="https://www.w3.org/TR/performance-timeline/">https://www.w3.org/TR/performance-timeline/</a>
+   <dd>Nicolas Pena Moreno. <a href="https://w3c.github.io/performance-timeline/"><cite>Performance Timeline</cite></a>. URL: <a href="https://w3c.github.io/performance-timeline/">https://w3c.github.io/performance-timeline/</a>
    <dt id="biblio-rfc2119">[RFC2119]
    <dd>S. Bradner. <a href="https://datatracker.ietf.org/doc/html/rfc2119"><cite>Key words for use in RFCs to Indicate Requirement Levels</cite></a>. March 1997. Best Current Practice. URL: <a href="https://datatracker.ietf.org/doc/html/rfc2119">https://datatracker.ietf.org/doc/html/rfc2119</a>
+   <dt id="biblio-streams">[STREAMS]
+   <dd>Adam Rice; et al. <a href="https://streams.spec.whatwg.org/"><cite>Streams Standard</cite></a>. Living Standard. URL: <a href="https://streams.spec.whatwg.org/">https://streams.spec.whatwg.org/</a>
    <dt id="biblio-webidl">[WEBIDL]
    <dd>Edgar Chen; Timothy Gu. <a href="https://webidl.spec.whatwg.org/"><cite>Web IDL Standard</cite></a>. Living Standard. URL: <a href="https://webidl.spec.whatwg.org/">https://webidl.spec.whatwg.org/</a>
   </dl>

@@ -50,7 +50,7 @@ urlPrefix: https://html.spec.whatwg.org/multipage/webappapis.html; spec: html;
         text: width; url: #dom-img-width;
         text: height; url: #dom-img-height;
 urlPrefix: https://drafts.csswg.org/cssom-view/; spec: CSSOM-VIEW;
-    type: dfn; text: viewport; url: viewport;
+    type: dfn; text: visual viewport; url: visual-viewport;
 </pre>
 
 Introduction {#sec-intro}
@@ -197,8 +197,8 @@ In order to <dfn export>potentially add a {{LargestContentfulPaint}} entry</dfn>
         1. Let |height| be |intersectionRect|'s {{DOMRectReadOnly/height}}.
         1. Let |size| be <code>|width| * |height|</code>.
         1. Let |root| be |document|'s <a for="Document">browsing context</a>'s <a>top-level browsing context</a>'s <a>active document</a>.
-        1. Let |rootWidth| be |root|'s <a>viewport</a>'s width, excluding any scrollbars.
-        1. Let |rootHeight| be |root|'s <a>viewport</a>'s height, excluding any scrollbars.
+        1. Let |rootWidth| be |root|'s <a>visual viewport</a>'s width, excluding any scrollbars.
+        1. Let |rootHeight| be |root|'s <a>visual viewport</a>'s height, excluding any scrollbars.
         1. If |size| is equal to |rootWidth| times |rootHeight|, return.
         1. If |imageRequest| is not null, run the following steps to adjust for image position and upscaling:
             1. Let |concreteDimensions| be |imageRequest|'s [=concrete object size=] within |element|.

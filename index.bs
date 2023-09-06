@@ -49,6 +49,7 @@ urlPrefix: https://html.spec.whatwg.org/multipage/webappapis.html; spec: html;
         text: naturalHeight; url: #dom-img-naturalheight;
         text: width; url: #dom-img-width;
         text: height; url: #dom-img-height;
+    type: dfn; text: update the image data; url: update-the-image-data;
 urlPrefix: https://drafts.csswg.org/cssom-view/; spec: CSSOM-VIEW;
     type: dfn; text: visual viewport; url: visual-viewport;
 </pre>
@@ -80,6 +81,11 @@ Largest content {#sec-largest-content}
 ------------------------
 
 The algorithm used for this API keeps track of the content seen so far. Whenever a new largest content is found, a new entry is created for it. Content that is removed is still considered by the algorithm. In particular, if the content removed was the largest, then a new entry is created only if larger content is ever added. The algorithm terminates whenever scroll or input events occur, since those are likely to introduce new content into the website.
+
+Low-entropy images {#sec-low-entropy}
+-------------------------------------
+
+In order to better reflect the user's experience, this API ignores images which contain very little information content relative to their displayed size. This will exclude images which are extremely simple, and likely intended for use as backgrounds, or as placeholders for content loaded later. As a simple measure of information content, the API will compute the ratio of an image's encoded length to its rendered visual size. The minimum value for which an image will be considered a candidate for largest contentful paint is the <dfn>entropy threshold</dfn>, which is defined to be the value 0.05.
 
 Usage example {#sec-example}
 ------------------------
@@ -218,6 +224,8 @@ In order to <dfn export>potentially add a {{LargestContentfulPaint}} entry</dfn>
             1. Let |scaleFactor| be <code>|boundingClientArea| / |naturalArea|</code>.
             1. If |scaleFactor| is greater than 1, then divide |size| by |scaleFactor|.
 
+        1. Let |contentLength| be |imageRequest|'s [=image request/response info=]'s [=decoded size=].
+        1. If |contentLength| is less than |size| * [=entropy threshold=], then return.
         1. If |size| is less than or equal to |document|'s [=largest contentful paint size=], return.
         1. Let |contentInfo| be a <a>map</a> with |contentInfo|["size"] = |size|, |contentInfo|["url"] = |url|, |contentInfo|["id"] = |id|, |contentInfo|["renderTime"] = |renderTime|, |contentInfo|["loadTime"] = |loadTime|, and contentInfo["element"] = |element|.
         1. <a>Create a LargestContentfulPaint entry</a> with |contentInfo|, and |document| as inputs.
@@ -263,6 +271,10 @@ Modifications to the HTML specification {#sec-modifications-HTML}
 <em>This section will be removed once the [[HTML]] specification has been modified.</em>
 
 Each {{Window}} has <dfn>has dispatched scroll event</dfn>, a boolean which is initially set to false.
+
+An [=image request=] has a [=response body info=] <dfn for="image request">response info</dfn>.
+
+When fetching an image request (under [=update the image data=]), the [=image request=]'s [=image request/response info=] should be set to the [=/response=]'s [=response/body info=].
 
 Security & privacy considerations {#sec-security}
 ===============================================

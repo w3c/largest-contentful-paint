@@ -46,7 +46,7 @@ Pictorial elements are described in the <a href="https://github.com/WICG/element
 
 *   image elements
 *   html elements with [contentful](#contentful-style-background-images) style-background-images
-*   video elements where the first frame or poster image is used
+*   video elements
 
 In the future, we may add other elements (like canvas elements) to the group of contentful elements.
 

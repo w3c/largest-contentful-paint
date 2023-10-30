@@ -46,9 +46,9 @@ Pictorial elements are described in the <a href="https://github.com/WICG/element
 
 *   image elements
 *   html elements with [contentful](#contentful-style-background-images) style-background-images
-*   video elements with poster images
+*   video elements where the first frame or poster image is used
 
-In the future, we may add canvas and video elements to the group of contentful elements.
+In the future, we may add other elements (like canvas elements) to the group of contentful elements.
 
 
 #### Contentful style-background-images
@@ -61,7 +61,7 @@ The heuristics to identify a background-purposed image may include:
 
 ### Paint: first paint
 
-We have different definitions of first paint time for textual and pictorial elements. For pictorial elements, the first paint time refers to the first paint after the image is fully loaded. For text, the first paint time is the first paint of the text at its earliest font. In other words, if a text element with a default font is repainted after its web-font is loaded, the first paint time refers to that of the default font.
+We have different definitions of first paint time for textual and pictorial elements. For pictorial elements, the first paint time refers to the first paint after a static image is fully loaded whereas for animated elements (GIF-style images or video) it is the time of the first frame (including any poster images). For text, the first paint time is the first paint of the text at its earliest font. In other words, if a text element with a default font is repainted after its web-font is loaded, the first paint time refers to that of the default font.
 
 
 ### Visual size

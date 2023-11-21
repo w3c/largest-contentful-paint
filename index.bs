@@ -59,22 +59,22 @@ Introduction {#sec-intro}
 <em>This section is non-normative.</em>
 The LargestContentfulPaint API enables developers to gain visibility into the loading and rendering process of the web pages, in order for them to be able to optimize it.
 
-Developers today don't have a reliable metric that correlates with their user's visual rendering experience. Existing metrics such as First Paint and First Contentful Paint focus on initial rendering, but don't take into account the importance of the painted content, and therefore may indicate times in which the user still does not consider the page useful.
+Developers need a reliable metric that correlates with their user's visual rendering experience. Paint loading metrics such as First Paint and First Contentful Paint focus on initial rendering, but don't take into account the importance of the painted content, and therefore may indicate times in which the user still does not consider the page useful.
 
-Largest Contentful Paint (LCP) aims to be a new page-load metric that:
-* better correlates with user experience than the existing page-load metrics
+Largest Contentful Paint (LCP) aims to be a page-load metric that:
+* better correlates with user experience than First Paint and First Contentful Paint
 * is easy to understand and reason about
 * reduces the chance of gaming
 
 The largest paint during the loading process of the page is likely to signify a meaningful event from the user's perspective, and is therefore something we want to expose by default to developers, enabling performance teams, analytics providers and lab-based measurement tools to collect those metrics without requiring extra annotation work by the folks creating the content itself.
 
-The API relies heavily on [[ELEMENT-TIMING]], which can be thought of as the low-level primitive that this high-level feature is built on top of. For cases where the content creators are willing to annotate their content and indicate the important points in the page's loading cycle, Element Timing is the API that will provide them more control over the elements that get reported.
+The API relies heavily on [[PAINT-TIMING]], which can be thought of as the low-level primitive that this high-level feature is built on top of. For cases where the content creators are willing to annotate their content and indicate the important points in the page's loading cycle, [[ELEMENT-TIMING]] is the API that will provide them more control over the elements that get reported.
 
 
 Elements exposed {#sec-elements-exposed}
 ------------------------
 
-The Largest Contentful Paint API will only expose element types that are already <a>exposed</a> by the Element Timing API. In this case, there is no need to annotate them with the <code>elementtiming</code> attribute.
+The Largest Contentful Paint API will only expose element types that are already measured and <a>exposed</a> by Paint Timing. Note that unlike Element Timing, there is no need to annotate elements in order to have them be eligible for Largest Contentful Paint.
 
 Largest content {#sec-largest-content}
 ------------------------
@@ -108,6 +108,23 @@ The LargestContentfulPaint API is based on heuristics. As such, it is error pron
 * The algorithm halts when it detects certain types of user inputs. However, this means that the algorithm will not capture the main content if the user input occurs before the main content is displayed. In fact, the algorithm may produce meaningless results or no results at all if user input occurs very early.
 
 * To account for image carousels, content is still considered as the largest even if it's removed. This presents problems for websites with splash screens that use large content as placeholders.
+
+Terminology {#sec-terminology}
+==============================
+
+A <dfn>largest contentful paint candidate</dfn> is a [=struct=] containing the
+following members:
+
+* <dfn for="largest contentful paint candidate">element</dfn>, an [=/element=]
+* <dfn for="largest contentful paint candidate">request</dfn>, a [=/Request=]
+
+An [=largest contentful paint candidate=] |candidate| is <dfn>eligible to be largest contentful paint</dfn> if it meets the
+following criteria:
+
+* |candidate|'s [=largest contentful paint candidate/element=]'s opacity is > 0
+* |candidate|'s [=largest contentful paint candidate/element=] is a text node, or |candidate|'s [=largest contentful paint candidate/request=]'s
+    [=/response=]'s content length in bytes is >= |candidate|'s [=largest contentful paint candidate/element=]'s [=effective visual size=] * 0.004
+
 
 Largest Contentful Paint {#sec-largest-contentful-paint}
 =======================================
@@ -156,7 +173,7 @@ The {{LargestContentfulPaint/id}} attribute must return the value of <a>this</a>
 
 The {{LargestContentfulPaint/url}} attribute must return the value of <a>this</a>'s <a>url</a>.
 
-The {{LargestContentfulPaint/element}} attribute's getter must return the value returned by running the <a>get an element</a> algorithm with <a>element</a> and null as inputs.
+The {{LargestContentfulPaint/element}} attribute's getter must return the value returned by running the <a>get an element</a> algorithm with [=/element=] and null as inputs.
 
 Note: The above algorithm defines that an element that is no longer a [=tree/descendant=] of the {{Document}} will no longer be returned by {{LargestContentfulPaint/element}}'s attribute getter, including elements that are inside a shadow DOM.
 
@@ -168,6 +185,88 @@ Note: The user agent needs to maintain the [=content set=] so that removed conte
 Processing model {#sec-processing-model}
 ========================================
 
+Modifications to the DOM specification {#sec-modifications-DOM}
+--------------------------------------------------------
+
+<em>This section will be removed once the [[DOM]] specification has been modified.</em>
+
+<div algorithm="additions to event dispatch">
+    We modify the <a>event dispatch algorithm</a> as follows.
+
+    Right after step 1, we add the following step:
+
+    * If |target|'s [=relevant global object=] is a {{Window}} object, <var ignore>event</var>'s {{Event/type}} is {{Document/scroll}} and its {{Event/isTrusted}} is true, set |target|'s [=relevant global object=]'s [=has dispatched scroll event=] to true.
+</div>
+
+Modifications to the HTML specification {#sec-modifications-HTML}
+----------------------------------------
+<em>This section will be removed once the [[HTML]] specification has been modified.</em>
+
+Each {{Window}} has <dfn>has dispatched scroll event</dfn>, a boolean which is initially set to false.
+
+Modifications to the Paint Timing specification {#sec-modifications-paint-timing}
+---------------------------------------------------------------------------------
+
+Append the following steps to [=the paint timing steps=]:
+
+<div algorithm="LargestContentfulPaint paint-steps">
+    1. For each triple (|imageElement|, |request|, |loadTime|) of <var ignore>paintedImages</var>,
+        1. If |imageElement| is not [=exposed for paint timing=], given |document|, continue.
+        1. Let |candidate| be (|imageElement|, |request|)
+        1. Let |intersectionRect| be the value returned by the intersection rect algorithm using imageElement as the target and viewport as the root.
+        1. Potentially add an LCP element given |candidate|, |intersectionRect|, <var ignore>now</var>, |loadTime| and <var ignore>document</var>.
+    1. For each |textNode| of <var ignore>paintedTextNodes</var>,
+        1. If |textNode| is not [=exposed for paint timing=], given |document|, continue.
+        1. Let |intersectionRect| be an empty rectangle.
+        1. For each {{Text}} <a>node</a> |text| in |textNode|'s <a>set of owned text nodes</a>:
+            1. Augment |intersectionRect| to be smallest rectangle containing the border box of |text| and |intersectionRect|.
+        1. Intersect |intersectionRect| with the visual viewport.
+        1. Call the <a>potentially add a LargestContentfulPaint entry</a> algorithm with |intersectionRect|, null, <var ignore>now</var>, 0, |textNode|, and <var ignore>document</var>.
+</div>
+
+Determine the effective visual size of an element {#sec-effective-visual-size}
+---
+
+In order to determine the <dfn export>effective visual size</dfn> of an [=/Element=],
+run the following steps:
+
+<div algorithm="LargestContentfulPaint effective-visual-size">
+    : Input
+    ::  |intersectionRect|, a {{DOMRectReadOnly}}
+    ::  |imageRequest|, a {{Request}}
+    ::  |element|, an [=/Element=]
+    ::  |document|, a <a>Document</a>
+    : Output
+    ::  The size to report for Largest Contentful Paint, in pixels, or null if the element should not be an LCP candidate.
+        1. Let |width| be |intersectionRect|'s {{DOMRectReadOnly/width}}.
+        1. Let |height| be |intersectionRect|'s {{DOMRectReadOnly/height}}.
+        1. Let |size| be <code>|width| * |height|</code>.
+        1. Let |root| be |document|'s <a for="Document">browsing context</a>'s <a>top-level browsing context</a>'s <a>active document</a>.
+        1. Let |rootWidth| be |root|'s <a>visual viewport</a>'s width, excluding any scrollbars.
+        1. Let |rootHeight| be |root|'s <a>visual viewport</a>'s height, excluding any scrollbars.
+        1. If |size| is equal to |rootWidth| times |rootHeight|, return null.
+        1. If |imageRequest| is not [=eligible to be largest contentful paint=], return null.
+        1. If |imageRequest| is not null, run the following steps to adjust for image position and upscaling:
+            1. Let |concreteDimensions| be |imageRequest|'s [=concrete object size=] within |element|.
+            1. Let |visibleDimensions| be |concreteDimensions|, adjusted for positioning by 'object-position' or 'background-position' and |element|'s [=content box=].
+
+                Note: some of those algorithms are not rigorously defined in CSS. The expected result is to get the actual position and size of the image in |element| as a {{DOMRectReadOnly}}.
+
+            1. Let |clientContentRect| be the smallest {{DOMRectReadOnly}} containing |visibleDimensions| with |element|'s [=transforms=] applied.
+            1. Let |intersectingClientContentRect| be the intersection of |clientContentRect| with |intersectionRect|.
+            1. Set |size| to <code>|intersectingClientContentRect|'s {{DOMRectReadOnly/width}} * |intersectingClientContentRect|'s {{DOMRectReadOnly/height}}</code>.
+
+                Note: this ensures that we only intersect with the image itself and not with the element's decorations.
+
+            1. Let |naturalArea| be <code>|imageRequest|'s [=natural width=] * |imageRequest|'s [=natural height=]</code>.
+            1. If |naturalArea| is 0, then return null.
+            1. Let |boundingClientArea| be <code>|clientContentRect|'s {{DOMRectReadOnly/width}} * |clientContentRect|'s {{DOMRectReadOnly/height}}</code>.
+            1. Let |scaleFactor| be <code>|boundingClientArea| / |naturalArea|</code>.
+            1. If |scaleFactor| is greater than 1, then divide |size| by |scaleFactor|.
+
+        1. Return |size|.
+</div>
+
 Potentially add LargestContentfulPaint entry {#sec-add-lcp-entry}
 --------------------------------------------------------
 
@@ -177,49 +276,23 @@ This allows developers to detect support for the API.
 In order to <dfn export>potentially add a {{LargestContentfulPaint}} entry</dfn>, the user agent must run the following steps:
 <div algorithm="LargestContentfulPaint potentially-add-entry">
     : Input
+    ::  |candidate|, a [=largest contentful paint candidate=]
     ::  |intersectionRect|, a {{DOMRectReadOnly}}
-    ::  |imageRequest|, a {{Request}}
     ::  |renderTime|, a DOMHighResTimestamp
     ::  |loadTime|, a DOMHighResTimestamp
-    ::  |element|, an <a>Element</a>
     ::  |document|, a <a>Document</a>
     : Output
     ::  None
-        1. Let |contentIdentifier| be the <a>tuple</a> (|element|, |imageRequest|).
-        1. If |document|'s [=content set=] <a for=set>contains</a> |contentIdentifier|, return.
-        1. <a for=set>Append</a> |contentIdentifier| to |document|'s [=content set=]
+        1. If |document|'s [=content set=] <a for=set>contains</a> |candidate|, return.
+        1. <a for=set>Append</a> |candidate| to |document|'s [=content set=]
         1. Let |window| be |document|’s [=relevant global object=].
         1. If either of |window|'s [=has dispatched scroll event=] or [=has dispatched input event=] is true, return.
-        1. Let |url| be the empty string.
-        1. If |imageRequest| is not null, set |url| to be |imageRequest|'s [=request URL=].
-        1. Let |id| be |element|'s <a attribute for=Element>element id</a>.
-        1. Let |width| be |intersectionRect|'s {{DOMRectReadOnly/width}}.
-        1. Let |height| be |intersectionRect|'s {{DOMRectReadOnly/height}}.
-        1. Let |size| be <code>|width| * |height|</code>.
-        1. Let |root| be |document|'s <a for="Document">browsing context</a>'s <a>top-level browsing context</a>'s <a>active document</a>.
-        1. Let |rootWidth| be |root|'s <a>visual viewport</a>'s width, excluding any scrollbars.
-        1. Let |rootHeight| be |root|'s <a>visual viewport</a>'s height, excluding any scrollbars.
-        1. If |size| is equal to |rootWidth| times |rootHeight|, return.
-        1. If |imageRequest| is not null, run the following steps to adjust for image position and upscaling:
-            1. Let |concreteDimensions| be |imageRequest|'s [=concrete object size=] within |element|.
-            1. Let |visibleDimensions| be |concreteDimensions|, adjusted for positioning by 'object-position' or 'background-position' and |element|'s [=content box=].
-
-               Note: some of those algorithms are not rigorously defined in CSS. The expected result is to get the actual position and size of the image in |element| as a {{DOMRectReadOnly}}.
-
-            1. Let |clientContentRect| be the smallest {{DOMRectReadOnly}} containing |visibleDimensions| with |element|'s [=transforms=] applied.
-            1. Let |intersectingClientContentRect| be the intersection of |clientContentRect| with |intersectionRect|.
-            1. Set |size| to <code>|intersectingClientContentRect|'s {{DOMRectReadOnly/width}} * |intersectingClientContentRect|'s {{DOMRectReadOnly/height}}</code>.
-
-               Note: this ensure that we only intersect with the image itself and not with the element's decorations.
-
-            1. Let |naturalArea| be <code>|imageRequest|'s [=natural width=] * |imageRequest|'s [=natural height=]</code>.
-            1. If |naturalArea| is 0, then return.
-            1. Let |boundingClientArea| be <code>|clientContentRect|'s {{DOMRectReadOnly/width}} * |clientContentRect|'s {{DOMRectReadOnly/height}}</code>.
-            1. Let |scaleFactor| be <code>|boundingClientArea| / |naturalArea|</code>.
-            1. If |scaleFactor| is greater than 1, then divide |size| by |scaleFactor|.
-
+        1. Let |size| be the [=effective visual size=] of |candidate|'s [=/element=] given |intersectionRect|.
         1. If |size| is less than or equal to |document|'s [=largest contentful paint size=], return.
-        1. Let |contentInfo| be a <a>map</a> with |contentInfo|["size"] = |size|, |contentInfo|["url"] = |url|, |contentInfo|["id"] = |id|, |contentInfo|["renderTime"] = |renderTime|, |contentInfo|["loadTime"] = |loadTime|, and contentInfo["element"] = |element|.
+        1. Let |url| be the empty string.
+        1. If |candidate|'s [=largest contentful paint candidate/request=] is not null, set |url| to be |candidate|'s [=largest contentful paint candidate/request=]'s [=request URL=].
+        1. Let |id| be |candidate|'s [=largest contentful paint candidate/element=]'s <a attribute for=Element>element id</a>.
+        1. Let |contentInfo| be a <a>map</a> with |contentInfo|["size"] = |size|, |contentInfo|["url"] = |url|, |contentInfo|["id"] = |id|, |contentInfo|["renderTime"] = |renderTime|, |contentInfo|["loadTime"] = |loadTime|, and contentInfo["element"] = |candidate|'s [=largest contentful paint candidate/element=].
         1. <a>Create a LargestContentfulPaint entry</a> with |contentInfo|, and |document| as inputs.
 </div>
 
@@ -245,27 +318,8 @@ In order to <dfn>create a {{LargestContentfulPaint}} entry</dfn>, the user agent
         1. [=Queue the PerformanceEntry=] |entry|.
 </div>
 
-Modifications to the DOM specification {#sec-modifications-DOM}
---------------------------------------------------------
-
-<em>This section will be removed once the [[DOM]] specification has been modified.</em>
-
-<div algorithm="additions to event dispatch">
-    We modify the <a>event dispatch algorithm</a> as follows.
-
-    Right after step 1, we add the following step:
-
-    * If |target|'s [=relevant global object=] is a {{Window}} object, <var ignore>event</var>'s {{Event/type}} is {{Document/scroll}} and its {{Event/isTrusted}} is true, set |target|'s [=relevant global object=]'s [=has dispatched scroll event=] to true.
-</div>
-
-Modifications to the HTML specification {#sec-modifications-HTML}
-----------------------------------------
-<em>This section will be removed once the [[HTML]] specification has been modified.</em>
-
-Each {{Window}} has <dfn>has dispatched scroll event</dfn>, a boolean which is initially set to false.
-
 Security & privacy considerations {#sec-security}
 ===============================================
 
-This API relies on Element Timing for its underlying primitives. LCP may expose some element not exposed by Element Timing in case that they are smaller than Element Timing's limits, but are still the largest elements to be painted up until that point in the page's loading. That does not seem to expose any sensitive information beyond what Element Timing already enables.
+This API relies on Paint Timing for its underlying primitives. Unlike the similar API Element Timing, LCP may expose timing details of some elements with small sizes, if they are still the largest elements to be painted up until that point in the page's loading. That does not seem to expose any sensitive information beyond what Element Timing already enables.
 

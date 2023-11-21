@@ -148,32 +148,36 @@ interface LargestContentfulPaint : PerformanceEntry {
 </pre>
 
 Each {{LargestContentfulPaint}} object has these associated concepts:
-* A <dfn>renderTime</dfn>, initially set to 0.
-* A <dfn>size</dfn>, initially set to 0.
-* A <dfn>loadTime</dfn>, initially set to 0.
-* An <dfn>id</dfn>, initially set to the empty string.
-* A <dfn>url</dfn>, initially set to the empty string.
-* An <dfn>element</dfn> containing the associated {{Element}}, initially set to <code>null</code>.
+* A <dfn for="LargestContentfulPaint">renderTime</dfn>, initially set to 0.
+* A <dfn for="LargestContentfulPaint">size</dfn>, initially set to 0.
+* A <dfn for="LargestContentfulPaint">loadTime</dfn>, initially set to 0.
+* An <dfn for="LargestContentfulPaint">id</dfn>, initially set to the empty string.
+* A <dfn for="LargestContentfulPaint">url</dfn>, initially set to the empty string.
+* An <dfn for="LargestContentfulPaint">element</dfn> containing the associated {{Element}}, initially set to <code>null</code>.
 
 The {{PerformanceEntry/entryType}} attribute's getter must return the {{DOMString}} <code>"largest-contentful-paint"</code>.
 
 The {{PerformanceEntry/name}} attribute's getter must return the empty string.
 
-The {{PerformanceEntry/startTime}} attribute's getter must return the value of <a>this</a>'s <a>renderTime</a> if it is not 0, and the value of <a>this</a>'s <a>loadTime</a> otherwise.
+The {{PerformanceEntry/startTime}} attribute's getter must return the value of [=this=]'s <a>renderTime</a> if it is not 0, and the value of [=this=]'s [=LargestContentfulPaint/loadTime=] otherwise.
 
 The {{PerformanceEntry/duration}} attribute's getter must return 0.
 
-The {{LargestContentfulPaint/renderTime}} attribute must return the value of <a>this</a>'s <a>renderTime</a>.
+The {{LargestContentfulPaint/renderTime}} attribute must return the value of [=this=]'s [=LargestContentfulPaint/renderTime=].
 
-The {{LargestContentfulPaint/loadTime}} attribute must return the value of <a>this</a>'s <a>loadTime</a>.
+The {{LargestContentfulPaint/loadTime}} attribute must return the value of [=this=]'s [=LargestContentfulPaint/loadTime=].
 
-The {{LargestContentfulPaint/size}} attribute must return the value of <a>this</a>'s <a>size</a>.
+The {{LargestContentfulPaint/size}} attribute must return the value of [=this=]'s [=LargestContentfulPaint/size=].
 
-The {{LargestContentfulPaint/id}} attribute must return the value of <a>this</a>'s <a>id</a>.
+The {{LargestContentfulPaint/id}} attribute must return the value of [=this=]'s [=LargestContentfulPaint/id=].
 
-The {{LargestContentfulPaint/url}} attribute must return the value of <a>this</a>'s <a>url</a>.
+The {{LargestContentfulPaint/url}} attribute must return the value of [=this=]'s [=LargestContentfulPaint/url=].
 
-The {{LargestContentfulPaint/element}} attribute's getter must return the value returned by running the <a>get an element</a> algorithm with [=/element=] and null as inputs.
+The {{LargestContentfulPaint/element}} attribute's getter must perform the following steps:
+<div algorithm="LargestContentfulPaint element">
+    1. If [=this=]'s [=LargestContentfulPaint/element=] is not [=exposed for paint timing=] given null, return null.
+    1. Return [=this=]'s [=LargestContentfulPaint/element=].
+</div>
 
 Note: The above algorithm defines that an element that is no longer a [=tree/descendant=] of the {{Document}} will no longer be returned by {{LargestContentfulPaint/element}}'s attribute getter, including elements that are inside a shadow DOM.
 

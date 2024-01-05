@@ -116,7 +116,7 @@ A <dfn>largest contentful paint candidate</dfn> is a [=struct=] containing the
 following members:
 
 * <dfn for="largest contentful paint candidate">element</dfn>, an [=/element=]
-* <dfn for="largest contentful paint candidate">request</dfn>, a [=/Request=]
+* <dfn for="largest contentful paint candidate">request</dfn>, a [=/Request=] or null
 
 An [=largest contentful paint candidate=] |candidate| is <dfn>eligible to be largest contentful paint</dfn> if it meets the
 following criteria:
@@ -211,21 +211,27 @@ Each {{Window}} has <dfn>has dispatched scroll event</dfn>, a boolean which is i
 Modifications to the Paint Timing specification {#sec-modifications-paint-timing}
 ---------------------------------------------------------------------------------
 
-Append the following steps to [=the paint timing steps=]:
+Report Largest Contentful Paint {#sec-report-largest-contentful-paint}
+----------------------------------------------------------------------
 
-<div algorithm="LargestContentfulPaint paint-steps">
-    1. For each triple (|imageElement|, |request|, |loadTime|) of <var ignore>paintedImages</var>,
+<div export algorithm="report largest contentful paint">
+    When asked to <dfn>report largest contentful paint</dfn> given a {{Document}} |document|, a timestamp |now|, an [=ordered set=] of [=pending image records=] |paintedImages|, and an [=ordered set=] of [=/elements=] |paintedTextNodes|, perform the following steps:
+
+    1. [=list/For each=] |record| of |paintedImages|:
+        1. Let |imageElement| be |record|'s [=pending image record/element=].
         1. If |imageElement| is not [=exposed for paint timing=], given |document|, continue.
+        1. Let |request| be |record|'s [=pending image record/request=].
         1. Let |candidate| be (|imageElement|, |request|)
-        1. Let |intersectionRect| be the value returned by the intersection rect algorithm using imageElement as the target and viewport as the root.
-        1. Potentially add an LCP element given |candidate|, |intersectionRect|, <var ignore>now</var>, |loadTime| and <var ignore>document</var>.
-    1. For each |textNode| of <var ignore>paintedTextNodes</var>,
+        1. Let |intersectionRect| be the value returned by the intersection rect algorithm using |imageElement| as the target and viewport as the root.
+        1. Call the <a>potentially add a LargestContentfulPaint entry</a> algorithm with |candidate|, |intersectionRect|, |now|, |record|'s [=pending image record/loadTime=] and |document|.
+    1. [=list/For each=] |textNode| of |paintedTextNodes|,
         1. If |textNode| is not [=exposed for paint timing=], given |document|, continue.
+        1. Let |candidate| be (|textNode|, null)
         1. Let |intersectionRect| be an empty rectangle.
-        1. For each {{Text}} <a>node</a> |text| in |textNode|'s <a>set of owned text nodes</a>:
+        1. [=set/For each=] {{Text}} <a>node</a> |text| of |textNode|'s <a>set of owned text nodes</a>:
             1. Augment |intersectionRect| to be smallest rectangle containing the border box of |text| and |intersectionRect|.
         1. Intersect |intersectionRect| with the visual viewport.
-        1. Call the <a>potentially add a LargestContentfulPaint entry</a> algorithm with |intersectionRect|, null, <var ignore>now</var>, 0, |textNode|, and <var ignore>document</var>.
+        1. Call the <a>potentially add a LargestContentfulPaint entry</a> algorithm with |candidate|, |intersectionRect|, |now|, 0, and |document|.
 </div>
 
 Determine the effective visual size of an element {#sec-effective-visual-size}

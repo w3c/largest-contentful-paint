@@ -122,6 +122,7 @@ following criteria:
 * |candidate|'s [=largest contentful paint candidate/element=] is a text node, or |candidate|'s [=largest contentful paint candidate/request=]'s
     [=/response=]'s content length in bytes is >= |candidate|'s [=largest contentful paint candidate/element=]'s [=effective visual size=] * 0.004
 
+    Note: This heuristic tests whether the image resource contains sufficient data to be seen as contentful to the user. It compares the transferred file size with the number of pixels which are actually produced, after decoding and any image scaling is applied. Images which encode a very large number of pixels with in a very small number of bytes are typically low-content backgrounds, gradients, and the like, and are not considered as [=largest contentful paint candidates=].
 
 Largest Contentful Paint {#sec-largest-contentful-paint}
 =======================================
@@ -214,7 +215,7 @@ Report Largest Contentful Paint {#sec-report-largest-contentful-paint}
         1. Let |request| be |record|'s [=pending image record/request=].
         1. Let |candidate| be (|imageElement|, |request|)
         1. Let |intersectionRect| be the value returned by the intersection rect algorithm using |imageElement| as the target and viewport as the root.
-        1. Call the <a>potentially add a LargestContentfulPaint entry</a> algorithm with |candidate|, |intersectionRect|, |now|, |record|'s [=pending image record/loadTime=] and |document|.
+        1. <a>Potentially add a LargestContentfulPaint entry</a> with |candidate|, |intersectionRect|, |now|, |record|'s [=pending image record/loadTime=] and |document|.
     1. [=list/For each=] |textNode| of |paintedTextNodes|,
         1. If |textNode| is not [=exposed for paint timing=], given |document|, continue.
         1. Let |candidate| be (|textNode|, null)
@@ -222,7 +223,7 @@ Report Largest Contentful Paint {#sec-report-largest-contentful-paint}
         1. [=set/For each=] {{Text}} <a>node</a> |text| of |textNode|'s <a>set of owned text nodes</a>:
             1. Augment |intersectionRect| to be smallest rectangle containing the border box of |text| and |intersectionRect|.
         1. Intersect |intersectionRect| with the visual viewport.
-        1. Call the <a>potentially add a LargestContentfulPaint entry</a> algorithm with |candidate|, |intersectionRect|, |now|, 0, and |document|.
+        1. <a>Potentially add a LargestContentfulPaint entry</a> with |candidate|, |intersectionRect|, |now|, 0, and |document|.
 </div>
 
 Determine the effective visual size of an element {#sec-effective-visual-size}
@@ -251,13 +252,13 @@ run the following steps:
             1. Let |concreteDimensions| be |imageRequest|'s [=concrete object size=] within |element|.
             1. Let |visibleDimensions| be |concreteDimensions|, adjusted for positioning by 'object-position' or 'background-position' and |element|'s [=content box=].
 
-                Note: some of those algorithms are not rigorously defined in CSS. The expected result is to get the actual position and size of the image in |element| as a {{DOMRectReadOnly}}.
+               Note: some of those algorithms are not rigorously defined in CSS. The expected result is to get the actual position and size of the image in |element| as a {{DOMRectReadOnly}}.
 
             1. Let |clientContentRect| be the smallest {{DOMRectReadOnly}} containing |visibleDimensions| with |element|'s [=transforms=] applied.
             1. Let |intersectingClientContentRect| be the intersection of |clientContentRect| with |intersectionRect|.
             1. Set |size| to <code>|intersectingClientContentRect|'s {{DOMRectReadOnly/width}} * |intersectingClientContentRect|'s {{DOMRectReadOnly/height}}</code>.
 
-                Note: this ensures that we only intersect with the image itself and not with the element's decorations.
+               Note: this ensures that we only intersect with the image itself and not with the element's decorations.
 
             1. Let |naturalArea| be <code>|imageRequest|'s [=natural width=] * |imageRequest|'s [=natural height=]</code>.
             1. If |naturalArea| is 0, then return null.

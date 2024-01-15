@@ -51,6 +51,15 @@ urlPrefix: https://html.spec.whatwg.org/multipage/webappapis.html; spec: html;
         text: height; url: #dom-img-height;
 urlPrefix: https://drafts.csswg.org/cssom-view/; spec: CSSOM-VIEW;
     type: dfn; text: visual viewport; url: visual-viewport;
+urlPrefix: https://w3c.github.io/paint-timing/; spec: PAINT-TIMING;
+    type: dfn; url:#the-paint-timing-steps; text: the paint timing steps
+    type: dfn; url:#set-of-owned-text-nodes; text: set of owned text nodes
+    type: dfn; url:#exposed-for-paint-timing; text: exposed for paint timing
+    type: dfn; url:#pending-image-record; text: pending image record
+    type: dfn; for:pending image record; url:#pending-image-record-element; text: element
+    type: dfn; for:pending image record; url:#pending-image-record-loadtime; text: loadTime
+    type: dfn; for:pending image record; url:#pending-image-record-request; text: request
+    type: dfn; url:#timing-eligible; text: timing-eligible
 </pre>
 
 Introduction {#sec-intro}

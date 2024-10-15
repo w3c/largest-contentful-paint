@@ -189,6 +189,7 @@ The {{LargestContentfulPaint/element}} attribute's getter must perform the follo
 Note: The above algorithm defines that an element that is no longer a [=tree/descendant=] of the {{Document}} will no longer be returned by {{LargestContentfulPaint/element}}'s attribute getter, including elements that are inside a shadow DOM.
 
 This specification also extends {{Document}} by adding to it a <dfn>largest contentful paint size</dfn> concept, initially set to 0.
+
 It also adds an associated <dfn>content set</dfn>, which is initially an empty <a spec=infra for=/>set</a>. The [=content set=] will be filled with ({{Element}}, {{Request}}) <a>tuples</a>. This is used for performance, to enable the algorithm to only consider each content once.
 
 Note: The user agent needs to maintain the [=content set=] so that removed content does not introduce memory leaks. In particular, it can tie the lifetime of the <a>tuples</a> to weak pointers to the {{Element|Elements}} so that it can be cleaned up sometime after the {{Element|Elements}} are removed. Since the <a spec=infra for=/>set</a> is not exposed to web developers, this does not expose garbage collection timing.
@@ -227,7 +228,7 @@ Report Largest Contentful Paint {#sec-report-largest-contentful-paint}
         1. <a>Potentially add a LargestContentfulPaint entry</a> with |candidate|, |intersectionRect|, |now|, |record|'s [=pending image record/loadTime=] and |document|.
     1. [=list/For each=] |textNode| of |paintedTextNodes|,
         1. If |textNode| is not [=exposed for paint timing=], given |document|, continue.
-        1. If |textNode| is transparent or otherwise invisible, continue.
+        1. If |textNode| has [=alpha channel=] value <=0 or [=opacity=] >= 1, and the CSS property <a property>text-shadow</a> has value none, the 'stroke-color' value is 'transparent' and the 'stroke-image' value is none, continue.
         1. Let |candidate| be (|textNode|, null)
         1. Let |intersectionRect| be an empty rectangle.
         1. [=set/For each=] {{Text}} <a>node</a> |text| of |textNode|'s <a>set of owned text nodes</a>:

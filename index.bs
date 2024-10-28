@@ -227,6 +227,8 @@ Report Largest Contentful Paint {#sec-report-largest-contentful-paint}
         1. <a>Potentially add a LargestContentfulPaint entry</a> with |candidate|, |intersectionRect|, |now|, |record|'s [=pending image record/loadTime=] and |document|.
     1. [=list/For each=] |textNode| of |paintedTextNodes|,
         1. If |textNode| is not [=exposed for paint timing=], given |document|, continue.
+        1. If |textNode| has [=alpha channel=] value <=0 or [=opacity=] value <=0:
+            1. If |textNode|'s <a property>text-shadow</a> value is none, |textNode|'s 'stroke-color' value is [=transparent=] and |textNode|'s 'stroke-image' value is none, continue.
         1. Let |candidate| be (|textNode|, null)
         1. Let |intersectionRect| be an empty rectangle.
         1. [=set/For each=] {{Text}} <a>node</a> |text| of |textNode|'s <a>set of owned text nodes</a>:

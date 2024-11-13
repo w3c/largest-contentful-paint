@@ -51,6 +51,8 @@ urlPrefix: https://html.spec.whatwg.org/multipage/webappapis.html; spec: html;
         text: height; url: #dom-img-height;
 urlPrefix: https://drafts.csswg.org/cssom-view/; spec: CSSOM-VIEW;
     type: dfn; text: visual viewport; url: visual-viewport;
+urlPrefix: https://drafts.csswg.org/css-color-3/; spec: CSS-COLOR-3;
+    type: dfn; text: transparent;
 urlPrefix: https://w3c.github.io/paint-timing/; spec: PAINT-TIMING;
     type: dfn; url:#the-paint-timing-steps; text: the paint timing steps
     type: dfn; url:#set-of-owned-text-nodes; text: set of owned text nodes
@@ -60,6 +62,10 @@ urlPrefix: https://w3c.github.io/paint-timing/; spec: PAINT-TIMING;
     type: dfn; for:pending image record; url:#pending-image-record-loadtime; text: loadTime
     type: dfn; for:pending image record; url:#pending-image-record-request; text: request
     type: dfn; url:#timing-eligible; text: timing-eligible
+    type: dfn; text: paint timing info;
+    type: dfn; for: PaintTimingMixin; text: paint timing info;
+    type: dfn; for: paint timing info; text: default paint timestamp;
+    type: interface; text: PaintTimingMixin;
 </pre>
 
 Introduction {#sec-intro}
@@ -144,7 +150,6 @@ Largest Contentful Paint involves the following new interface:
 <pre class="idl">
 [Exposed=Window]
 interface LargestContentfulPaint : PerformanceEntry {
-    readonly attribute DOMHighResTimeStamp renderTime;
     readonly attribute DOMHighResTimeStamp loadTime;
     readonly attribute unsigned long size;
     readonly attribute DOMString id;
@@ -152,10 +157,11 @@ interface LargestContentfulPaint : PerformanceEntry {
     readonly attribute Element? element;
     [Default] object toJSON();
 };
+
+LargestContentfulPaint includes PaintTimingMixin;
 </pre>
 
 Each {{LargestContentfulPaint}} object has these associated concepts:
-* A <dfn for="LargestContentfulPaint">renderTime</dfn>, initially set to 0.
 * A <dfn for="LargestContentfulPaint">size</dfn>, initially set to 0.
 * A <dfn for="LargestContentfulPaint">loadTime</dfn>, initially set to 0.
 * An <dfn for="LargestContentfulPaint">id</dfn>, initially set to the empty string.
@@ -166,11 +172,11 @@ The {{PerformanceEntry/entryType}} attribute's getter must return the {{DOMStrin
 
 The {{PerformanceEntry/name}} attribute's getter must return the empty string.
 
-The {{PerformanceEntry/startTime}} attribute's getter must return the value of [=this=]'s <a>renderTime</a> if it is not 0, and the value of [=this=]'s [=LargestContentfulPaint/loadTime=] otherwise.
+The {{PerformanceEntry/startTime}} attribute's getter must return the value of [=this=]'s {{LargestContentfulPaint/renderTime}} if it is not 0, and the value of [=this=]'s [=LargestContentfulPaint/loadTime=] otherwise.
 
 The {{PerformanceEntry/duration}} attribute's getter must return 0.
 
-The {{LargestContentfulPaint/renderTime}} attribute must return the value of [=this=]'s [=LargestContentfulPaint/renderTime=].
+The {{LargestContentfulPaint/renderTime}} attribute must return the [=default paint timestamp=] given [=this=]'s [=PaintTimingMixin/paint timing info=].
 
 The {{LargestContentfulPaint/loadTime}} attribute must return the value of [=this=]'s [=LargestContentfulPaint/loadTime=].
 
@@ -216,7 +222,7 @@ Report Largest Contentful Paint {#sec-report-largest-contentful-paint}
 ----------------------------------------------------------------------
 
 <div export algorithm="report largest contentful paint">
-    When asked to <dfn>report largest contentful paint</dfn> given a {{Document}} |document|, a timestamp |now|, an [=ordered set=] of [=pending image records=] |paintedImages|, and an [=ordered set=] of [=/elements=] |paintedTextNodes|, perform the following steps:
+    When asked to <dfn>report largest contentful paint</dfn> given a {{Document}} |document|, a [=/paint timing info=] |paintTimingInfo|, an [=ordered set=] of [=pending image records=] |paintedImages|, and an [=ordered set=] of [=/elements=] |paintedTextNodes|, perform the following steps:
 
     1. [=list/For each=] |record| of |paintedImages|:
         1. Let |imageElement| be |record|'s [=pending image record/element=].
@@ -224,7 +230,7 @@ Report Largest Contentful Paint {#sec-report-largest-contentful-paint}
         1. Let |request| be |record|'s [=pending image record/request=].
         1. Let |candidate| be (|imageElement|, |request|)
         1. Let |intersectionRect| be the value returned by the intersection rect algorithm using |imageElement| as the target and viewport as the root.
-        1. <a>Potentially add a LargestContentfulPaint entry</a> with |candidate|, |intersectionRect|, |now|, |record|'s [=pending image record/loadTime=] and |document|.
+        1. <a>Potentially add a LargestContentfulPaint entry</a> with |candidate|, |intersectionRect|, |paintTimingInfo|, |record|'s [=pending image record/loadTime=] and |document|.
     1. [=list/For each=] |textNode| of |paintedTextNodes|,
         1. If |textNode| is not [=exposed for paint timing=], given |document|, continue.
         1. If |textNode| has [=alpha channel=] value <=0 or [=opacity=] value <=0:
@@ -234,7 +240,7 @@ Report Largest Contentful Paint {#sec-report-largest-contentful-paint}
         1. [=set/For each=] {{Text}} <a>node</a> |text| of |textNode|'s <a>set of owned text nodes</a>:
             1. Augment |intersectionRect| to be smallest rectangle containing the border box of |text| and |intersectionRect|.
         1. Intersect |intersectionRect| with the visual viewport.
-        1. <a>Potentially add a LargestContentfulPaint entry</a> with |candidate|, |intersectionRect|, |now|, 0, and |document|.
+        1. <a>Potentially add a LargestContentfulPaint entry</a> with |candidate|, |intersectionRect|, |paintTimingInfo|, 0, and |document|.
 </div>
 
 Determine the effective visual size of an element {#sec-effective-visual-size}
@@ -291,7 +297,7 @@ In order to <dfn export>potentially add a {{LargestContentfulPaint}} entry</dfn>
     : Input
     ::  |candidate|, a [=largest contentful paint candidate=]
     ::  |intersectionRect|, a {{DOMRectReadOnly}}
-    ::  |renderTime|, a DOMHighResTimestamp
+    ::  |paintTimingInfo|, a [=/paint timing info=]
     ::  |loadTime|, a DOMHighResTimestamp
     ::  |document|, a <a>Document</a>
     : Output
@@ -305,8 +311,8 @@ In order to <dfn export>potentially add a {{LargestContentfulPaint}} entry</dfn>
         1. Let |url| be the empty string.
         1. If |candidate|'s [=largest contentful paint candidate/request=] is not null, set |url| to be |candidate|'s [=largest contentful paint candidate/request=]'s [=request URL=].
         1. Let |id| be |candidate|'s [=largest contentful paint candidate/element=]'s <a attribute for=Element>element id</a>.
-        1. Let |contentInfo| be a <a>map</a> with |contentInfo|["size"] = |size|, |contentInfo|["url"] = |url|, |contentInfo|["id"] = |id|, |contentInfo|["renderTime"] = |renderTime|, |contentInfo|["loadTime"] = |loadTime|, and contentInfo["element"] = |candidate|'s [=largest contentful paint candidate/element=].
-        1. <a>Create a LargestContentfulPaint entry</a> with |contentInfo|, and |document| as inputs.
+        1. Let |contentInfo| be a <a>map</a> with |contentInfo|["size"] = |size|, |contentInfo|["url"] = |url|, |contentInfo|["id"] = |id|, |contentInfo|["loadTime"] = |loadTime|, and contentInfo["element"] = |candidate|'s [=largest contentful paint candidate/element=].
+        1. <a>Create a LargestContentfulPaint entry</a> with |contentInfo|, |paintTimingInfo|, and |document| as inputs.
 </div>
 
 Create a LargestContentfulPaint entry {#sec-create-entry}
@@ -317,15 +323,15 @@ In order to <dfn>create a {{LargestContentfulPaint}} entry</dfn>, the user agent
 <div algorithm="LargestContentfulPaint create-entry">
     : Input
     ::  |contentInfo|, a <a>map</a>
+    ::  |paintTimingInfo|, a [=/paint timing info=]
     ::  |document|, a {{Document}}
     : Output
     ::  None
         1. Set |document|'s [=largest contentful paint size=] to |contentInfo|["size"].
-        1. Let |entry| be a new {{LargestContentfulPaint}} entry with |document|'s [=relevant realm=], with its
+        1. Let |entry| be a new {{LargestContentfulPaint}} entry with |document|'s [=relevant realm=], whose [=PaintTimingMixin/paint timing info=] is |paintTimingInfo|, with its
             * {{LargestContentfulPaint/size}} set to |contentInfo|["size"],
             * {{LargestContentfulPaint/url}} set to |contentInfo|["url"],
             * {{LargestContentfulPaint/id}} set to |contentInfo|["id"],
-            * {{LargestContentfulPaint/renderTime}} set to |contentInfo|["renderTime"],
             * {{LargestContentfulPaint/loadTime}} set to |contentInfo|["loadTime"],
             * and {{LargestContentfulPaint/element}} set to |contentInfo|["element"].
         1. [=Queue the PerformanceEntry=] |entry|.

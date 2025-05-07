@@ -62,7 +62,6 @@ urlPrefix: https://w3c.github.io/paint-timing/; spec: PAINT-TIMING;
     type: dfn; for:pending image record; url:#pending-image-record-loadtime; text: loadTime
     type: dfn; for:pending image record; url:#pending-image-record-request; text: request
     type: dfn; url:#timing-eligible; text: timing-eligible
-    type: dfn; text: paint timing info;
     type: dfn; for: PaintTimingMixin; text: paint timing info;
     type: dfn; for: paint timing info; text: default paint timestamp;
     type: interface; text: PaintTimingMixin;
@@ -222,7 +221,7 @@ Report Largest Contentful Paint {#sec-report-largest-contentful-paint}
 ----------------------------------------------------------------------
 
 <div export algorithm="report largest contentful paint">
-    When asked to <dfn>report largest contentful paint</dfn> given a {{Document}} |document|, a [=/paint timing info=] |paintTimingInfo|, an [=ordered set=] of [=pending image records=] |paintedImages|, and an [=ordered set=] of [=/elements=] |paintedTextNodes|, perform the following steps:
+    When asked to <dfn>report largest contentful paint</dfn> given a {{Document}} |document|, a [=PaintTimingMixin/paint timing info=] |paintTimingInfo|, an [=ordered set=] of [=pending image records=] |paintedImages|, and an [=ordered set=] of [=/elements=] |paintedTextNodes|, perform the following steps:
 
     1. [=list/For each=] |record| of |paintedImages|:
         1. Let |imageElement| be |record|'s [=pending image record/element=].
@@ -297,7 +296,7 @@ In order to <dfn export>potentially add a {{LargestContentfulPaint}} entry</dfn>
     : Input
     ::  |candidate|, a [=largest contentful paint candidate=]
     ::  |intersectionRect|, a {{DOMRectReadOnly}}
-    ::  |paintTimingInfo|, a [=/paint timing info=]
+    ::  |paintTimingInfo|, a [=PaintTimingMixin/paint timing info=]
     ::  |loadTime|, a DOMHighResTimestamp
     ::  |document|, a <a>Document</a>
     : Output
@@ -323,7 +322,7 @@ In order to <dfn>create a {{LargestContentfulPaint}} entry</dfn>, the user agent
 <div algorithm="LargestContentfulPaint create-entry">
     : Input
     ::  |contentInfo|, a <a>map</a>
-    ::  |paintTimingInfo|, a [=/paint timing info=]
+    ::  |paintTimingInfo|, a [=PaintTimingMixin/paint timing info=]
     ::  |document|, a {{Document}}
     : Output
     ::  None

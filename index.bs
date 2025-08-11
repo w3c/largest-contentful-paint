@@ -171,10 +171,11 @@ The {{PerformanceEntry/entryType}} attribute's getter must return the {{DOMStrin
 
 The {{PerformanceEntry/name}} attribute's getter must return the empty string.
 
-The {{PerformanceEntry/startTime}} attribute's getter must return the [=default paint timestamp=] given [=this=]'s [=PaintTimingMixin/paint timing info=] if it is not 0,
-    and the value of [=this=]'s [=LargestContentfulPaint/loadTime=] otherwise.
+The {{PerformanceEntry/startTime}} attribute's getter must return the value of [=this=]'s {{LargestContentfulPaint/renderTime}} if it is not 0, and the value of [=this=]'s [=LargestContentfulPaint/loadTime=] otherwise.
 
 The {{PerformanceEntry/duration}} attribute's getter must return 0.
+
+The {{LargestContentfulPaint/renderTime}} attribute must return the [=default paint timestamp=] given [=this=]'s [=PaintTimingMixin/paint timing info=].
 
 The {{LargestContentfulPaint/loadTime}} attribute must return the value of [=this=]'s [=LargestContentfulPaint/loadTime=].
 

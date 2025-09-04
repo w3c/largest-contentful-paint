@@ -136,7 +136,7 @@ const po = new PerformanceObserver(list => {
     const entries = list.getEntries();
     const entry = entries[entries.length - 1];
     // Use the startTime, which will be the later of renderTime or loadTime.
-    // Note: Most browser suppot a coarsened renderTime for cross-origin
+    // Note: Most browser support a coarsened renderTime for cross-origin
     // resources, rather than needing to fallback to loadTime.
     const largestPaintTime = entry.startTime;
     // Send the LCP information for processing.

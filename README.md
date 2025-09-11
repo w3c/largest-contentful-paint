@@ -135,11 +135,9 @@ Its main disadvantage is that it accumulates all the entries, resulting in subop
 const po = new PerformanceObserver(list => {
     const entries = list.getEntries();
     const entry = entries[entries.length - 1];
-    // Process entry as the latest LCP candidate
-    // LCP is accurate when the renderTime is available.
-    // Try to avoid this being false by adding Timing-Allow-Origin headers!
-    const accurateLCP = entry.renderTime ? true : false;
-    // Use startTime as the LCP timestamp. It will be renderTime if available, or loadTime otherwise.
+    // Use the startTime, which will be the later of renderTime or loadTime.
+    // Note: Most browser support a coarsened renderTime for cross-origin
+    // resources, rather than needing to fallback to loadTime.
     const largestPaintTime = entry.startTime;
     // Send the LCP information for processing.
 });

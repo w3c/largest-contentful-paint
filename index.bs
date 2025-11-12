@@ -235,7 +235,7 @@ Report Largest Contentful Paint {#sec-report-largest-contentful-paint}
         1. Let |size| be the [=effective visual size=] of |imageElement| given |intersectionRect|.
         1. If |size| is less than or equal to |newCandidateSize|, continue.
         1. Let |request| be |record|'s [=pending image record/request=].
-        1. Let |newCandidateSize| be |size|.
+        1. Set |newCandidateSize| to |size|.
         1. Set |newCandidate| to be a new [=largest contentful paint candidate=] with its [=largest contentful paint candidate/element=] set to |imageElement|, its [=largest contentful paint candidate/size=] set to |size|, its [=largest contentful paint candidate/request=] set to |request|, and its [=largest contentful paint candidate/loadTime=] set to |record|'s [=pending image record/loadTime=].
     1. [=list/For each=] |textNode| of |paintedTextNodes|,
         1. If |textNode| is not [=exposed for paint timing=], given |document|, continue.
@@ -245,7 +245,7 @@ Report Largest Contentful Paint {#sec-report-largest-contentful-paint}
         1. Intersect |intersectionRect| with the visual viewport.
         1. Let |size| be the [=effective visual size=] of |textNode| given |intersectionRect|.
         1. If |size| is less than or equal to |newCandidateSize|, continue.
-        1. Let |newCandidateSize| be |size|.
+        1. Set |newCandidateSize| to |size|.
         1. Set |newCandidate| to be a new [=largest contentful paint candidate=] with its [=largest contentful paint candidate/element=] set to |textNode|, its [=largest contentful paint candidate/size=] set to |size|, its [=largest contentful paint candidate/request=] set to null, and its [=largest contentful paint candidate/loadTime=] set to 0.
     1. If |newCandidate| is not null:
         1. <a>Potentially add a LargestContentfulPaint entry</a> with |newCandidate|, |paintTimingInfo|, and |document|.

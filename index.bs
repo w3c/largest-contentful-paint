@@ -313,13 +313,13 @@ In order to <dfn export>potentially add a {{LargestContentfulPaint}} entry</dfn>
         1. Let |window| be |document|’s [=relevant global object=].
         1. If either of |window|'s [=has dispatched scroll event=] or [=has dispatched input event=] is true, return.
         1. Let |contentInfo| be a <a>map</a>.
-        1. Set |contentInfo|["size"] = candidate|'s [=largest contentful paint candidate/size=].
+        1. Set |contentInfo|["size"] to |candidate|'s [=largest contentful paint candidate/size=].
         1. Let |url| be the empty string.
         1. If |candidate|'s [=largest contentful paint candidate/request=] is not null, set |url| to be |candidate|'s [=largest contentful paint candidate/request=]'s [=request URL=].
         1. Set |contentInfo|["url"] = |url|.
-        1. Set |contentInfo|["id"] = |candidate|'s [=largest contentful paint candidate/element=]'s <a attribute for=Element>element id</a>.
-        1. Set |contentInfo|["loadTime"] = |candidate|'s [=largest contentful paint candidate/loadTime=].
-        1. Set |contentInfo|["element"] = |candidate|'s [=largest contentful paint candidate/element=].
+        1. Set |contentInfo|["id"] to |candidate|'s [=largest contentful paint candidate/element=]'s <a attribute for=Element>element id</a>.
+        1. Set |contentInfo|["loadTime"] to |candidate|'s [=largest contentful paint candidate/loadTime=].
+        1. Set |contentInfo|["element"] to |candidate|'s [=largest contentful paint candidate/element=].
         1. <a>Create a LargestContentfulPaint entry</a> with |contentInfo|, |paintTimingInfo|, and |document| as inputs.
 </div>
 

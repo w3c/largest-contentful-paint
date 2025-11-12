@@ -127,7 +127,9 @@ A <dfn>largest contentful paint candidate</dfn> is a [=struct=] containing the
 following members:
 
 * <dfn for="largest contentful paint candidate">element</dfn>, an [=/element=]
+* <dfn for="largest contentful paint candidate">size</dfn>, a [=/number=]
 * <dfn for="largest contentful paint candidate">request</dfn>, a [=/Request=] or null
+* <dfn for="largest contentful paint candidate">loadTime</dfn>, a [=/number=]
 
 An [=largest contentful paint candidate=] |candidate| is <dfn>eligible to be largest contentful paint</dfn> if it meets the
 following criteria:
@@ -224,23 +226,29 @@ Report Largest Contentful Paint {#sec-report-largest-contentful-paint}
 <div export algorithm="report largest contentful paint">
     When asked to <dfn>report largest contentful paint</dfn> given a {{Document}} |document|, a [=PaintTimingMixin/paint timing info=] |paintTimingInfo|, an [=ordered set=] of [=pending image records=] |paintedImages|, and an [=ordered set=] of [=/elements=] |paintedTextNodes|, perform the following steps:
 
+    1. Let |newCandidateSize| be |document|'s [=largest contentful paint size=].
+    1. Let |newCandidate| be null.
     1. [=list/For each=] |record| of |paintedImages|:
         1. Let |imageElement| be |record|'s [=pending image record/element=].
         1. If |imageElement| is not [=exposed for paint timing=], given |document|, continue.
-        1. Let |request| be |record|'s [=pending image record/request=].
-        1. Let |candidate| be (|imageElement|, |request|)
         1. Let |intersectionRect| be the value returned by the intersection rect algorithm using |imageElement| as the target and viewport as the root.
-        1. <a>Potentially add a LargestContentfulPaint entry</a> with |candidate|, |intersectionRect|, |paintTimingInfo|, |record|'s [=pending image record/loadTime=] and |document|.
+        1. Let |size| be the [=effective visual size=] of |imageElement| given |intersectionRect|.
+        1. If |size| is less than or equal to |newCandidateSize|, continue.
+        1. Let |request| be |record|'s [=pending image record/request=].
+        1. Let |newCandidateSize| be |size|.
+        1. Set |newCandidate| to be a new [=largest contentful paint candidate=] with its [=largest contentful paint candidate/element=] set to |imageElement|, its [=largest contentful paint candidate/size=] set to |size|, its [=largest contentful paint candidate/request=] set to |request|, and its [=largest contentful paint candidate/loadTime=] set to |record|'s [=pending image record/loadTime=].
     1. [=list/For each=] |textNode| of |paintedTextNodes|,
         1. If |textNode| is not [=exposed for paint timing=], given |document|, continue.
         1. If |textNode| has [=alpha channel=] value <=0 or [=opacity=] value <=0:
             1. If |textNode|'s <a property>text-shadow</a> value is none, |textNode|'s 'stroke-color' value is [=transparent=] and |textNode|'s 'stroke-image' value is none, continue.
-        1. Let |candidate| be (|textNode|, null)
-        1. Let |intersectionRect| be an empty rectangle.
-        1. [=set/For each=] {{Text}} <a>node</a> |text| of |textNode|'s <a>set of owned text nodes</a>:
-            1. Augment |intersectionRect| to be smallest rectangle containing the border box of |text| and |intersectionRect|.
+        1. Let |intersectionRect| be the union of the border boxes of all {{Text}} <a>nodes</a> in |textNode|'s <a>set of owned text nodes</a>.
         1. Intersect |intersectionRect| with the visual viewport.
-        1. <a>Potentially add a LargestContentfulPaint entry</a> with |candidate|, |intersectionRect|, |paintTimingInfo|, 0, and |document|.
+        1. Let |size| be the [=effective visual size=] of |textNode| given |intersectionRect|.
+        1. If |size| is less than or equal to |newCandidateSize|, continue.
+        1. Let |newCandidateSize| be |size|.
+        1. Set |newCandidate| to be a new [=largest contentful paint candidate=] with its [=largest contentful paint candidate/element=] set to |textNode|, its [=largest contentful paint candidate/size=] set to |size|, its [=largest contentful paint candidate/request=] set to null, and its [=largest contentful paint candidate/loadTime=] set to 0.
+    1. If |newCandidate| is not null:
+        1. <a>Potentially add a LargestContentfulPaint entry</a> with |newCandidate|, |paintTimingInfo|, and |document|.
 </div>
 
 Determine the effective visual size of an element {#sec-effective-visual-size}
@@ -296,9 +304,7 @@ In order to <dfn export>potentially add a {{LargestContentfulPaint}} entry</dfn>
 <div algorithm="LargestContentfulPaint potentially-add-entry">
     : Input
     ::  |candidate|, a [=largest contentful paint candidate=]
-    ::  |intersectionRect|, a {{DOMRectReadOnly}}
     ::  |paintTimingInfo|, a [=PaintTimingMixin/paint timing info=]
-    ::  |loadTime|, a DOMHighResTimestamp
     ::  |document|, a <a>Document</a>
     : Output
     ::  None
@@ -306,12 +312,14 @@ In order to <dfn export>potentially add a {{LargestContentfulPaint}} entry</dfn>
         1. <a for=set>Append</a> |candidate| to |document|'s [=content set=]
         1. Let |window| be |document|’s [=relevant global object=].
         1. If either of |window|'s [=has dispatched scroll event=] or [=has dispatched input event=] is true, return.
-        1. Let |size| be the [=effective visual size=] of |candidate|'s [=/element=] given |intersectionRect|.
-        1. If |size| is less than or equal to |document|'s [=largest contentful paint size=], return.
+        1. Let |contentInfo| be a <a>map</a>.
+        1. Set |contentInfo|["size"] = candidate|'s [=largest contentful paint candidate/size=].
         1. Let |url| be the empty string.
         1. If |candidate|'s [=largest contentful paint candidate/request=] is not null, set |url| to be |candidate|'s [=largest contentful paint candidate/request=]'s [=request URL=].
-        1. Let |id| be |candidate|'s [=largest contentful paint candidate/element=]'s <a attribute for=Element>element id</a>.
-        1. Let |contentInfo| be a <a>map</a> with |contentInfo|["size"] = |size|, |contentInfo|["url"] = |url|, |contentInfo|["id"] = |id|, |contentInfo|["loadTime"] = |loadTime|, and contentInfo["element"] = |candidate|'s [=largest contentful paint candidate/element=].
+        1. Set |contentInfo|["url"] = |url|.
+        1. Set |contentInfo|["id"] = |candidate|'s [=largest contentful paint candidate/element=]'s <a attribute for=Element>element id</a>.
+        1. Set |contentInfo|["loadTime"] = |candidate|'s [=largest contentful paint candidate/loadTime=].
+        1. Set |contentInfo|["element"] = |candidate|'s [=largest contentful paint candidate/element=].
         1. <a>Create a LargestContentfulPaint entry</a> with |contentInfo|, |paintTimingInfo|, and |document| as inputs.
 </div>
 
@@ -341,4 +349,3 @@ Security & privacy considerations {#sec-security}
 =================================================
 
 This API relies on Paint Timing for its underlying primitives. Unlike the similar API Element Timing, LCP may expose timing details of some elements with small sizes, if they are still the largest elements to be painted up until that point in the page's loading. That does not seem to expose any sensitive information beyond what Element Timing already enables.
-

@@ -4,8 +4,8 @@ Status: ED
 Shortname: largest-contentful-paint
 Group: webperf
 Level: none
-Editor: Yoav Weiss, Google https://google.com, yoavweiss@chromium.org, w3cid 58673
-Editor: Nicolás Peña Moreno, Google https://google.com, npm@chromium.org, w3cid 103755
+Editor: Yoav Weiss, Shopify https://shopify.com, yoav@yoav.ws, w3cid 58673
+Former Editor: Nicolás Peña Moreno, Google https://google.com, npm@chromium.org, w3cid 103755
 TR: https://www.w3.org/TR/largest-contentful-paint
 URL: https://w3c.github.io/largest-contentful-paint/
 Repository: https://github.com/w3c/largest-contentful-paint/

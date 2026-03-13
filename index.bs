@@ -241,8 +241,7 @@ Report Largest Contentful Paint {#sec-report-largest-contentful-paint}
         1. If |result| is null, continue.
         1. If |result|'s [=effective visual size result/size=] is less than or equal to |currentSize|, continue.
         1. If |currentSize| is greater than 0:
-            1. If |result|'s [=effective visual size result/width=] minus |currentWidth| is less than or equal to 3, continue.
-            1. If |result|'s [=effective visual size result/height=] minus |currentHeight| is less than or equal to 3, continue.
+            1. If |result|'s [=effective visual size result/width=] minus |currentWidth| is less than or equal to 3, and |result|'s [=effective visual size result/height=] minus |currentHeight| is less than or equal to 3, continue.
         1. Set |currentSize| to |result|'s [=effective visual size result/size=].
         1. Set |currentWidth| to |result|'s [=effective visual size result/width=].
         1. Set |currentHeight| to |result|'s [=effective visual size result/height=].
@@ -256,8 +255,7 @@ Report Largest Contentful Paint {#sec-report-largest-contentful-paint}
         1. If |result| is null, continue.
         1. If |result|'s [=effective visual size result/size=] is less than or equal to |currentSize|, continue.
         1. If |currentSize| is greater than 0:
-            1. If |result|'s [=effective visual size result/width=] minus |currentWidth| is less than or equal to 3, continue.
-            1. If |result|'s [=effective visual size result/height=] minus |currentHeight| is less than or equal to 3, continue.
+            1. If |result|'s [=effective visual size result/width=] minus |currentWidth| is less than or equal to 3, and |result|'s [=effective visual size result/height=] minus |currentHeight| is less than or equal to 3, continue.
         1. Set |currentSize| to |result|'s [=effective visual size result/size=].
         1. Set |currentWidth| to |result|'s [=effective visual size result/width=].
         1. Set |currentHeight| to |result|'s [=effective visual size result/height=].

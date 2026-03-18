@@ -309,11 +309,7 @@ run the following steps:
             1. If |naturalArea| is 0, then return null.
             1. Let |boundingClientArea| be <code>|clientContentRect|'s {{DOMRectReadOnly/width}} * |clientContentRect|'s {{DOMRectReadOnly/height}}</code>.
             1. Let |scaleFactor| be <code>|boundingClientArea| / |naturalArea|</code>.
-            1. If |scaleFactor| is greater than 1, then:
-                1. Divide |size| by |scaleFactor|.
-                1. Let |linearScaleFactor| be the square root of |scaleFactor|.
-                1. Divide |width| by |linearScaleFactor|, and round up to the nearest integer.
-                1. Divide |height| by |linearScaleFactor|, and round up to the nearest integer.
+            1. If |scaleFactor| is greater than 1, then divide |size| by |scaleFactor|.
 
         1. Return an [=effective visual size result=] with [=effective visual size result/size=] set to |size|, [=effective visual size result/width=] set to |width|, and [=effective visual size result/height=] set to |height|.
 </div>

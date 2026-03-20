@@ -128,6 +128,8 @@ following members:
 
 * <dfn for="largest contentful paint candidate">element</dfn>, an [=/element=]
 * <dfn for="largest contentful paint candidate">size</dfn>, a [=/number=]
+* <dfn for="largest contentful paint candidate">width</dfn>, a [=/number=]
+* <dfn for="largest contentful paint candidate">height</dfn>, a [=/number=]
 * <dfn for="largest contentful paint candidate">request</dfn>, a [=/Request=] or null
 * <dfn for="largest contentful paint candidate">loadTime</dfn>, a [=/number=]
 
@@ -191,7 +193,11 @@ The {{LargestContentfulPaint/element}} attribute's getter must perform the follo
 
 Note: The above algorithm defines that an element that is no longer a [=tree/descendant=] of the {{Document}} will no longer be returned by {{LargestContentfulPaint/element}}'s attribute getter, including elements that are inside a shadow DOM.
 
-This specification also extends {{Document}} by adding to it a <dfn>largest contentful paint size</dfn> concept, initially set to 0.
+This specification also extends {{Document}} by adding to it:
+
+* A <dfn>largest contentful paint size</dfn> concept, initially set to 0.
+* A <dfn>largest contentful paint width</dfn> concept, initially set to 0.
+* A <dfn>largest contentful paint height</dfn> concept, initially set to 0.
 
 Processing model {#sec-processing-model}
 ========================================
@@ -223,25 +229,37 @@ Report Largest Contentful Paint {#sec-report-largest-contentful-paint}
 
     1. Let |window| be |document|’s [=relevant global object=].
     1. If either of |window|'s [=has dispatched scroll event=] or [=has dispatched input event=] is true, return.
-    1. Let |newCandidateSize| be |document|'s [=largest contentful paint size=].
+    1. Let |currentSize| be |document|'s [=largest contentful paint size=].
+    1. Let |currentWidth| be |document|'s [=largest contentful paint width=].
+    1. Let |currentHeight| be |document|'s [=largest contentful paint height=].
     1. Let |newCandidate| be null.
     1. [=list/For each=] |record| of |paintedImages|:
         1. Let |imageElement| be |record|'s [=pending image record/element=].
         1. If |imageElement| is not [=exposed for paint timing=], given |document|, continue.
         1. Let |intersectionRect| be the value returned by the intersection rect algorithm using |imageElement| as the target and viewport as the root.
-        1. Let |size| be the [=effective visual size=] of |imageElement| given |intersectionRect| and |record|'s [=pending image record/request=].
-        1. If |size| is less than or equal to |newCandidateSize|, continue.
-        1. Set |newCandidateSize| to |size|.
-        1. Set |newCandidate| to be a new [=largest contentful paint candidate=] with its [=largest contentful paint candidate/element=] set to |imageElement|, its [=largest contentful paint candidate/size=] set to |size|, its [=largest contentful paint candidate/request=] set to |record|'s [=pending image record/request=], and its [=largest contentful paint candidate/loadTime=] set to |record|'s [=pending image record/loadTime=].
+        1. Let |result| be the [=effective visual size=] of |imageElement| given |intersectionRect| and |record|'s [=pending image record/request=].
+        1. If |result| is null, continue.
+        1. If |result|'s [=effective visual size result/size=] is less than or equal to |currentSize|, continue.
+        1. If |currentSize| is greater than 0:
+            1. If |result|'s [=effective visual size result/width=] minus |currentWidth| is less than or equal to 3, and |result|'s [=effective visual size result/height=] minus |currentHeight| is less than or equal to 3, continue.
+        1. Set |currentSize| to |result|'s [=effective visual size result/size=].
+        1. Set |currentWidth| to |result|'s [=effective visual size result/width=].
+        1. Set |currentHeight| to |result|'s [=effective visual size result/height=].
+        1. Set |newCandidate| to be a new [=largest contentful paint candidate=] with its [=largest contentful paint candidate/element=] set to |imageElement|, its [=largest contentful paint candidate/size=] set to |result|'s [=effective visual size result/size=], its [=largest contentful paint candidate/width=] set to |result|'s [=effective visual size result/width=], its [=largest contentful paint candidate/height=] set to |result|'s [=effective visual size result/height=], its [=largest contentful paint candidate/request=] set to |record|'s [=pending image record/request=], and its [=largest contentful paint candidate/loadTime=] set to |record|'s [=pending image record/loadTime=].
     1. [=list/For each=] |textNode| of |paintedTextNodes|,
         1. If |textNode| is not [=exposed for paint timing=], given |document|, continue.
         1. If |textNode| has [=alpha channel=] value <=0 or [=opacity=] value <=0:
             1. If |textNode|'s <a property>text-shadow</a> value is none, |textNode|'s 'stroke-color' value is [=transparent=] and |textNode|'s 'stroke-image' value is none, continue.
         1. Let |intersectionRect| be the union of the border boxes of all {{Text}} <a>nodes</a> in |textNode|'s <a>set of owned text nodes</a>, intersected with the visual viewport.
-        1. Let |size| be the [=effective visual size=] of |textNode| given |intersectionRect| and null.
-        1. If |size| is less than or equal to |newCandidateSize|, continue.
-        1. Set |newCandidateSize| to |size|.
-        1. Set |newCandidate| to be a new [=largest contentful paint candidate=] with its [=largest contentful paint candidate/element=] set to |textNode|, its [=largest contentful paint candidate/size=] set to |size|, its [=largest contentful paint candidate/request=] set to null, and its [=largest contentful paint candidate/loadTime=] set to 0.
+        1. Let |result| be the [=effective visual size=] of |textNode| given |intersectionRect| and null.
+        1. If |result| is null, continue.
+        1. If |result|'s [=effective visual size result/size=] is less than or equal to |currentSize|, continue.
+        1. If |currentSize| is greater than 0:
+            1. If |result|'s [=effective visual size result/width=] minus |currentWidth| is less than or equal to 3, and |result|'s [=effective visual size result/height=] minus |currentHeight| is less than or equal to 3, continue.
+        1. Set |currentSize| to |result|'s [=effective visual size result/size=].
+        1. Set |currentWidth| to |result|'s [=effective visual size result/width=].
+        1. Set |currentHeight| to |result|'s [=effective visual size result/height=].
+        1. Set |newCandidate| to be a new [=largest contentful paint candidate=] with its [=largest contentful paint candidate/element=] set to |textNode|, its [=largest contentful paint candidate/size=] set to |result|'s [=effective visual size result/size=], its [=largest contentful paint candidate/width=] set to |result|'s [=effective visual size result/width=], its [=largest contentful paint candidate/height=] set to |result|'s [=effective visual size result/height=], its [=largest contentful paint candidate/request=] set to null, and its [=largest contentful paint candidate/loadTime=] set to 0.
     1. If |newCandidate| is not null:
         1. <a>Create a LargestContentfulPaint entry</a> with |newCandidate|, |paintTimingInfo|, and |document|.
 </div>
@@ -260,9 +278,9 @@ run the following steps:
     ::  |element|, an [=/Element=]
     ::  |document|, a <a>Document</a>
     : Output
-    ::  The size to report for Largest Contentful Paint, in pixels, or null if the element should not be an LCP candidate.
-        1. Let |width| be |intersectionRect|'s {{DOMRectReadOnly/width}}.
-        1. Let |height| be |intersectionRect|'s {{DOMRectReadOnly/height}}.
+    ::  An <dfn>effective visual size result</dfn>, which is a [=struct=] with items <dfn for="effective visual size result">size</dfn> (a [=/number=]), <dfn for="effective visual size result">width</dfn> (a [=/number=]), and <dfn for="effective visual size result">height</dfn> (a [=/number=]), representing the effective visual size, width, and height to report for Largest Contentful Paint, in pixels; or null if the element should not be an LCP candidate.
+        1. Let |width| be |intersectionRect|'s {{DOMRectReadOnly/width}}, rounded up to the nearest integer.
+        1. Let |height| be |intersectionRect|'s {{DOMRectReadOnly/height}}, rounded up to the nearest integer.
         1. Let |size| be <code>|width| * |height|</code>.
         1. Let |root| be |document|'s <a for="Document">browsing context</a>'s <a>top-level browsing context</a>'s <a>active document</a>.
         1. Let |rootWidth| be |root|'s <a>visual viewport</a>'s width, excluding any scrollbars.
@@ -281,7 +299,9 @@ run the following steps:
 
             1. Let |clientContentRect| be the smallest {{DOMRectReadOnly}} containing |visibleDimensions| with |element|'s [=transforms=] applied.
             1. Let |intersectingClientContentRect| be the intersection of |clientContentRect| with |intersectionRect|.
-            1. Set |size| to <code>|intersectingClientContentRect|'s {{DOMRectReadOnly/width}} * |intersectingClientContentRect|'s {{DOMRectReadOnly/height}}</code>.
+            1. Set |width| to |intersectingClientContentRect|'s {{DOMRectReadOnly/width}}, rounded up to the nearest integer.
+            1. Set |height| to |intersectingClientContentRect|'s {{DOMRectReadOnly/height}}, rounded up to the nearest integer.
+            1. Set |size| to <code>|width| * |height|</code>.
 
                Note: This ensures that we only intersect with the image itself and not with the element's decorations.
 
@@ -291,7 +311,7 @@ run the following steps:
             1. Let |scaleFactor| be <code>|boundingClientArea| / |naturalArea|</code>.
             1. If |scaleFactor| is greater than 1, then divide |size| by |scaleFactor|.
 
-        1. Return |size|.
+        1. Return an [=effective visual size result=] with [=effective visual size result/size=] set to |size|, [=effective visual size result/width=] set to |width|, and [=effective visual size result/height=] set to |height|.
 </div>
 
 Create a LargestContentfulPaint entry {#sec-create-entry}
@@ -307,6 +327,8 @@ In order to <dfn>create a {{LargestContentfulPaint}} entry</dfn>, the user agent
     : Output
     ::  None
         1. Set |document|'s [=largest contentful paint size=] to |candidate|'s [=largest contentful paint candidate/size=].
+        1. Set |document|'s [=largest contentful paint width=] to |candidate|'s [=largest contentful paint candidate/width=].
+        1. Set |document|'s [=largest contentful paint height=] to |candidate|'s [=largest contentful paint candidate/height=].
         1. Let |url| be the empty string.
         1. If |candidate|'s [=largest contentful paint candidate/request=] is not null, set |url| to be |candidate|'s [=largest contentful paint candidate/request=]'s [=request URL=].
         1. Let |entry| be a new {{LargestContentfulPaint}} entry with |document|'s [=relevant realm=], whose [=PaintTimingMixin/paint timing info=] is |paintTimingInfo|, with its

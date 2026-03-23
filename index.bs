@@ -125,7 +125,7 @@ The LargestContentfulPaint API is based on full-page load navigations. Therefore
  * Back-forward cache, or bfcache, navigations.
  * Soft navigations within Single Page Applications (SPA).
 
-When using the LargestContentfulPaint API you may wish to consider how to handle these types of navigations since users may consider them as navigations.
+When using the LargestContentfulPaint API you may wish to consider how to handle these, outside of this API, since users may consider them as navigations.
 
 Terminology {#sec-terminology}
 ==============================

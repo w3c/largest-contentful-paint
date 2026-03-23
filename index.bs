@@ -114,6 +114,8 @@ The following example shows an image and a large body of text. The developer the
 Limitations {#limitations}
 ------------------------
 
+<em>This section is non-normative.</em>
+
 The LargestContentfulPaint API is based on heuristics. As such, it is error prone. It has the following problems:
 
 * The algorithm halts when it detects certain types of user inputs. However, this means that the algorithm will not capture the main content if the user input occurs before the main content is displayed. In fact, the algorithm may produce meaningless results or no results at all if user input occurs very early.

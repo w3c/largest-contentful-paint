@@ -125,7 +125,7 @@ The LargestContentfulPaint API is based on heuristics. As such, it is error pron
 The LargestContentfulPaint API is based on full-page load navigations. Therefore it is not reset on:
 
  * Back-forward cache, or bfcache, restorations.
- * Soft navigations within Single Page Applications (SPA).
+ * Same document history navigations as used within within rich, JavaScript, applications.
 
 When using the LargestContentfulPaint API you may wish to consider how to handle these, outside of this API, since users may consider them as navigations.
 

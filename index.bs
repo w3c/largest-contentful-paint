@@ -127,7 +127,7 @@ The LargestContentfulPaint API is based on document loads. Therefore it is not r
  * Back-forward cache, or bfcache, restorations.
  * Same document history navigations as used within within rich, JavaScript, applications.
 
-When using the LargestContentfulPaint API you may wish to consider how to handle these, outside of this API, since users may consider them as navigations.
+When using the LargestContentfulPaint API you may wish to consider how to handle these, outside of this API, since users may consider them as page loads.
 
 Additionally, pages loaded initially off-screen, such as in background tabs, or through prerendering technology, will report larger values than may be expected since they measure the time from load until paint so again need to be considered how to handle.
 

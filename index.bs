@@ -122,7 +122,7 @@ The LargestContentfulPaint API is based on heuristics. As such, it is error pron
 
 * To account for image carousels, content is still considered as the largest even if it's removed. This presents problems for websites with splash screens that use large content as placeholders.
 
-The LargestContentfulPaint API is based on full-page load navigations. Therefore it is not reset on:
+The LargestContentfulPaint API is based on document loads. Therefore it is not reset on:
 
  * Back-forward cache, or bfcache, restorations.
  * Same document history navigations as used within within rich, JavaScript, applications.

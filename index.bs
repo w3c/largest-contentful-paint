@@ -114,11 +114,22 @@ The following example shows an image and a large body of text. The developer the
 Limitations {#limitations}
 ------------------------
 
+<em>This section is non-normative.</em>
+
 The LargestContentfulPaint API is based on heuristics. As such, it is error prone. It has the following problems:
 
 * The algorithm halts when it detects certain types of user inputs. However, this means that the algorithm will not capture the main content if the user input occurs before the main content is displayed. In fact, the algorithm may produce meaningless results or no results at all if user input occurs very early.
 
 * To account for image carousels, content is still considered as the largest even if it's removed. This presents problems for websites with splash screens that use large content as placeholders.
+
+The LargestContentfulPaint API is based on document loads. Therefore it is not reset on:
+
+ * Back-forward cache, or bfcache, restorations.
+ * Same document history navigations as used within within rich, JavaScript, applications.
+
+When using the LargestContentfulPaint API you may wish to consider how to handle these, outside of this API, since users may consider them as page loads.
+
+Additionally, pages loaded initially off-screen, such as in background tabs, or through prerendering technology, will report larger values than may be expected since they measure the time from load until paint so again need to be considered how to handle.
 
 Terminology {#sec-terminology}
 ==============================

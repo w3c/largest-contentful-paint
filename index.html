@@ -742,7 +742,7 @@ var[data-var-color="6"] { --var-vg: #FFBCF2; }
 </p>
    <h1 class="no-ref p-name" id="title">Largest Contentful Paint</h1>
    <p id="w3c-state"><a href="https://www.w3.org/standards/types/#ED">Editor’s Draft</a>,
-    <time class="dt-updated" datetime="2026-03-19">19 March 2026</time></p>
+    <time class="dt-updated" datetime="2026-03-23">23 March 2026</time></p>
    <details open>
     <summary>More details about this document</summary>
     <div data-fill-with="spec-metadata">
@@ -869,6 +869,7 @@ observer<c- p>.</c->observe<c- p>({</c->entryTypes<c- o>:</c-> <c- p>[</c-><c- t
 <c- p>&lt;/</c-><c- f>script</c-><c- p>></c->
 </pre>
    <h3 class="heading settled" data-level="1.3" id="limitations"><span class="secno">1.3. </span><span class="content">Limitations</span><a class="self-link" href="#limitations"></a></h3>
+   <p><em>This section is non-normative.</em></p>
    <p>The LargestContentfulPaint API is based on heuristics. As such, it is error prone. It has the following problems:</p>
    <ul>
     <li data-md>
@@ -876,6 +877,15 @@ observer<c- p>.</c->observe<c- p>({</c->entryTypes<c- o>:</c-> <c- p>[</c-><c- t
     <li data-md>
      <p>To account for image carousels, content is still considered as the largest even if it’s removed. This presents problems for websites with splash screens that use large content as placeholders.</p>
    </ul>
+   <p>The LargestContentfulPaint API is based on document loads. Therefore it is not reset on:</p>
+   <ul>
+    <li data-md>
+     <p>Back-forward cache, or bfcache, restorations.</p>
+    <li data-md>
+     <p>Same document history navigations as used within within rich, JavaScript, applications.</p>
+   </ul>
+   <p>When using the LargestContentfulPaint API you may wish to consider how to handle these, outside of this API, since users may consider them as page loads.</p>
+   <p>Additionally, pages loaded initially off-screen, such as in background tabs, or through prerendering technology, will report larger values than may be expected since they measure the time from load until paint so again need to be considered how to handle.</p>
    <h2 class="heading settled" data-level="2" id="sec-terminology"><span class="secno">2. </span><span class="content">Terminology</span><a class="self-link" href="#sec-terminology"></a></h2>
    <p>A <dfn class="dfn-paneled" data-dfn-type="dfn" data-noexport id="largest-contentful-paint-candidate">largest contentful paint candidate</dfn> is a <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#struct" id="ref-for-struct">struct</a> containing the
 following members:</p>

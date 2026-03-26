@@ -288,13 +288,13 @@ run the following steps:
             1. Let |concreteDimensions| be |imageRequest|'s [=concrete object size=] within |element|.
             1. Let |visibleDimensions| be |concreteDimensions|, adjusted for positioning by 'object-position' or 'background-position' and |element|'s [=content box=].
 
-               Note: some of those algorithms are not rigorously defined in CSS. The expected result is to get the actual position and size of the image in |element| as a {{DOMRectReadOnly}}.
+                Note: some of those algorithms are not rigorously defined in CSS. The expected result is to get the actual position and size of the image in |element| as a {{DOMRectReadOnly}}.
 
             1. Let |clientContentRect| be the smallest {{DOMRectReadOnly}} containing |visibleDimensions| with |element|'s [=transforms=] applied.
             1. Let |intersectingClientContentRect| be the intersection of |clientContentRect| with |intersectionRect|.
             1. Set |size| to <code>|intersectingClientContentRect|'s {{DOMRectReadOnly/width}} * |intersectingClientContentRect|'s {{DOMRectReadOnly/height}}</code>.
 
-               Note: This ensures that we only intersect with the image itself and not with the element's decorations.
+                Note: This ensures that we only intersect with the image itself and not with the element's decorations.
 
             1. Let |naturalArea| be <code>|imageRequest|'s [=natural width=] * |imageRequest|'s [=natural height=]</code>.
             1. If |naturalArea| is 0, then return null.

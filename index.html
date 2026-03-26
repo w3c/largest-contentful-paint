@@ -742,7 +742,7 @@ var[data-var-color="6"] { --var-vg: #FFBCF2; }
 </p>
    <h1 class="no-ref p-name" id="title">Largest Contentful Paint</h1>
    <p id="w3c-state"><a href="https://www.w3.org/standards/types/#ED">Editor’s Draft</a>,
-    <time class="dt-updated" datetime="2026-03-23">23 March 2026</time></p>
+    <time class="dt-updated" datetime="2026-03-26">26 March 2026</time></p>
    <details open>
     <summary>More details about this document</summary>
     <div data-fill-with="spec-metadata">
@@ -1071,18 +1071,14 @@ run the following steps:</p>
           <p>Let <var>concreteDimensions</var> be <var>imageRequest</var>’s <a data-link-type="dfn" href="https://drafts.csswg.org/css-images-3/#concrete-object-size" id="ref-for-concrete-object-size">concrete object size</a> within <var>element</var>.</p>
          <li data-md>
           <p>Let <var>visibleDimensions</var> be <var>concreteDimensions</var>, adjusted for positioning by <a class="css property" data-link-type="property" href="https://drafts.csswg.org/css-images-3/#propdef-object-position" id="ref-for-propdef-object-position">object-position</a> or <a class="css property" data-link-type="property" href="https://drafts.csswg.org/css-backgrounds-3/#propdef-background-position" id="ref-for-propdef-background-position">background-position</a> and <var>element</var>’s <a data-link-type="dfn" href="https://drafts.csswg.org/css-box-4/#content-box" id="ref-for-content-box">content box</a>.</p>
-        </ol>
-        <p class="note" role="note"><span class="marker">Note:</span> some of those algorithms are not rigorously defined in CSS. The expected result is to get the actual position and size of the image in <var>element</var> as a <code class="idl"><a data-link-type="idl" href="https://drafts.csswg.org/geometry-1/#domrectreadonly" id="ref-for-domrectreadonly①">DOMRectReadOnly</a></code>.</p>
-        <ol>
+          <p class="note" role="note"><span class="marker">Note:</span> some of those algorithms are not rigorously defined in CSS. The expected result is to get the actual position and size of the image in <var>element</var> as a <code class="idl"><a data-link-type="idl" href="https://drafts.csswg.org/geometry-1/#domrectreadonly" id="ref-for-domrectreadonly①">DOMRectReadOnly</a></code>.</p>
          <li data-md>
           <p>Let <var>clientContentRect</var> be the smallest <code class="idl"><a data-link-type="idl" href="https://drafts.csswg.org/geometry-1/#domrectreadonly" id="ref-for-domrectreadonly②">DOMRectReadOnly</a></code> containing <var>visibleDimensions</var> with <var>element</var>’s <a data-link-type="dfn" href="https://streams.spec.whatwg.org/#generictransformstream-transform" id="ref-for-generictransformstream-transform">transforms</a> applied.</p>
          <li data-md>
           <p>Let <var>intersectingClientContentRect</var> be the intersection of <var>clientContentRect</var> with <var>intersectionRect</var>.</p>
          <li data-md>
           <p>Set <var>size</var> to <code class="highlight"><var>intersectingClientContentRect</var>’s <code class="idl"><a data-link-type="idl" href="https://drafts.csswg.org/geometry-1/#dom-domrectreadonly-width" id="ref-for-dom-domrectreadonly-width①">width</a></code> <c- o>*</c-> <var>intersectingClientContentRect</var>’s <code class="idl"><a data-link-type="idl" href="https://drafts.csswg.org/geometry-1/#dom-domrectreadonly-height" id="ref-for-dom-domrectreadonly-height①">height</a></code></code>.</p>
-        </ol>
-        <p class="note" role="note"><span class="marker">Note:</span> This ensures that we only intersect with the image itself and not with the element’s decorations.</p>
-        <ol>
+          <p class="note" role="note"><span class="marker">Note:</span> This ensures that we only intersect with the image itself and not with the element’s decorations.</p>
          <li data-md>
           <p>Let <var>naturalArea</var> be <code class="highlight"><var>imageRequest</var>’s <a data-link-type="dfn" href="https://drafts.csswg.org/css-images-3/#natural-width" id="ref-for-natural-width">natural width</a> <c- o>*</c-> <var>imageRequest</var>’s <a data-link-type="dfn" href="https://drafts.csswg.org/css-images-3/#natural-height" id="ref-for-natural-height">natural height</a></code>.</p>
          <li data-md>

@@ -242,7 +242,13 @@ Report Largest Contentful Paint {#sec-report-largest-contentful-paint}
         1. If |result| is null, continue.
         1. If |result|'s [=effective visual size result/size=] is less than or equal to |largestSize|, continue.
         1. Set |largestSize| to |result|'s [=effective visual size result/size=].
-        1. Set |newCandidate| to be a new [=largest contentful paint candidate=] with its [=largest contentful paint candidate/element=] set to |imageElement|, its [=largest contentful paint candidate/size=] set to |result|'s [=effective visual size result/size=], its [=largest contentful paint candidate/width=] set to |result|'s [=effective visual size result/width=], its [=largest contentful paint candidate/height=] set to |result|'s [=effective visual size result/height=], its [=largest contentful paint candidate/request=] set to |record|'s [=pending image record/request=], and its [=largest contentful paint candidate/loadTime=] set to |record|'s [=pending image record/loadTime=].
+    1. Set |newCandidate| to be a new [=largest contentful paint candidate=] with the following values:
+        1. [=largest contentful paint candidate/element=] set to |imageElement|.
+        1. [=largest contentful paint candidate/size=] set to |result|'s [=effective visual size result/size=].
+        1. [=largest contentful paint candidate/width=] set to |result|'s [=effective visual size result/width=].
+        1. [=largest contentful paint candidate/height=] set to |result|'s [=effective visual size result/height=].
+        1. [=largest contentful paint candidate/request=] set to |record|'s [=pending image record/request=].
+        1. [=largest contentful paint candidate/loadTime=] set to |record|'s [=pending image record/loadTime=].
     1. [=list/For each=] |textNode| of |paintedTextNodes|,
         1. If |textNode| is not [=exposed for paint timing=], given |document|, continue.
         1. If |textNode| has [=alpha channel=] value <=0 or [=opacity=] value <=0:
@@ -252,7 +258,13 @@ Report Largest Contentful Paint {#sec-report-largest-contentful-paint}
         1. If |result| is null, continue.
         1. If |result|'s [=effective visual size result/size=] is less than or equal to |largestSize|, continue.
         1. Set |largestSize| to |result|'s [=effective visual size result/size=].
-        1. Set |newCandidate| to be a new [=largest contentful paint candidate=] with its [=largest contentful paint candidate/element=] set to |textNode|, its [=largest contentful paint candidate/size=] set to |result|'s [=effective visual size result/size=], its [=largest contentful paint candidate/width=] set to |result|'s [=effective visual size result/width=], its [=largest contentful paint candidate/height=] set to |result|'s [=effective visual size result/height=], its [=largest contentful paint candidate/request=] set to null, and its [=largest contentful paint candidate/loadTime=] set to 0.
+        1. Set |newCandidate| to be a new [=largest contentful paint candidate=] with the following values:
+            1. [=largest contentful paint candidate/element=] set to |textNode|.
+            1. [=largest contentful paint candidate/size=] set to |result|'s [=effective visual size result/size=].
+            1. [=largest contentful paint candidate/width=] set to |result|'s [=effective visual size result/width=].
+            1. [=largest contentful paint candidate/height=] set to |result|'s [=effective visual size result/height=].
+            1. [=largest contentful paint candidate/request=] set to null.
+            1. [=largest contentful paint candidate/loadTime=] set to 0.
     1. If |newCandidate| is not null:
         1. If |currentSize| is greater than 0:
             1. If |newCandidate|'s [=largest contentful paint candidate/width=] minus |currentWidth| is less than or equal to 3, and |newCandidate|'s [=largest contentful paint candidate/height=] minus |currentHeight| is less than or equal to 3, return.

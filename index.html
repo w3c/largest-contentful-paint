@@ -5,9 +5,9 @@
   <title>Largest Contentful Paint</title>
   <meta content="ED" name="w3c-status">
   <link href="https://www.w3.org/StyleSheets/TR/2021/W3C-ED" rel="stylesheet">
-  <meta content="Bikeshed version 9e651ddb3, updated Fri Dec 12 15:40:37 2025 -0800" name="generator">
+  <meta content="Bikeshed version 0a3d88311, updated Mon May 4 18:07:03 2026 +0000" name="generator">
   <link href="https://www.w3.org/TR/largest-contentful-paint" rel="canonical">
-  <meta content="e0215aa507b22d4e3f4069efefc443c019078628" name="revision">
+  <meta content="0793d0e033ec40f70be43be30f4868bf0cd0d532" name="revision">
   <meta content="dark light" name="color-scheme">
   <link href="https://www.w3.org/StyleSheets/TR/2021/dark.css" media="(prefers-color-scheme: dark)" rel="stylesheet" type="text/css">
 <style>/* Boilerplate: style-autolinks */
@@ -303,7 +303,7 @@ pre .property::before, pre .property::after {
 </style>
 <style>/* Boilerplate: style-counters */
 body {
-    counter-reset: example figure issue;
+    counter-reset: example figure issue table;
 }
 .issue {
     counter-increment: issue;
@@ -328,6 +328,13 @@ figcaption {
 }
 figcaption:not(.no-marker)::before {
     content: "Figure " counter(figure) " ";
+}
+
+figure.table figcaption {
+    counter-increment: table;
+}
+figure.table figcaption:not(.no-marker)::before {
+    content: "Table " counter(table) " ";
 }
 </style>
 <style>/* Boilerplate: style-dfn-panel */
@@ -690,6 +697,30 @@ c-[il] { color: #000000 } /* Literal.Number.Integer.Long */
     c-[vm] { color: #cb4b16 } /* Name.Variable.Magic */
     c-[il] { color: #657b83 } /* Literal.Number.Integer.Long */
 }
+
+@media print {
+    /* Darken colors for print that would otherwise print too faintly */
+    c-[c]  { color: #555555 } /* Comment */
+    c-[d]  { color: #555555 } /* Comment.Multiline */
+    c-[cp] { color: #555555 } /* Comment.Preproc */
+    c-[c1] { color: #555555 } /* Comment.Single */
+    c-[cs] { color: #555555 } /* Comment.Special */
+    c-[o]  { color: #222222 } /* Operator */
+    c-[p]  { color: #222222 } /* Punctuation */
+    c-[ow] { color: #222222 } /* Operator.Word */
+    c-[s]  { color: #664400 } /* Literal.String */
+    c-[t]  { color: #664400 } /* Literal.String.Single */
+    c-[u]  { color: #664400 } /* Literal.String.Double */
+    c-[sb] { color: #664400 } /* Literal.String.Backtick */
+    c-[sc] { color: #664400 } /* Literal.String.Char */
+    c-[sd] { color: #664400 } /* Literal.String.Doc */
+    c-[se] { color: #664400 } /* Literal.String.Escape */
+    c-[sh] { color: #664400 } /* Literal.String.Heredoc */
+    c-[si] { color: #664400 } /* Literal.String.Interpol */
+    c-[sx] { color: #664400 } /* Literal.String.Other */
+    c-[sr] { color: #664400 } /* Literal.String.Regex */
+    c-[ss] { color: #664400 } /* Literal.String.Symbol */
+}
 </style>
 <style>/* Boilerplate: style-var-click-highlighting */
 /*
@@ -742,7 +773,7 @@ var[data-var-color="6"] { --var-vg: #FFBCF2; }
 </p>
    <h1 class="no-ref p-name" id="title">Largest Contentful Paint</h1>
    <p id="w3c-state"><a href="https://www.w3.org/standards/types/#ED">Editor’s Draft</a>,
-    <time class="dt-updated" datetime="2026-04-08">8 April 2026</time></p>
+    <time class="dt-updated" datetime="2026-06-02">2 June 2026</time></p>
    <details open>
     <summary>More details about this document</summary>
     <div data-fill-with="spec-metadata">
@@ -830,7 +861,7 @@ var[data-var-color="6"] { --var-vg: #FFBCF2; }
      <a href="#references"><span class="secno"></span> <span class="content">References</span></a>
      <ol class="toc">
       <li><a href="#normative"><span class="secno"></span> <span class="content">Normative References</span></a>
-      <li><a href="#informative"><span class="secno"></span> <span class="content">Informative References</span></a>
+      <li><a href="#informative"><span class="secno"></span> <span class="content">Non-Normative References</span></a>
      </ol>
     <li><a href="#idl-index"><span class="secno"></span> <span class="content">IDL Index</span></a>
    </ol>
@@ -1016,22 +1047,22 @@ This allows developers to detect support for the API.</p>
         <p>If <var>result</var>’s <a data-link-type="dfn" href="#effective-visual-size-result-size" id="ref-for-effective-visual-size-result-size">size</a> is less than or equal to <var>largestSize</var>, continue.</p>
        <li data-md>
         <p>Set <var>largestSize</var> to <var>result</var>’s <a data-link-type="dfn" href="#effective-visual-size-result-size" id="ref-for-effective-visual-size-result-size①">size</a>.</p>
-      </ol>
-     <li data-md>
-      <p>Set <var>newCandidate</var> to be a new <a data-link-type="dfn" href="#largest-contentful-paint-candidate" id="ref-for-largest-contentful-paint-candidate">largest contentful paint candidate</a> with the following values:</p>
-      <ol>
        <li data-md>
-        <p><a data-link-type="dfn" href="#largest-contentful-paint-candidate-element" id="ref-for-largest-contentful-paint-candidate-element">element</a> set to <var>imageElement</var>.</p>
-       <li data-md>
-        <p><a data-link-type="dfn" href="#largest-contentful-paint-candidate-size" id="ref-for-largest-contentful-paint-candidate-size">size</a> set to <var>result</var>’s <a data-link-type="dfn" href="#effective-visual-size-result-size" id="ref-for-effective-visual-size-result-size②">size</a>.</p>
-       <li data-md>
-        <p><a data-link-type="dfn" href="#largest-contentful-paint-candidate-width" id="ref-for-largest-contentful-paint-candidate-width">width</a> set to <var>result</var>’s <a data-link-type="dfn" href="#effective-visual-size-result-width" id="ref-for-effective-visual-size-result-width">width</a>.</p>
-       <li data-md>
-        <p><a data-link-type="dfn" href="#largest-contentful-paint-candidate-height" id="ref-for-largest-contentful-paint-candidate-height">height</a> set to <var>result</var>’s <a data-link-type="dfn" href="#effective-visual-size-result-height" id="ref-for-effective-visual-size-result-height">height</a>.</p>
-       <li data-md>
-        <p><a data-link-type="dfn" href="#largest-contentful-paint-candidate-request" id="ref-for-largest-contentful-paint-candidate-request">request</a> set to <var>record</var>’s <a data-link-type="dfn" href="https://w3c.github.io/paint-timing/#pending-image-record-request" id="ref-for-pending-image-record-request①">request</a>.</p>
-       <li data-md>
-        <p><a data-link-type="dfn" href="#largest-contentful-paint-candidate-loadtime" id="ref-for-largest-contentful-paint-candidate-loadtime">loadTime</a> set to <var>record</var>’s <a data-link-type="dfn" href="https://w3c.github.io/paint-timing/#pending-image-record-loadtime" id="ref-for-pending-image-record-loadtime">loadTime</a>.</p>
+        <p>Set <var>newCandidate</var> to be a new <a data-link-type="dfn" href="#largest-contentful-paint-candidate" id="ref-for-largest-contentful-paint-candidate">largest contentful paint candidate</a> with the following values:</p>
+        <ol>
+         <li data-md>
+          <p><a data-link-type="dfn" href="#largest-contentful-paint-candidate-element" id="ref-for-largest-contentful-paint-candidate-element">element</a> set to <var>imageElement</var>.</p>
+         <li data-md>
+          <p><a data-link-type="dfn" href="#largest-contentful-paint-candidate-size" id="ref-for-largest-contentful-paint-candidate-size">size</a> set to <var>result</var>’s <a data-link-type="dfn" href="#effective-visual-size-result-size" id="ref-for-effective-visual-size-result-size②">size</a>.</p>
+         <li data-md>
+          <p><a data-link-type="dfn" href="#largest-contentful-paint-candidate-width" id="ref-for-largest-contentful-paint-candidate-width">width</a> set to <var>result</var>’s <a data-link-type="dfn" href="#effective-visual-size-result-width" id="ref-for-effective-visual-size-result-width">width</a>.</p>
+         <li data-md>
+          <p><a data-link-type="dfn" href="#largest-contentful-paint-candidate-height" id="ref-for-largest-contentful-paint-candidate-height">height</a> set to <var>result</var>’s <a data-link-type="dfn" href="#effective-visual-size-result-height" id="ref-for-effective-visual-size-result-height">height</a>.</p>
+         <li data-md>
+          <p><a data-link-type="dfn" href="#largest-contentful-paint-candidate-request" id="ref-for-largest-contentful-paint-candidate-request">request</a> set to <var>record</var>’s <a data-link-type="dfn" href="https://w3c.github.io/paint-timing/#pending-image-record-request" id="ref-for-pending-image-record-request①">request</a>.</p>
+         <li data-md>
+          <p><a data-link-type="dfn" href="#largest-contentful-paint-candidate-loadtime" id="ref-for-largest-contentful-paint-candidate-loadtime">loadTime</a> set to <var>record</var>’s <a data-link-type="dfn" href="https://w3c.github.io/paint-timing/#pending-image-record-loadtime" id="ref-for-pending-image-record-loadtime">loadTime</a>.</p>
+        </ol>
       </ol>
      <li data-md>
       <p><a data-link-type="dfn" href="https://infra.spec.whatwg.org/#list-iterate" id="ref-for-list-iterate①">For each</a> <var>textNode</var> of <var>paintedTextNodes</var>,</p>
@@ -1127,7 +1158,7 @@ run the following steps:</p>
           <p>Let <var>concreteDimensions</var> be <var>imageRequest</var>’s <a data-link-type="dfn" href="https://drafts.csswg.org/css-images-3/#concrete-object-size" id="ref-for-concrete-object-size">concrete object size</a> within <var>element</var>.</p>
          <li data-md>
           <p>Let <var>visibleDimensions</var> be <var>concreteDimensions</var>, adjusted for positioning by <a class="css property" data-link-type="property" href="https://drafts.csswg.org/css-images-3/#propdef-object-position" id="ref-for-propdef-object-position">object-position</a> or <a class="css property" data-link-type="property" href="https://drafts.csswg.org/css-backgrounds-3/#propdef-background-position" id="ref-for-propdef-background-position">background-position</a> and <var>element</var>’s <a data-link-type="dfn" href="https://drafts.csswg.org/css-box-4/#content-box" id="ref-for-content-box">content box</a>.</p>
-          <p class="note" role="note"><span class="marker">Note:</span> some of those algorithms are not rigorously defined in CSS. The expected result is to get the actual position and size of the image in <var>element</var> as a <code class="idl"><a data-link-type="idl" href="https://drafts.csswg.org/geometry-1/#domrectreadonly" id="ref-for-domrectreadonly①">DOMRectReadOnly</a></code>.</p>
+          <p class="note" role="note"><span class="marker">Note:</span> Some of those algorithms are not rigorously defined in CSS. The expected result is to get the actual position and size of the image in <var>element</var> as a <code class="idl"><a data-link-type="idl" href="https://drafts.csswg.org/geometry-1/#domrectreadonly" id="ref-for-domrectreadonly①">DOMRectReadOnly</a></code>.</p>
          <li data-md>
           <p>Let <var>clientContentRect</var> be the smallest <code class="idl"><a data-link-type="idl" href="https://drafts.csswg.org/geometry-1/#domrectreadonly" id="ref-for-domrectreadonly②">DOMRectReadOnly</a></code> containing <var>visibleDimensions</var> with <var>element</var>’s <a data-link-type="dfn" href="https://streams.spec.whatwg.org/#generictransformstream-transform" id="ref-for-generictransformstream-transform">transforms</a> applied.</p>
          <li data-md>
@@ -1520,7 +1551,7 @@ run the following steps:</p>
    <dt id="biblio-webidl">[WEBIDL]
    <dd>Edgar Chen; Timothy Gu. <a href="https://webidl.spec.whatwg.org/"><cite>Web IDL Standard</cite></a>. Living Standard. URL: <a href="https://webidl.spec.whatwg.org/">https://webidl.spec.whatwg.org/</a>
   </dl>
-  <h3 class="heading no-num no-ref settled" id="informative"><span class="content">Informative References</span><a class="self-link" href="#informative"></a></h3>
+  <h3 class="heading no-num no-ref settled" id="informative"><span class="content">Non-Normative References</span><a class="self-link" href="#informative"></a></h3>
   <dl>
    <dt id="biblio-element-timing">[ELEMENT-TIMING]
    <dd><a href="https://w3c.github.io/element-timing/"><cite>Element Timing API</cite></a>. Editor's Draft. URL: <a href="https://w3c.github.io/element-timing/">https://w3c.github.io/element-timing/</a>

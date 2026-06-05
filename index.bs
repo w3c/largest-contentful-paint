@@ -144,6 +144,7 @@ following members:
 * <dfn for="largest contentful paint candidate">request</dfn>, a [=/Request=] or null
 * <dfn for="largest contentful paint candidate">loadTime</dfn>, a [=/number=]
 
+Note: A [=largest contentful paint candidate=]'s [=largest contentful paint candidate/element=] can be stored weakly to prevent leaking elements that have been removed from the DOM.
 
 Largest Contentful Paint {#sec-largest-contentful-paint}
 =======================================
@@ -206,9 +207,7 @@ Note: The above algorithm defines that an element that is no longer a [=tree/des
 
 This specification also extends {{Document}} by adding to it:
 
-* A <dfn>largest contentful paint size</dfn> concept, initially set to 0.
-* A <dfn>largest contentful paint width</dfn> concept, initially set to 0.
-* A <dfn>largest contentful paint height</dfn> concept, initially set to 0.
+* A <dfn>current largest contentful paint candidate</dfn>, a [=largest contentful paint candidate=] or null, initially null.
 
 Processing model {#sec-processing-model}
 ========================================
@@ -240,18 +239,17 @@ Report Largest Contentful Paint {#sec-report-largest-contentful-paint}
 
     1. Let |window| be |document|’s [=relevant global object=].
     1. If either of |window|'s [=has dispatched scroll event=] or [=has dispatched input event=] is true, return.
-    1. Let |newCandidate| be the result of [=computing a new largest contentful paint candidate=] given |document|, |paintedTextNodes|, |document|'s [=largest contentful paint size=], |document|'s [=largest contentful paint width=], and |document|'s [=largest contentful paint height=].
+    1. Let |newCandidate| be the result of [=computing a new largest contentful paint candidate=] given |document|, |paintedImages|, |paintedTextNodes|, and |document|'s [=current largest contentful paint candidate=].
     1. If |newCandidate| is null, return.
-    1. Set |document|'s [=largest contentful paint size=] to |newCandidate|'s [=largest contentful paint candidate/size=].
-    1. Set |document|'s [=largest contentful paint width=] to |newCandidate|'s [=largest contentful paint candidate/width=].
-    1. Set |document|'s [=largest contentful paint height=] to |newCandidate|'s [=largest contentful paint candidate/height=].
+    1. Set |document|'s [=current largest contentful paint candidate=] to |newCandidate|.
     1. Let |entry| be the result of [=creating a LargestContentfulPaint entry=] with |newCandidate|, |paintTimingInfo|, and |document|.
     1. [=Queue the PerformanceEntry=] |entry|.
 </div>
 
 <div algorithm>
-    To <dfn export>compute a new largest contentful paint candidate</dfn>, given a {{Document}} |document|, an [=ordered set=] of [=pending image records=] |paintedImages|, an [=ordered set=] of [=/elements=] |paintedTextNodes|, a [=/number=] |currentSize|, a [=/number=] |currentWidth|, and a [=/number=] |currentHeight|, perform the following steps. They return a [=largest contentful paint candidate=].
+    To <dfn export>compute a new largest contentful paint candidate</dfn>, given a {{Document}} |document|, an [=ordered set=] of [=pending image records=] |paintedImages|, an [=ordered set=] of [=/elements=] |paintedTextNodes|, and a [=largest contentful paint candidate=] or null |currentCandidate|, perform the following steps. They return a [=largest contentful paint candidate=] or null.
 
+    1. Let |currentSize| be |currentCandidate|'s [=largest contentful paint candidate/size=] if |currentCandidate| is not null or 0 otherwise.
     1. Let |largestSize| be |currentSize|.
     1. Let |newCandidate| be null.
     1. [=list/For each=] |record| of |paintedImages|:
@@ -286,7 +284,7 @@ Report Largest Contentful Paint {#sec-report-largest-contentful-paint}
             1. [=largest contentful paint candidate/request=] set to null.
             1. [=largest contentful paint candidate/loadTime=] set to 0.
     1. If |newCandidate| is not null and |currentSize| is greater than 0:
-        1. If |newCandidate|'s [=largest contentful paint candidate/width=] minus |currentWidth| is less than or equal to 3, and |newCandidate|'s [=largest contentful paint candidate/height=] minus |currentHeight| is less than or equal to 3, return null.
+        1. If |newCandidate|'s [=largest contentful paint candidate/width=] minus |currentCandidate|'s [=largest contentful paint candidate/width=] is less than or equal to 3, and |newCandidate|'s [=largest contentful paint candidate/height=] minus |currentCandidate|'s [=largest contentful paint candidate/height=] is less than or equal to 3, return null.
     1. Return |newCandidate|.
 </div>
 

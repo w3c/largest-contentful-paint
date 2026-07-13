@@ -5,7 +5,7 @@
   <title>Largest Contentful Paint</title>
   <meta content="ED" name="w3c-status">
   <link href="https://www.w3.org/StyleSheets/TR/2021/W3C-ED" rel="stylesheet">
-  <meta content="Bikeshed version 0a3d88311, updated Mon May 4 18:07:03 2026 +0000" name="generator">
+  <meta content="Bikeshed version d113b2e81, updated Tue Jun 9 14:57:55 2026 -0700" name="generator">
   <link href="https://www.w3.org/TR/largest-contentful-paint" rel="canonical">
   <meta content="0793d0e033ec40f70be43be30f4868bf0cd0d532" name="revision">
   <meta content="dark light" name="color-scheme">
@@ -773,7 +773,7 @@ var[data-var-color="6"] { --var-vg: #FFBCF2; }
 </p>
    <h1 class="no-ref p-name" id="title">Largest Contentful Paint</h1>
    <p id="w3c-state"><a href="https://www.w3.org/standards/types/#ED">Editor’s Draft</a>,
-    <time class="dt-updated" datetime="2026-06-02">2 June 2026</time></p>
+    <time class="dt-updated" datetime="2026-07-13">13 July 2026</time></p>
    <details open>
     <summary>More details about this document</summary>
     <div data-fill-with="spec-metadata">
@@ -918,7 +918,7 @@ observer<c- p>.</c->observe<c- p>({</c->entryTypes<c- o>:</c-> <c- p>[</c-><c- t
    <p>When using the LargestContentfulPaint API you may wish to consider how to handle these, outside of this API, since users may consider them as page loads.</p>
    <p>Additionally, pages loaded initially off-screen, such as in background tabs, or through prerendering technology, will report larger values than may be expected since they measure the time from load until paint so again need to be considered how to handle.</p>
    <h2 class="heading settled" data-level="2" id="sec-terminology"><span class="secno">2. </span><span class="content">Terminology</span><a class="self-link" href="#sec-terminology"></a></h2>
-   <p>A <dfn class="dfn-paneled" data-dfn-type="dfn" data-noexport id="largest-contentful-paint-candidate">largest contentful paint candidate</dfn> is a <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#struct" id="ref-for-struct">struct</a> containing the
+   <p>A <dfn class="dfn-paneled" data-dfn-type="dfn" data-export id="largest-contentful-paint-candidate">largest contentful paint candidate</dfn> is a <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#struct" id="ref-for-struct">struct</a> containing the
 following members:</p>
    <ul>
     <li data-md>
@@ -934,6 +934,7 @@ following members:</p>
     <li data-md>
      <p><dfn class="dfn-paneled" data-dfn-for="largest contentful paint candidate" data-dfn-type="dfn" data-noexport id="largest-contentful-paint-candidate-loadtime">loadTime</dfn>, a <a data-link-type="dfn" href="https://drafts.csswg.org/css-values-4/#number" id="ref-for-number③">number</a></p>
    </ul>
+   <p class="note" role="note"><span class="marker">Note:</span> A <a data-link-type="dfn" href="#largest-contentful-paint-candidate" id="ref-for-largest-contentful-paint-candidate">largest contentful paint candidate</a>’s <a data-link-type="dfn" href="#largest-contentful-paint-candidate-element" id="ref-for-largest-contentful-paint-candidate-element">element</a> can be stored weakly to prevent leaking elements that have been removed from the DOM.</p>
    <h2 class="heading settled" data-level="3" id="sec-largest-contentful-paint"><span class="secno">3. </span><span class="content">Largest Contentful Paint</span><a class="self-link" href="#sec-largest-contentful-paint"></a></h2>
    <p class="note" role="note"><span class="marker">Note:</span> A user agent implementing the Largest Contentful Paint API would need to include <code class="highlight"><c- u>"largest-contentful-paint"</c-></code> in <code class="idl"><a data-link-type="idl" href="https://w3c.github.io/performance-timeline/#supportedentrytypes-attribute" id="ref-for-supportedentrytypes-attribute">supportedEntryTypes</a></code> for <code class="idl"><a data-link-type="idl" href="https://html.spec.whatwg.org/multipage/nav-history-apis.html#window" id="ref-for-window">Window</a></code> contexts.
 This allows developers to detect support for the API.</p>
@@ -987,11 +988,7 @@ This allows developers to detect support for the API.</p>
    <p>This specification also extends <code class="idl"><a data-link-type="idl" href="https://dom.spec.whatwg.org/#document" id="ref-for-document①">Document</a></code> by adding to it:</p>
    <ul>
     <li data-md>
-     <p>A <dfn class="dfn-paneled" data-dfn-type="dfn" data-noexport id="largest-contentful-paint-size">largest contentful paint size</dfn> concept, initially set to 0.</p>
-    <li data-md>
-     <p>A <dfn class="dfn-paneled" data-dfn-type="dfn" data-noexport id="largest-contentful-paint-width">largest contentful paint width</dfn> concept, initially set to 0.</p>
-    <li data-md>
-     <p>A <dfn class="dfn-paneled" data-dfn-type="dfn" data-noexport id="largest-contentful-paint-height">largest contentful paint height</dfn> concept, initially set to 0.</p>
+     <p>A <dfn class="dfn-paneled" data-dfn-type="dfn" data-noexport id="current-largest-contentful-paint-candidate">current largest contentful paint candidate</dfn>, a <a data-link-type="dfn" href="#largest-contentful-paint-candidate" id="ref-for-largest-contentful-paint-candidate①">largest contentful paint candidate</a> or null, initially null.</p>
    </ul>
    <h2 class="heading settled" data-level="4" id="sec-processing-model"><span class="secno">4. </span><span class="content">Processing model</span><a class="self-link" href="#sec-processing-model"></a></h2>
    <p>Each <code class="idl"><a data-link-type="idl" href="https://html.spec.whatwg.org/multipage/nav-history-apis.html#window" id="ref-for-window①">Window</a></code> has <dfn class="dfn-paneled" data-dfn-type="dfn" data-noexport id="has-dispatched-scroll-event">has dispatched scroll event</dfn>, a boolean which is initially set to false.</p>
@@ -1021,11 +1018,25 @@ This allows developers to detect support for the API.</p>
      <li data-md>
       <p>If either of <var>window</var>’s <a data-link-type="dfn" href="#has-dispatched-scroll-event" id="ref-for-has-dispatched-scroll-event①">has dispatched scroll event</a> or <a data-link-type="dfn" href="https://wicg.github.io/event-timing#has-dispatched-input-event" id="ref-for-has-dispatched-input-event">has dispatched input event</a> is true, return.</p>
      <li data-md>
-      <p>Let <var>currentSize</var> be <var>document</var>’s <a data-link-type="dfn" href="#largest-contentful-paint-size" id="ref-for-largest-contentful-paint-size">largest contentful paint size</a>.</p>
+      <p>Let <var>newCandidate</var> be the result of <a data-link-type="dfn" href="#compute-a-new-largest-contentful-paint-candidate" id="ref-for-compute-a-new-largest-contentful-paint-candidate">computing a new largest contentful paint candidate</a> given <var>document</var>, <var>paintedImages</var>, <var>paintedTextNodes</var>, and <var>document</var>’s <a data-link-type="dfn" href="#current-largest-contentful-paint-candidate" id="ref-for-current-largest-contentful-paint-candidate">current largest contentful paint candidate</a>.</p>
      <li data-md>
-      <p>Let <var>currentWidth</var> be <var>document</var>’s <a data-link-type="dfn" href="#largest-contentful-paint-width" id="ref-for-largest-contentful-paint-width">largest contentful paint width</a>.</p>
+      <p>If <var>newCandidate</var> is null, return.</p>
      <li data-md>
-      <p>Let <var>currentHeight</var> be <var>document</var>’s <a data-link-type="dfn" href="#largest-contentful-paint-height" id="ref-for-largest-contentful-paint-height">largest contentful paint height</a>.</p>
+      <p>Set <var>document</var>’s <a data-link-type="dfn" href="#current-largest-contentful-paint-candidate" id="ref-for-current-largest-contentful-paint-candidate①">current largest contentful paint candidate</a> to <var>newCandidate</var>.</p>
+     <li data-md>
+      <p>Let <var>entry</var> be the result of <a data-link-type="dfn" href="#create-a-largestcontentfulpaint-entry" id="ref-for-create-a-largestcontentfulpaint-entry">creating a LargestContentfulPaint entry</a> with <var>newCandidate</var>, <var>paintTimingInfo</var>, and <var>document</var>.</p>
+     <li data-md>
+      <p><a data-link-type="dfn" href="https://w3c.github.io/performance-timeline/#dfn-queue-a-performanceentry" id="ref-for-dfn-queue-a-performanceentry">Queue the PerformanceEntry</a> <var>entry</var>.</p>
+    </ol>
+   </div>
+   <div class="algorithm" data-algorithm="compute a new largest contentful paint candidate">
+    
+    To <dfn class="dfn-paneled" data-dfn-type="dfn" data-export id="compute-a-new-largest-contentful-paint-candidate">compute a new largest contentful paint candidate</dfn>, given a <code class="idl"><a data-link-type="idl" href="https://dom.spec.whatwg.org/#document" id="ref-for-document③">Document</a></code> <var>document</var>, an <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#ordered-set" id="ref-for-ordered-set②">ordered set</a> of <a data-link-type="dfn" href="https://w3c.github.io/paint-timing/#pending-image-record" id="ref-for-pending-image-record①">pending image records</a> <var>paintedImages</var>, an <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#ordered-set" id="ref-for-ordered-set③">ordered set</a> of <a data-link-type="dfn" href="https://dom.spec.whatwg.org#concept-element" id="ref-for-concept-element②">elements</a> <var>paintedTextNodes</var>, and a <a data-link-type="dfn" href="#largest-contentful-paint-candidate" id="ref-for-largest-contentful-paint-candidate②">largest contentful paint candidate</a> or null <var>currentCandidate</var>, perform the following steps. They return a <a data-link-type="dfn" href="#largest-contentful-paint-candidate" id="ref-for-largest-contentful-paint-candidate③">largest contentful paint candidate</a> or null.
+
+
+    <ol>
+     <li data-md>
+      <p>Let <var>currentSize</var> be <var>currentCandidate</var>’s <a data-link-type="dfn" href="#largest-contentful-paint-candidate-size" id="ref-for-largest-contentful-paint-candidate-size">size</a> if <var>currentCandidate</var> is not null or 0 otherwise.</p>
      <li data-md>
       <p>Let <var>largestSize</var> be <var>currentSize</var>.</p>
      <li data-md>
@@ -1048,12 +1059,12 @@ This allows developers to detect support for the API.</p>
        <li data-md>
         <p>Set <var>largestSize</var> to <var>result</var>’s <a data-link-type="dfn" href="#effective-visual-size-result-size" id="ref-for-effective-visual-size-result-size①">size</a>.</p>
        <li data-md>
-        <p>Set <var>newCandidate</var> to be a new <a data-link-type="dfn" href="#largest-contentful-paint-candidate" id="ref-for-largest-contentful-paint-candidate">largest contentful paint candidate</a> with the following values:</p>
+        <p>Set <var>newCandidate</var> to be a new <a data-link-type="dfn" href="#largest-contentful-paint-candidate" id="ref-for-largest-contentful-paint-candidate④">largest contentful paint candidate</a> with the following values:</p>
         <ol>
          <li data-md>
-          <p><a data-link-type="dfn" href="#largest-contentful-paint-candidate-element" id="ref-for-largest-contentful-paint-candidate-element">element</a> set to <var>imageElement</var>.</p>
+          <p><a data-link-type="dfn" href="#largest-contentful-paint-candidate-element" id="ref-for-largest-contentful-paint-candidate-element①">element</a> set to <var>imageElement</var>.</p>
          <li data-md>
-          <p><a data-link-type="dfn" href="#largest-contentful-paint-candidate-size" id="ref-for-largest-contentful-paint-candidate-size">size</a> set to <var>result</var>’s <a data-link-type="dfn" href="#effective-visual-size-result-size" id="ref-for-effective-visual-size-result-size②">size</a>.</p>
+          <p><a data-link-type="dfn" href="#largest-contentful-paint-candidate-size" id="ref-for-largest-contentful-paint-candidate-size①">size</a> set to <var>result</var>’s <a data-link-type="dfn" href="#effective-visual-size-result-size" id="ref-for-effective-visual-size-result-size②">size</a>.</p>
          <li data-md>
           <p><a data-link-type="dfn" href="#largest-contentful-paint-candidate-width" id="ref-for-largest-contentful-paint-candidate-width">width</a> set to <var>result</var>’s <a data-link-type="dfn" href="#effective-visual-size-result-width" id="ref-for-effective-visual-size-result-width">width</a>.</p>
          <li data-md>
@@ -1086,12 +1097,12 @@ This allows developers to detect support for the API.</p>
        <li data-md>
         <p>Set <var>largestSize</var> to <var>result</var>’s <a data-link-type="dfn" href="#effective-visual-size-result-size" id="ref-for-effective-visual-size-result-size④">size</a>.</p>
        <li data-md>
-        <p>Set <var>newCandidate</var> to be a new <a data-link-type="dfn" href="#largest-contentful-paint-candidate" id="ref-for-largest-contentful-paint-candidate①">largest contentful paint candidate</a> with the following values:</p>
+        <p>Set <var>newCandidate</var> to be a new <a data-link-type="dfn" href="#largest-contentful-paint-candidate" id="ref-for-largest-contentful-paint-candidate⑤">largest contentful paint candidate</a> with the following values:</p>
         <ol>
          <li data-md>
-          <p><a data-link-type="dfn" href="#largest-contentful-paint-candidate-element" id="ref-for-largest-contentful-paint-candidate-element①">element</a> set to <var>textNode</var>.</p>
+          <p><a data-link-type="dfn" href="#largest-contentful-paint-candidate-element" id="ref-for-largest-contentful-paint-candidate-element②">element</a> set to <var>textNode</var>.</p>
          <li data-md>
-          <p><a data-link-type="dfn" href="#largest-contentful-paint-candidate-size" id="ref-for-largest-contentful-paint-candidate-size①">size</a> set to <var>result</var>’s <a data-link-type="dfn" href="#effective-visual-size-result-size" id="ref-for-effective-visual-size-result-size⑤">size</a>.</p>
+          <p><a data-link-type="dfn" href="#largest-contentful-paint-candidate-size" id="ref-for-largest-contentful-paint-candidate-size②">size</a> set to <var>result</var>’s <a data-link-type="dfn" href="#effective-visual-size-result-size" id="ref-for-effective-visual-size-result-size⑤">size</a>.</p>
          <li data-md>
           <p><a data-link-type="dfn" href="#largest-contentful-paint-candidate-width" id="ref-for-largest-contentful-paint-candidate-width①">width</a> set to <var>result</var>’s <a data-link-type="dfn" href="#effective-visual-size-result-width" id="ref-for-effective-visual-size-result-width①">width</a>.</p>
          <li data-md>
@@ -1103,21 +1114,17 @@ This allows developers to detect support for the API.</p>
         </ol>
       </ol>
      <li data-md>
-      <p>If <var>newCandidate</var> is not null:</p>
+      <p>If <var>newCandidate</var> is not null and <var>currentSize</var> is greater than 0:</p>
       <ol>
        <li data-md>
-        <p>If <var>currentSize</var> is greater than 0:</p>
-        <ol>
-         <li data-md>
-          <p>If <var>newCandidate</var>’s <a data-link-type="dfn" href="#largest-contentful-paint-candidate-width" id="ref-for-largest-contentful-paint-candidate-width②">width</a> minus <var>currentWidth</var> is less than or equal to 3, and <var>newCandidate</var>’s <a data-link-type="dfn" href="#largest-contentful-paint-candidate-height" id="ref-for-largest-contentful-paint-candidate-height②">height</a> minus <var>currentHeight</var> is less than or equal to 3, return.</p>
-        </ol>
-       <li data-md>
-        <p><a data-link-type="dfn" href="#create-a-largestcontentfulpaint-entry" id="ref-for-create-a-largestcontentfulpaint-entry">Create a LargestContentfulPaint entry</a> with <var>newCandidate</var>, <var>paintTimingInfo</var>, and <var>document</var>.</p>
+        <p>If <var>newCandidate</var>’s <a data-link-type="dfn" href="#largest-contentful-paint-candidate-width" id="ref-for-largest-contentful-paint-candidate-width②">width</a> minus <var>currentCandidate</var>’s <a data-link-type="dfn" href="#largest-contentful-paint-candidate-width" id="ref-for-largest-contentful-paint-candidate-width③">width</a> is less than or equal to 3, and <var>newCandidate</var>’s <a data-link-type="dfn" href="#largest-contentful-paint-candidate-height" id="ref-for-largest-contentful-paint-candidate-height②">height</a> minus <var>currentCandidate</var>’s <a data-link-type="dfn" href="#largest-contentful-paint-candidate-height" id="ref-for-largest-contentful-paint-candidate-height③">height</a> is less than or equal to 3, return null.</p>
       </ol>
+     <li data-md>
+      <p>Return <var>newCandidate</var>.</p>
     </ol>
    </div>
    <h3 class="heading settled" data-level="4.3" id="sec-effective-visual-size"><span class="secno">4.3. </span><span class="content">Determine the effective visual size of an element</span><a class="self-link" href="#sec-effective-visual-size"></a></h3>
-   <p>In order to determine the <dfn class="dfn-paneled" data-dfn-type="dfn" data-export id="effective-visual-size">effective visual size</dfn> of an <a data-link-type="dfn" href="https://dom.spec.whatwg.org#concept-element" id="ref-for-concept-element②">Element</a>,
+   <p>In order to determine the <dfn class="dfn-paneled" data-dfn-type="dfn" data-export id="effective-visual-size">effective visual size</dfn> of an <a data-link-type="dfn" href="https://dom.spec.whatwg.org#concept-element" id="ref-for-concept-element③">Element</a>,
 run the following steps:</p>
    <div class="algorithm" data-algorithm="LargestContentfulPaint effective-visual-size">
     <dl>
@@ -1127,7 +1134,7 @@ run the following steps:</p>
      <dd data-md>
       <p><var>imageRequest</var>, a <code class="idl"><a data-link-type="idl" href="https://fetch.spec.whatwg.org/#request" id="ref-for-request">Request</a></code> or null</p>
      <dd data-md>
-      <p><var>element</var>, an <a data-link-type="dfn" href="https://dom.spec.whatwg.org#concept-element" id="ref-for-concept-element③">Element</a></p>
+      <p><var>element</var>, an <a data-link-type="dfn" href="https://dom.spec.whatwg.org#concept-element" id="ref-for-concept-element④">Element</a></p>
      <dd data-md>
       <p><var>document</var>, a <a data-link-type="dfn" href="https://dom.spec.whatwg.org#concept-document" id="ref-for-concept-document">Document</a></p>
      <dt data-md>Output
@@ -1187,46 +1194,40 @@ run the following steps:</p>
     </dl>
    </div>
    <h3 class="heading settled" data-level="4.4" id="sec-create-entry"><span class="secno">4.4. </span><span class="content">Create a LargestContentfulPaint entry</span><a class="self-link" href="#sec-create-entry"></a></h3>
-   <p>In order to <dfn class="dfn-paneled" data-dfn-type="dfn" data-noexport id="create-a-largestcontentfulpaint-entry">create a <code class="idl"><a data-link-type="idl" href="#largestcontentfulpaint" id="ref-for-largestcontentfulpaint③">LargestContentfulPaint</a></code> entry</dfn>, the user agent must run the following steps:</p>
+   <p>In order to <dfn class="dfn-paneled" data-dfn-type="dfn" data-export id="create-a-largestcontentfulpaint-entry">create a <code class="idl"><a data-link-type="idl" href="#largestcontentfulpaint" id="ref-for-largestcontentfulpaint③">LargestContentfulPaint</a></code> entry</dfn>, the user agent must run the following steps:</p>
    <div class="algorithm" data-algorithm="LargestContentfulPaint create-entry">
     <dl>
      <dt data-md>Input
      <dd data-md>
-      <p><var>candidate</var>, a <a data-link-type="dfn" href="#largest-contentful-paint-candidate" id="ref-for-largest-contentful-paint-candidate②">largest contentful paint candidate</a></p>
+      <p><var>candidate</var>, a <a data-link-type="dfn" href="#largest-contentful-paint-candidate" id="ref-for-largest-contentful-paint-candidate⑥">largest contentful paint candidate</a></p>
      <dd data-md>
       <p><var>paintTimingInfo</var>, a <a data-link-type="dfn" href="https://w3c.github.io/paint-timing/#paint-timing-info" id="ref-for-paint-timing-info②">paint timing info</a></p>
      <dd data-md>
-      <p><var>document</var>, a <code class="idl"><a data-link-type="idl" href="https://dom.spec.whatwg.org/#document" id="ref-for-document③">Document</a></code></p>
+      <p><var>document</var>, a <code class="idl"><a data-link-type="idl" href="https://dom.spec.whatwg.org/#document" id="ref-for-document④">Document</a></code></p>
      <dt data-md>Output
      <dd data-md>
-      <p>None</p>
+      <p>A <code class="idl"><a data-link-type="idl" href="#largestcontentfulpaint" id="ref-for-largestcontentfulpaint④">LargestContentfulPaint</a></code></p>
       <ol>
-       <li data-md>
-        <p>Set <var>document</var>’s <a data-link-type="dfn" href="#largest-contentful-paint-size" id="ref-for-largest-contentful-paint-size①">largest contentful paint size</a> to <var>candidate</var>’s <a data-link-type="dfn" href="#largest-contentful-paint-candidate-size" id="ref-for-largest-contentful-paint-candidate-size②">size</a>.</p>
-       <li data-md>
-        <p>Set <var>document</var>’s <a data-link-type="dfn" href="#largest-contentful-paint-width" id="ref-for-largest-contentful-paint-width①">largest contentful paint width</a> to <var>candidate</var>’s <a data-link-type="dfn" href="#largest-contentful-paint-candidate-width" id="ref-for-largest-contentful-paint-candidate-width③">width</a>.</p>
-       <li data-md>
-        <p>Set <var>document</var>’s <a data-link-type="dfn" href="#largest-contentful-paint-height" id="ref-for-largest-contentful-paint-height①">largest contentful paint height</a> to <var>candidate</var>’s <a data-link-type="dfn" href="#largest-contentful-paint-candidate-height" id="ref-for-largest-contentful-paint-candidate-height③">height</a>.</p>
        <li data-md>
         <p>Let <var>url</var> be the empty string.</p>
        <li data-md>
         <p>If <var>candidate</var>’s <a data-link-type="dfn" href="#largest-contentful-paint-candidate-request" id="ref-for-largest-contentful-paint-candidate-request②">request</a> is not null, set <var>url</var> to be <var>candidate</var>’s <a data-link-type="dfn" href="#largest-contentful-paint-candidate-request" id="ref-for-largest-contentful-paint-candidate-request③">request</a>’s <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#dom-request-url" id="ref-for-dom-request-url">request URL</a>.</p>
        <li data-md>
-        <p>Let <var>entry</var> be a new <code class="idl"><a data-link-type="idl" href="#largestcontentfulpaint" id="ref-for-largestcontentfulpaint④">LargestContentfulPaint</a></code> entry with <var>document</var>’s <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/webappapis.html#concept-relevant-realm" id="ref-for-concept-relevant-realm">relevant realm</a>, whose <a data-link-type="dfn" href="https://w3c.github.io/paint-timing/#paint-timing-info" id="ref-for-paint-timing-info③">paint timing info</a> is <var>paintTimingInfo</var>, with its</p>
+        <p>Let <var>entry</var> be a new <code class="idl"><a data-link-type="idl" href="#largestcontentfulpaint" id="ref-for-largestcontentfulpaint⑤">LargestContentfulPaint</a></code> entry with <var>document</var>’s <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/webappapis.html#concept-relevant-realm" id="ref-for-concept-relevant-realm">relevant realm</a>, whose <a data-link-type="dfn" href="https://w3c.github.io/paint-timing/#paint-timing-info" id="ref-for-paint-timing-info③">paint timing info</a> is <var>paintTimingInfo</var>, with its</p>
         <ul>
          <li data-md>
           <p><code class="idl"><a data-link-type="idl" href="#dom-largestcontentfulpaint-size" id="ref-for-dom-largestcontentfulpaint-size①">size</a></code> set to <var>candidate</var>’s <a data-link-type="dfn" href="#largest-contentful-paint-candidate-size" id="ref-for-largest-contentful-paint-candidate-size③">size</a>,</p>
          <li data-md>
           <p><code class="idl"><a data-link-type="idl" href="#dom-largestcontentfulpaint-url" id="ref-for-dom-largestcontentfulpaint-url①">url</a></code> set to <var>url</var>,</p>
          <li data-md>
-          <p><code class="idl"><a data-link-type="idl" href="#dom-largestcontentfulpaint-id" id="ref-for-dom-largestcontentfulpaint-id①">id</a></code> set to <var>candidate</var>’s <a data-link-type="dfn" href="#largest-contentful-paint-candidate-element" id="ref-for-largest-contentful-paint-candidate-element②">element</a>’s <a class="idl-code" data-link-type="attribute" href="https://dom.spec.whatwg.org#dom-element-id" id="ref-for-dom-element-id">element id</a>,</p>
+          <p><code class="idl"><a data-link-type="idl" href="#dom-largestcontentfulpaint-id" id="ref-for-dom-largestcontentfulpaint-id①">id</a></code> set to <var>candidate</var>’s <a data-link-type="dfn" href="#largest-contentful-paint-candidate-element" id="ref-for-largest-contentful-paint-candidate-element③">element</a>’s <a class="idl-code" data-link-type="attribute" href="https://dom.spec.whatwg.org#dom-element-id" id="ref-for-dom-element-id">element id</a>,</p>
          <li data-md>
           <p><code class="idl"><a data-link-type="idl" href="#dom-largestcontentfulpaint-loadtime" id="ref-for-dom-largestcontentfulpaint-loadtime①">loadTime</a></code> set to <var>candidate</var>’s <a data-link-type="dfn" href="#largest-contentful-paint-candidate-loadtime" id="ref-for-largest-contentful-paint-candidate-loadtime②">loadTime</a>,</p>
          <li data-md>
-          <p>and <code class="idl"><a data-link-type="idl" href="#dom-largestcontentfulpaint-element" id="ref-for-dom-largestcontentfulpaint-element②">element</a></code> set to <var>candidate</var>’s <a data-link-type="dfn" href="#largest-contentful-paint-candidate-element" id="ref-for-largest-contentful-paint-candidate-element③">element</a>.</p>
+          <p>and <code class="idl"><a data-link-type="idl" href="#dom-largestcontentfulpaint-element" id="ref-for-dom-largestcontentfulpaint-element②">element</a></code> set to <var>candidate</var>’s <a data-link-type="dfn" href="#largest-contentful-paint-candidate-element" id="ref-for-largest-contentful-paint-candidate-element④">element</a>.</p>
         </ul>
        <li data-md>
-        <p><a data-link-type="dfn" href="https://w3c.github.io/performance-timeline/#dfn-queue-a-performanceentry" id="ref-for-dfn-queue-a-performanceentry">Queue the PerformanceEntry</a> <var>entry</var>.</p>
+        <p>Return <var>entry</var>.</p>
       </ol>
     </dl>
    </div>
@@ -1293,7 +1294,9 @@ run the following steps:</p>
   <h2 class="heading no-num no-ref settled" id="index"><span class="content">Index</span><a class="self-link" href="#index"></a></h2>
   <h3 class="heading no-num no-ref settled" id="index-defined-here"><span class="content">Terms defined by this specification</span><a class="self-link" href="#index-defined-here"></a></h3>
   <ul class="index">
+   <li><a href="#compute-a-new-largest-contentful-paint-candidate">compute a new largest contentful paint candidate</a><span>, in § 4.2</span>
    <li><a href="#create-a-largestcontentfulpaint-entry">create a LargestContentfulPaint entry</a><span>, in § 4.4</span>
+   <li><a href="#current-largest-contentful-paint-candidate">current largest contentful paint candidate</a><span>, in § 3.1</span>
    <li><a href="#effective-visual-size">effective visual size</a><span>, in § 4.3</span>
    <li><a href="#effective-visual-size-result">effective visual size result</a><span>, in § 4.3</span>
    <li>
@@ -1318,9 +1321,6 @@ run the following steps:</p>
     </ul>
    <li><a href="#largestcontentfulpaint">LargestContentfulPaint</a><span>, in § 3.1</span>
    <li><a href="#largest-contentful-paint-candidate">largest contentful paint candidate</a><span>, in § 2</span>
-   <li><a href="#largest-contentful-paint-height">largest contentful paint height</a><span>, in § 3.1</span>
-   <li><a href="#largest-contentful-paint-size">largest contentful paint size</a><span>, in § 3.1</span>
-   <li><a href="#largest-contentful-paint-width">largest contentful paint width</a><span>, in § 3.1</span>
    <li>
     loadTime
     <ul>
@@ -1788,7 +1788,7 @@ let dfnPanelData = {
 "3b2ff63e": {"dfnID":"3b2ff63e","dfnText":"browsing context","external":true,"refSections":[{"refs":[{"id":"ref-for-concept-document-bc"}],"title":"4.3. Determine the effective visual size of an element"}],"url":"https://html.spec.whatwg.org/multipage/document-sequences.html#concept-document-bc"},
 "3b786c72": {"dfnID":"3b786c72","dfnText":"exposed for paint timing","external":true,"refSections":[{"refs":[{"id":"ref-for-exposed-for-paint-timing"}],"title":"3.1. LargestContentfulPaint interface"},{"refs":[{"id":"ref-for-exposed-for-paint-timing\u2460"},{"id":"ref-for-exposed-for-paint-timing\u2461"}],"title":"4.2. Report Largest Contentful Paint"}],"url":"https://w3c.github.io/paint-timing/#exposed-for-paint-timing"},
 "3c11912e": {"dfnID":"3c11912e","dfnText":"stroke-image","external":true,"refSections":[{"refs":[{"id":"ref-for-propdef-stroke-image"}],"title":"4.2. Report Largest Contentful Paint"}],"url":"https://drafts.csswg.org/fill-stroke-3/#propdef-stroke-image"},
-"3efa5dd7": {"dfnID":"3efa5dd7","dfnText":"queue the PerformanceEntry","external":true,"refSections":[{"refs":[{"id":"ref-for-dfn-queue-a-performanceentry"}],"title":"4.4. Create a LargestContentfulPaint entry"}],"url":"https://w3c.github.io/performance-timeline/#dfn-queue-a-performanceentry"},
+"3efa5dd7": {"dfnID":"3efa5dd7","dfnText":"queue the PerformanceEntry","external":true,"refSections":[{"refs":[{"id":"ref-for-dfn-queue-a-performanceentry"}],"title":"4.2. Report Largest Contentful Paint"}],"url":"https://w3c.github.io/performance-timeline/#dfn-queue-a-performanceentry"},
 "4013a022": {"dfnID":"4013a022","dfnText":"this","external":true,"refSections":[{"refs":[{"id":"ref-for-this"},{"id":"ref-for-this\u2460"},{"id":"ref-for-this\u2461"},{"id":"ref-for-this\u2462"},{"id":"ref-for-this\u2463"},{"id":"ref-for-this\u2464"},{"id":"ref-for-this\u2465"},{"id":"ref-for-this\u2466"}],"title":"3.1. LargestContentfulPaint interface"}],"url":"https://webidl.spec.whatwg.org/#this"},
 "46c6a718": {"dfnID":"46c6a718","dfnText":"content box","external":true,"refSections":[{"refs":[{"id":"ref-for-content-box"}],"title":"4.3. Determine the effective visual size of an element"}],"url":"https://drafts.csswg.org/css-box-4/#content-box"},
 "55213b5b": {"dfnID":"55213b5b","dfnText":"request","external":true,"refSections":[{"refs":[{"id":"ref-for-concept-request"}],"title":"2. Terminology"}],"url":"https://fetch.spec.whatwg.org/#concept-request"},
@@ -1799,13 +1799,13 @@ let dfnPanelData = {
 "5e0e1948": {"dfnID":"5e0e1948","dfnText":"width","external":true,"refSections":[{"refs":[{"id":"ref-for-dom-domrectreadonly-width"},{"id":"ref-for-dom-domrectreadonly-width\u2460"},{"id":"ref-for-dom-domrectreadonly-width\u2461"}],"title":"4.3. Determine the effective visual size of an element"}],"url":"https://drafts.csswg.org/geometry-1/#dom-domrectreadonly-width"},
 "62a0057d": {"dfnID":"62a0057d","dfnText":"visual viewport","external":true,"refSections":[{"refs":[{"id":"ref-for-visual-viewport"},{"id":"ref-for-visual-viewport\u2460"}],"title":"4.3. Determine the effective visual size of an element"}],"url":"https://drafts.csswg.org/cssom-view/#visual-viewport"},
 "67ba7293": {"dfnID":"67ba7293","dfnText":"event dispatch algorithm","external":true,"refSections":[{"refs":[{"id":"ref-for-concept-event-dispatch"}],"title":"4.1. Modifications to the DOM specification"}],"url":"https://dom.spec.whatwg.org#concept-event-dispatch"},
-"692595fe": {"dfnID":"692595fe","dfnText":"ordered set","external":true,"refSections":[{"refs":[{"id":"ref-for-ordered-set"},{"id":"ref-for-ordered-set\u2460"}],"title":"4.2. Report Largest Contentful Paint"}],"url":"https://infra.spec.whatwg.org/#ordered-set"},
+"692595fe": {"dfnID":"692595fe","dfnText":"ordered set","external":true,"refSections":[{"refs":[{"id":"ref-for-ordered-set"},{"id":"ref-for-ordered-set\u2460"},{"id":"ref-for-ordered-set\u2461"},{"id":"ref-for-ordered-set\u2462"}],"title":"4.2. Report Largest Contentful Paint"}],"url":"https://infra.spec.whatwg.org/#ordered-set"},
 "6a7f12db": {"dfnID":"6a7f12db","dfnText":"alpha channel","external":true,"refSections":[{"refs":[{"id":"ref-for-alpha-channel"}],"title":"4.2. Report Largest Contentful Paint"}],"url":"https://drafts.csswg.org/css-color-4/#alpha-channel"},
 "75563977": {"dfnID":"75563977","dfnText":"natural height","external":true,"refSections":[{"refs":[{"id":"ref-for-natural-height"}],"title":"4.3. Determine the effective visual size of an element"}],"url":"https://drafts.csswg.org/css-images-3/#natural-height"},
 "76cea803": {"dfnID":"76cea803","dfnText":"element","external":true,"refSections":[{"refs":[{"id":"ref-for-pending-image-record-element"}],"title":"4.2. Report Largest Contentful Paint"}],"url":"https://w3c.github.io/paint-timing/#pending-image-record-element"},
 "77a05ba3": {"dfnID":"77a05ba3","dfnText":"mark paint timing","external":true,"refSections":[{"refs":[{"id":"ref-for-mark-paint-timing"}],"title":"4.2. Report Largest Contentful Paint"}],"url":"https://w3c.github.io/paint-timing/#mark-paint-timing"},
 "838900a7": {"dfnID":"838900a7","dfnText":"isTrusted","external":true,"refSections":[{"refs":[{"id":"ref-for-dom-event-istrusted"}],"title":"4.1. Modifications to the DOM specification"}],"url":"https://dom.spec.whatwg.org/#dom-event-istrusted"},
-"85394472": {"dfnID":"85394472","dfnText":"Document","external":true,"refSections":[{"refs":[{"id":"ref-for-document"},{"id":"ref-for-document\u2460"}],"title":"3.1. LargestContentfulPaint interface"},{"refs":[{"id":"ref-for-document\u2461"}],"title":"4.2. Report Largest Contentful Paint"},{"refs":[{"id":"ref-for-document\u2462"}],"title":"4.4. Create a LargestContentfulPaint entry"}],"url":"https://dom.spec.whatwg.org/#document"},
+"85394472": {"dfnID":"85394472","dfnText":"Document","external":true,"refSections":[{"refs":[{"id":"ref-for-document"},{"id":"ref-for-document\u2460"}],"title":"3.1. LargestContentfulPaint interface"},{"refs":[{"id":"ref-for-document\u2461"},{"id":"ref-for-document\u2462"}],"title":"4.2. Report Largest Contentful Paint"},{"refs":[{"id":"ref-for-document\u2463"}],"title":"4.4. Create a LargestContentfulPaint entry"}],"url":"https://dom.spec.whatwg.org/#document"},
 "85932d17": {"dfnID":"85932d17","dfnText":"set of owned text nodes","external":true,"refSections":[{"refs":[{"id":"ref-for-set-of-owned-text-nodes"}],"title":"4.2. Report Largest Contentful Paint"}],"url":"https://w3c.github.io/paint-timing/#set-of-owned-text-nodes"},
 "8855a9aa": {"dfnID":"8855a9aa","dfnText":"DOMString","external":true,"refSections":[{"refs":[{"id":"ref-for-idl-DOMString"},{"id":"ref-for-idl-DOMString\u2460"},{"id":"ref-for-idl-DOMString\u2461"}],"title":"3.1. LargestContentfulPaint interface"}],"url":"https://webidl.spec.whatwg.org/#idl-DOMString"},
 "889e932f": {"dfnID":"889e932f","dfnText":"Exposed","external":true,"refSections":[{"refs":[{"id":"ref-for-Exposed"}],"title":"3.1. LargestContentfulPaint interface"}],"url":"https://webidl.spec.whatwg.org/#Exposed"},
@@ -1816,13 +1816,15 @@ let dfnPanelData = {
 "9d09d04c": {"dfnID":"9d09d04c","dfnText":"type","external":true,"refSections":[{"refs":[{"id":"ref-for-dom-event-type"}],"title":"4.1. Modifications to the DOM specification"}],"url":"https://dom.spec.whatwg.org/#dom-event-type"},
 "a17d13d2": {"dfnID":"a17d13d2","dfnText":"Document","external":true,"refSections":[{"refs":[{"id":"ref-for-concept-document"}],"title":"4.3. Determine the effective visual size of an element"}],"url":"https://dom.spec.whatwg.org#concept-document"},
 "a19e06f8": {"dfnID":"a19e06f8","dfnText":"stroke-color","external":true,"refSections":[{"refs":[{"id":"ref-for-propdef-stroke-color"}],"title":"4.2. Report Largest Contentful Paint"}],"url":"https://drafts.csswg.org/fill-stroke-3/#propdef-stroke-color"},
-"a242446a": {"dfnID":"a242446a","dfnText":"Element","external":true,"refSections":[{"refs":[{"id":"ref-for-concept-element"}],"title":"2. Terminology"},{"refs":[{"id":"ref-for-concept-element\u2460"}],"title":"4.2. Report Largest Contentful Paint"},{"refs":[{"id":"ref-for-concept-element\u2461"},{"id":"ref-for-concept-element\u2462"}],"title":"4.3. Determine the effective visual size of an element"}],"url":"https://dom.spec.whatwg.org#concept-element"},
-"a2de40e9": {"dfnID":"a2de40e9","dfnText":"pending image record","external":true,"refSections":[{"refs":[{"id":"ref-for-pending-image-record"}],"title":"4.2. Report Largest Contentful Paint"}],"url":"https://w3c.github.io/paint-timing/#pending-image-record"},
+"a242446a": {"dfnID":"a242446a","dfnText":"Element","external":true,"refSections":[{"refs":[{"id":"ref-for-concept-element"}],"title":"2. Terminology"},{"refs":[{"id":"ref-for-concept-element\u2460"},{"id":"ref-for-concept-element\u2461"}],"title":"4.2. Report Largest Contentful Paint"},{"refs":[{"id":"ref-for-concept-element\u2462"},{"id":"ref-for-concept-element\u2463"}],"title":"4.3. Determine the effective visual size of an element"}],"url":"https://dom.spec.whatwg.org#concept-element"},
+"a2de40e9": {"dfnID":"a2de40e9","dfnText":"pending image record","external":true,"refSections":[{"refs":[{"id":"ref-for-pending-image-record"},{"id":"ref-for-pending-image-record\u2460"}],"title":"4.2. Report Largest Contentful Paint"}],"url":"https://w3c.github.io/paint-timing/#pending-image-record"},
 "a9b574b7": {"dfnID":"a9b574b7","dfnText":"request","external":true,"refSections":[{"refs":[{"id":"ref-for-pending-image-record-request"},{"id":"ref-for-pending-image-record-request\u2460"}],"title":"4.2. Report Largest Contentful Paint"}],"url":"https://w3c.github.io/paint-timing/#pending-image-record-request"},
 "ae2a6342": {"dfnID":"ae2a6342","dfnText":"top-level browsing context","external":true,"refSections":[{"refs":[{"id":"ref-for-top-level-browsing-context"}],"title":"4.3. Determine the effective visual size of an element"}],"url":"https://html.spec.whatwg.org/multipage/document-sequences.html#top-level-browsing-context"},
 "cc7c9b78": {"dfnID":"cc7c9b78","dfnText":"startTime","external":true,"refSections":[{"refs":[{"id":"ref-for-dom-performanceentry-starttime"}],"title":"3.1. LargestContentfulPaint interface"}],"url":"https://w3c.github.io/performance-timeline/#dom-performanceentry-starttime"},
 "cf22a135": {"dfnID":"cf22a135","dfnText":"default paint timestamp","external":true,"refSections":[{"refs":[{"id":"ref-for-default-paint-timestamp"}],"title":"3.1. LargestContentfulPaint interface"}],"url":"https://w3c.github.io/paint-timing/#default-paint-timestamp"},
+"compute-a-new-largest-contentful-paint-candidate": {"dfnID":"compute-a-new-largest-contentful-paint-candidate","dfnText":"compute a new largest contentful paint candidate","external":false,"refSections":[{"refs":[{"id":"ref-for-compute-a-new-largest-contentful-paint-candidate"}],"title":"4.2. Report Largest Contentful Paint"}],"url":"#compute-a-new-largest-contentful-paint-candidate"},
 "create-a-largestcontentfulpaint-entry": {"dfnID":"create-a-largestcontentfulpaint-entry","dfnText":"create a LargestContentfulPaint entry","external":false,"refSections":[{"refs":[{"id":"ref-for-create-a-largestcontentfulpaint-entry"}],"title":"4.2. Report Largest Contentful Paint"}],"url":"#create-a-largestcontentfulpaint-entry"},
+"current-largest-contentful-paint-candidate": {"dfnID":"current-largest-contentful-paint-candidate","dfnText":"current largest contentful paint candidate","external":false,"refSections":[{"refs":[{"id":"ref-for-current-largest-contentful-paint-candidate"},{"id":"ref-for-current-largest-contentful-paint-candidate\u2460"}],"title":"4.2. Report Largest Contentful Paint"}],"url":"#current-largest-contentful-paint-candidate"},
 "d27a809f": {"dfnID":"d27a809f","dfnText":"background-position","external":true,"refSections":[{"refs":[{"id":"ref-for-propdef-background-position"}],"title":"4.3. Determine the effective visual size of an element"}],"url":"https://drafts.csswg.org/css-backgrounds-3/#propdef-background-position"},
 "da8b8e0e": {"dfnID":"da8b8e0e","dfnText":"descendant","external":true,"refSections":[{"refs":[{"id":"ref-for-concept-tree-descendant"}],"title":"3.1. LargestContentfulPaint interface"}],"url":"https://dom.spec.whatwg.org/#concept-tree-descendant"},
 "dce2489a": {"dfnID":"dce2489a","dfnText":"loadTime","external":true,"refSections":[{"refs":[{"id":"ref-for-pending-image-record-loadtime"}],"title":"4.2. Report Largest Contentful Paint"}],"url":"https://w3c.github.io/paint-timing/#pending-image-record-loadtime"},
@@ -1854,17 +1856,14 @@ let dfnPanelData = {
 "fcebdd60": {"dfnID":"fcebdd60","dfnText":"element id","external":true,"refSections":[{"refs":[{"id":"ref-for-dom-element-id"}],"title":"4.4. Create a LargestContentfulPaint entry"}],"url":"https://dom.spec.whatwg.org#dom-element-id"},
 "fe0bd60a": {"dfnID":"fe0bd60a","dfnText":"DOMHighResTimeStamp","external":true,"refSections":[{"refs":[{"id":"ref-for-dom-domhighrestimestamp"},{"id":"ref-for-dom-domhighrestimestamp\u2460"}],"title":"3.1. LargestContentfulPaint interface"}],"url":"https://w3c.github.io/hr-time#dom-domhighrestimestamp"},
 "has-dispatched-scroll-event": {"dfnID":"has-dispatched-scroll-event","dfnText":"has dispatched scroll event","external":false,"refSections":[{"refs":[{"id":"ref-for-has-dispatched-scroll-event"}],"title":"4.1. Modifications to the DOM specification"},{"refs":[{"id":"ref-for-has-dispatched-scroll-event\u2460"}],"title":"4.2. Report Largest Contentful Paint"}],"url":"#has-dispatched-scroll-event"},
-"largest-contentful-paint-candidate": {"dfnID":"largest-contentful-paint-candidate","dfnText":"largest contentful paint candidate","external":false,"refSections":[{"refs":[{"id":"ref-for-largest-contentful-paint-candidate"},{"id":"ref-for-largest-contentful-paint-candidate\u2460"}],"title":"4.2. Report Largest Contentful Paint"},{"refs":[{"id":"ref-for-largest-contentful-paint-candidate\u2461"}],"title":"4.4. Create a LargestContentfulPaint entry"}],"url":"#largest-contentful-paint-candidate"},
-"largest-contentful-paint-candidate-element": {"dfnID":"largest-contentful-paint-candidate-element","dfnText":"element","external":false,"refSections":[{"refs":[{"id":"ref-for-largest-contentful-paint-candidate-element"},{"id":"ref-for-largest-contentful-paint-candidate-element\u2460"}],"title":"4.2. Report Largest Contentful Paint"},{"refs":[{"id":"ref-for-largest-contentful-paint-candidate-element\u2461"},{"id":"ref-for-largest-contentful-paint-candidate-element\u2462"}],"title":"4.4. Create a LargestContentfulPaint entry"}],"url":"#largest-contentful-paint-candidate-element"},
-"largest-contentful-paint-candidate-height": {"dfnID":"largest-contentful-paint-candidate-height","dfnText":"height","external":false,"refSections":[{"refs":[{"id":"ref-for-largest-contentful-paint-candidate-height"},{"id":"ref-for-largest-contentful-paint-candidate-height\u2460"},{"id":"ref-for-largest-contentful-paint-candidate-height\u2461"}],"title":"4.2. Report Largest Contentful Paint"},{"refs":[{"id":"ref-for-largest-contentful-paint-candidate-height\u2462"}],"title":"4.4. Create a LargestContentfulPaint entry"}],"url":"#largest-contentful-paint-candidate-height"},
+"largest-contentful-paint-candidate": {"dfnID":"largest-contentful-paint-candidate","dfnText":"largest contentful paint candidate","external":false,"refSections":[{"refs":[{"id":"ref-for-largest-contentful-paint-candidate"}],"title":"2. Terminology"},{"refs":[{"id":"ref-for-largest-contentful-paint-candidate\u2460"}],"title":"3.1. LargestContentfulPaint interface"},{"refs":[{"id":"ref-for-largest-contentful-paint-candidate\u2461"},{"id":"ref-for-largest-contentful-paint-candidate\u2462"},{"id":"ref-for-largest-contentful-paint-candidate\u2463"},{"id":"ref-for-largest-contentful-paint-candidate\u2464"}],"title":"4.2. Report Largest Contentful Paint"},{"refs":[{"id":"ref-for-largest-contentful-paint-candidate\u2465"}],"title":"4.4. Create a LargestContentfulPaint entry"}],"url":"#largest-contentful-paint-candidate"},
+"largest-contentful-paint-candidate-element": {"dfnID":"largest-contentful-paint-candidate-element","dfnText":"element","external":false,"refSections":[{"refs":[{"id":"ref-for-largest-contentful-paint-candidate-element"}],"title":"2. Terminology"},{"refs":[{"id":"ref-for-largest-contentful-paint-candidate-element\u2460"},{"id":"ref-for-largest-contentful-paint-candidate-element\u2461"}],"title":"4.2. Report Largest Contentful Paint"},{"refs":[{"id":"ref-for-largest-contentful-paint-candidate-element\u2462"},{"id":"ref-for-largest-contentful-paint-candidate-element\u2463"}],"title":"4.4. Create a LargestContentfulPaint entry"}],"url":"#largest-contentful-paint-candidate-element"},
+"largest-contentful-paint-candidate-height": {"dfnID":"largest-contentful-paint-candidate-height","dfnText":"height","external":false,"refSections":[{"refs":[{"id":"ref-for-largest-contentful-paint-candidate-height"},{"id":"ref-for-largest-contentful-paint-candidate-height\u2460"},{"id":"ref-for-largest-contentful-paint-candidate-height\u2461"},{"id":"ref-for-largest-contentful-paint-candidate-height\u2462"}],"title":"4.2. Report Largest Contentful Paint"}],"url":"#largest-contentful-paint-candidate-height"},
 "largest-contentful-paint-candidate-loadtime": {"dfnID":"largest-contentful-paint-candidate-loadtime","dfnText":"loadTime","external":false,"refSections":[{"refs":[{"id":"ref-for-largest-contentful-paint-candidate-loadtime"},{"id":"ref-for-largest-contentful-paint-candidate-loadtime\u2460"}],"title":"4.2. Report Largest Contentful Paint"},{"refs":[{"id":"ref-for-largest-contentful-paint-candidate-loadtime\u2461"}],"title":"4.4. Create a LargestContentfulPaint entry"}],"url":"#largest-contentful-paint-candidate-loadtime"},
 "largest-contentful-paint-candidate-request": {"dfnID":"largest-contentful-paint-candidate-request","dfnText":"request","external":false,"refSections":[{"refs":[{"id":"ref-for-largest-contentful-paint-candidate-request"},{"id":"ref-for-largest-contentful-paint-candidate-request\u2460"}],"title":"4.2. Report Largest Contentful Paint"},{"refs":[{"id":"ref-for-largest-contentful-paint-candidate-request\u2461"},{"id":"ref-for-largest-contentful-paint-candidate-request\u2462"}],"title":"4.4. Create a LargestContentfulPaint entry"}],"url":"#largest-contentful-paint-candidate-request"},
-"largest-contentful-paint-candidate-size": {"dfnID":"largest-contentful-paint-candidate-size","dfnText":"size","external":false,"refSections":[{"refs":[{"id":"ref-for-largest-contentful-paint-candidate-size"},{"id":"ref-for-largest-contentful-paint-candidate-size\u2460"}],"title":"4.2. Report Largest Contentful Paint"},{"refs":[{"id":"ref-for-largest-contentful-paint-candidate-size\u2461"},{"id":"ref-for-largest-contentful-paint-candidate-size\u2462"}],"title":"4.4. Create a LargestContentfulPaint entry"}],"url":"#largest-contentful-paint-candidate-size"},
-"largest-contentful-paint-candidate-width": {"dfnID":"largest-contentful-paint-candidate-width","dfnText":"width","external":false,"refSections":[{"refs":[{"id":"ref-for-largest-contentful-paint-candidate-width"},{"id":"ref-for-largest-contentful-paint-candidate-width\u2460"},{"id":"ref-for-largest-contentful-paint-candidate-width\u2461"}],"title":"4.2. Report Largest Contentful Paint"},{"refs":[{"id":"ref-for-largest-contentful-paint-candidate-width\u2462"}],"title":"4.4. Create a LargestContentfulPaint entry"}],"url":"#largest-contentful-paint-candidate-width"},
-"largest-contentful-paint-height": {"dfnID":"largest-contentful-paint-height","dfnText":"largest contentful paint height","external":false,"refSections":[{"refs":[{"id":"ref-for-largest-contentful-paint-height"}],"title":"4.2. Report Largest Contentful Paint"},{"refs":[{"id":"ref-for-largest-contentful-paint-height\u2460"}],"title":"4.4. Create a LargestContentfulPaint entry"}],"url":"#largest-contentful-paint-height"},
-"largest-contentful-paint-size": {"dfnID":"largest-contentful-paint-size","dfnText":"largest contentful paint size","external":false,"refSections":[{"refs":[{"id":"ref-for-largest-contentful-paint-size"}],"title":"4.2. Report Largest Contentful Paint"},{"refs":[{"id":"ref-for-largest-contentful-paint-size\u2460"}],"title":"4.4. Create a LargestContentfulPaint entry"}],"url":"#largest-contentful-paint-size"},
-"largest-contentful-paint-width": {"dfnID":"largest-contentful-paint-width","dfnText":"largest contentful paint width","external":false,"refSections":[{"refs":[{"id":"ref-for-largest-contentful-paint-width"}],"title":"4.2. Report Largest Contentful Paint"},{"refs":[{"id":"ref-for-largest-contentful-paint-width\u2460"}],"title":"4.4. Create a LargestContentfulPaint entry"}],"url":"#largest-contentful-paint-width"},
-"largestcontentfulpaint": {"dfnID":"largestcontentfulpaint","dfnText":"LargestContentfulPaint","external":false,"refSections":[{"refs":[{"id":"ref-for-largestcontentfulpaint"},{"id":"ref-for-largestcontentfulpaint\u2460"},{"id":"ref-for-largestcontentfulpaint\u2461"}],"title":"3.1. LargestContentfulPaint interface"},{"refs":[{"id":"ref-for-largestcontentfulpaint\u2462"},{"id":"ref-for-largestcontentfulpaint\u2463"}],"title":"4.4. Create a LargestContentfulPaint entry"}],"url":"#largestcontentfulpaint"},
+"largest-contentful-paint-candidate-size": {"dfnID":"largest-contentful-paint-candidate-size","dfnText":"size","external":false,"refSections":[{"refs":[{"id":"ref-for-largest-contentful-paint-candidate-size"},{"id":"ref-for-largest-contentful-paint-candidate-size\u2460"},{"id":"ref-for-largest-contentful-paint-candidate-size\u2461"}],"title":"4.2. Report Largest Contentful Paint"},{"refs":[{"id":"ref-for-largest-contentful-paint-candidate-size\u2462"}],"title":"4.4. Create a LargestContentfulPaint entry"}],"url":"#largest-contentful-paint-candidate-size"},
+"largest-contentful-paint-candidate-width": {"dfnID":"largest-contentful-paint-candidate-width","dfnText":"width","external":false,"refSections":[{"refs":[{"id":"ref-for-largest-contentful-paint-candidate-width"},{"id":"ref-for-largest-contentful-paint-candidate-width\u2460"},{"id":"ref-for-largest-contentful-paint-candidate-width\u2461"},{"id":"ref-for-largest-contentful-paint-candidate-width\u2462"}],"title":"4.2. Report Largest Contentful Paint"}],"url":"#largest-contentful-paint-candidate-width"},
+"largestcontentfulpaint": {"dfnID":"largestcontentfulpaint","dfnText":"LargestContentfulPaint","external":false,"refSections":[{"refs":[{"id":"ref-for-largestcontentfulpaint"},{"id":"ref-for-largestcontentfulpaint\u2460"},{"id":"ref-for-largestcontentfulpaint\u2461"}],"title":"3.1. LargestContentfulPaint interface"},{"refs":[{"id":"ref-for-largestcontentfulpaint\u2462"},{"id":"ref-for-largestcontentfulpaint\u2463"},{"id":"ref-for-largestcontentfulpaint\u2464"}],"title":"4.4. Create a LargestContentfulPaint entry"}],"url":"#largestcontentfulpaint"},
 "largestcontentfulpaint-element": {"dfnID":"largestcontentfulpaint-element","dfnText":"element","external":false,"refSections":[{"refs":[{"id":"ref-for-largestcontentfulpaint-element"},{"id":"ref-for-largestcontentfulpaint-element\u2460"}],"title":"3.1. LargestContentfulPaint interface"}],"url":"#largestcontentfulpaint-element"},
 "largestcontentfulpaint-id": {"dfnID":"largestcontentfulpaint-id","dfnText":"id","external":false,"refSections":[{"refs":[{"id":"ref-for-largestcontentfulpaint-id"}],"title":"3.1. LargestContentfulPaint interface"}],"url":"#largestcontentfulpaint-id"},
 "largestcontentfulpaint-loadtime": {"dfnID":"largestcontentfulpaint-loadtime","dfnText":"loadTime","external":false,"refSections":[{"refs":[{"id":"ref-for-largestcontentfulpaint-loadtime"}],"title":"3.1. LargestContentfulPaint interface"}],"url":"#largestcontentfulpaint-loadtime"},
@@ -2259,7 +2258,9 @@ function genLinkingSyntaxes(dfn) {
 "use strict";
 {
 let refsData = {
+"#compute-a-new-largest-contentful-paint-candidate": {"displayText":"compute a new largest contentful paint candidate","export":true,"for_":[],"level":"","normative":true,"shortname":"largest-contentful-paint","spec":"largest-contentful-paint","status":"local","text":"compute a new largest contentful paint candidate","type":"dfn","url":"#compute-a-new-largest-contentful-paint-candidate"},
 "#create-a-largestcontentfulpaint-entry": {"displayText":"create a largestcontentfulpaint entry","export":true,"for_":[],"level":"","normative":true,"shortname":"largest-contentful-paint","spec":"largest-contentful-paint","status":"local","text":"create a largestcontentfulpaint entry","type":"dfn","url":"#create-a-largestcontentfulpaint-entry"},
+"#current-largest-contentful-paint-candidate": {"displayText":"current largest contentful paint candidate","export":true,"for_":[],"level":"","normative":true,"shortname":"largest-contentful-paint","spec":"largest-contentful-paint","status":"local","text":"current largest contentful paint candidate","type":"dfn","url":"#current-largest-contentful-paint-candidate"},
 "#dom-largestcontentfulpaint-element": {"displayText":"element","export":true,"for_":["LargestContentfulPaint"],"level":"","normative":true,"shortname":"largest-contentful-paint","spec":"largest-contentful-paint","status":"local","text":"element","type":"attribute","url":"#dom-largestcontentfulpaint-element"},
 "#dom-largestcontentfulpaint-id": {"displayText":"id","export":true,"for_":["LargestContentfulPaint"],"level":"","normative":true,"shortname":"largest-contentful-paint","spec":"largest-contentful-paint","status":"local","text":"id","type":"attribute","url":"#dom-largestcontentfulpaint-id"},
 "#dom-largestcontentfulpaint-loadtime": {"displayText":"loadTime","export":true,"for_":["LargestContentfulPaint"],"level":"","normative":true,"shortname":"largest-contentful-paint","spec":"largest-contentful-paint","status":"local","text":"loadTime","type":"attribute","url":"#dom-largestcontentfulpaint-loadtime"},
@@ -2279,9 +2280,6 @@ let refsData = {
 "#largest-contentful-paint-candidate-request": {"displayText":"request","export":true,"for_":["largest contentful paint candidate"],"level":"","normative":true,"shortname":"largest-contentful-paint","spec":"largest-contentful-paint","status":"local","text":"request","type":"dfn","url":"#largest-contentful-paint-candidate-request"},
 "#largest-contentful-paint-candidate-size": {"displayText":"size","export":true,"for_":["largest contentful paint candidate"],"level":"","normative":true,"shortname":"largest-contentful-paint","spec":"largest-contentful-paint","status":"local","text":"size","type":"dfn","url":"#largest-contentful-paint-candidate-size"},
 "#largest-contentful-paint-candidate-width": {"displayText":"width","export":true,"for_":["largest contentful paint candidate"],"level":"","normative":true,"shortname":"largest-contentful-paint","spec":"largest-contentful-paint","status":"local","text":"width","type":"dfn","url":"#largest-contentful-paint-candidate-width"},
-"#largest-contentful-paint-height": {"displayText":"largest contentful paint height","export":true,"for_":[],"level":"","normative":true,"shortname":"largest-contentful-paint","spec":"largest-contentful-paint","status":"local","text":"largest contentful paint height","type":"dfn","url":"#largest-contentful-paint-height"},
-"#largest-contentful-paint-size": {"displayText":"largest contentful paint size","export":true,"for_":[],"level":"","normative":true,"shortname":"largest-contentful-paint","spec":"largest-contentful-paint","status":"local","text":"largest contentful paint size","type":"dfn","url":"#largest-contentful-paint-size"},
-"#largest-contentful-paint-width": {"displayText":"largest contentful paint width","export":true,"for_":[],"level":"","normative":true,"shortname":"largest-contentful-paint","spec":"largest-contentful-paint","status":"local","text":"largest contentful paint width","type":"dfn","url":"#largest-contentful-paint-width"},
 "#largestcontentfulpaint": {"displayText":"LargestContentfulPaint","export":true,"for_":[],"level":"","normative":true,"shortname":"largest-contentful-paint","spec":"largest-contentful-paint","status":"local","text":"LargestContentfulPaint","type":"interface","url":"#largestcontentfulpaint"},
 "#largestcontentfulpaint-element": {"displayText":"element","export":true,"for_":["LargestContentfulPaint"],"level":"","normative":true,"shortname":"largest-contentful-paint","spec":"largest-contentful-paint","status":"local","text":"element","type":"dfn","url":"#largestcontentfulpaint-element"},
 "#largestcontentfulpaint-id": {"displayText":"id","export":true,"for_":["LargestContentfulPaint"],"level":"","normative":true,"shortname":"largest-contentful-paint","spec":"largest-contentful-paint","status":"local","text":"id","type":"dfn","url":"#largestcontentfulpaint-id"},

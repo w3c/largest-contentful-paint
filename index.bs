@@ -134,7 +134,7 @@ Additionally, pages loaded initially off-screen, such as in background tabs, or 
 Terminology {#sec-terminology}
 ==============================
 
-A <dfn>largest contentful paint candidate</dfn> is a [=struct=] containing the
+A <dfn export>largest contentful paint candidate</dfn> is a [=struct=] containing the
 following members:
 
 * <dfn for="largest contentful paint candidate">element</dfn>, an [=/element=]
@@ -144,6 +144,7 @@ following members:
 * <dfn for="largest contentful paint candidate">request</dfn>, a [=/Request=] or null
 * <dfn for="largest contentful paint candidate">loadTime</dfn>, a [=/number=]
 
+Note: A [=largest contentful paint candidate=]'s [=largest contentful paint candidate/element=] can be stored weakly to prevent leaking elements that have been removed from the DOM.
 
 Largest Contentful Paint {#sec-largest-contentful-paint}
 =======================================
@@ -206,9 +207,7 @@ Note: The above algorithm defines that an element that is no longer a [=tree/des
 
 This specification also extends {{Document}} by adding to it:
 
-* A <dfn>largest contentful paint size</dfn> concept, initially set to 0.
-* A <dfn>largest contentful paint width</dfn> concept, initially set to 0.
-* A <dfn>largest contentful paint height</dfn> concept, initially set to 0.
+* A <dfn>current largest contentful paint candidate</dfn>, a [=largest contentful paint candidate=] or null, initially null.
 
 Processing model {#sec-processing-model}
 ========================================
@@ -240,9 +239,17 @@ Report Largest Contentful Paint {#sec-report-largest-contentful-paint}
 
     1. Let |window| be |document|’s [=relevant global object=].
     1. If either of |window|'s [=has dispatched scroll event=] or [=has dispatched input event=] is true, return.
-    1. Let |currentSize| be |document|'s [=largest contentful paint size=].
-    1. Let |currentWidth| be |document|'s [=largest contentful paint width=].
-    1. Let |currentHeight| be |document|'s [=largest contentful paint height=].
+    1. Let |newCandidate| be the result of [=computing a new largest contentful paint candidate=] given |document|, |paintedImages|, |paintedTextNodes|, and |document|'s [=current largest contentful paint candidate=].
+    1. If |newCandidate| is null, return.
+    1. Set |document|'s [=current largest contentful paint candidate=] to |newCandidate|.
+    1. Let |entry| be the result of [=creating a LargestContentfulPaint entry=] with |newCandidate|, |paintTimingInfo|, and |document|.
+    1. [=Queue the PerformanceEntry=] |entry|.
+</div>
+
+<div algorithm>
+    To <dfn export>compute a new largest contentful paint candidate</dfn>, given a {{Document}} |document|, an [=ordered set=] of [=pending image records=] |paintedImages|, an [=ordered set=] of [=/elements=] |paintedTextNodes|, and a [=largest contentful paint candidate=] or null |currentCandidate|, perform the following steps. They return a [=largest contentful paint candidate=] or null.
+
+    1. Let |currentSize| be |currentCandidate|'s [=largest contentful paint candidate/size=] if |currentCandidate| is not null or 0 otherwise.
     1. Let |largestSize| be |currentSize|.
     1. Let |newCandidate| be null.
     1. [=list/For each=] |record| of |paintedImages|:
@@ -276,12 +283,10 @@ Report Largest Contentful Paint {#sec-report-largest-contentful-paint}
             1. [=largest contentful paint candidate/height=] set to |result|'s [=effective visual size result/height=].
             1. [=largest contentful paint candidate/request=] set to null.
             1. [=largest contentful paint candidate/loadTime=] set to 0.
-    1. If |newCandidate| is not null:
-        1. If |currentSize| is greater than 0:
-            1. If |newCandidate|'s [=largest contentful paint candidate/width=] minus |currentWidth| is less than or equal to 3, and |newCandidate|'s [=largest contentful paint candidate/height=] minus |currentHeight| is less than or equal to 3, return.
-        1. <a>Create a LargestContentfulPaint entry</a> with |newCandidate|, |paintTimingInfo|, and |document|.
+    1. If |newCandidate| is not null and |currentSize| is greater than 0:
+        1. If |newCandidate|'s [=largest contentful paint candidate/width=] minus |currentCandidate|'s [=largest contentful paint candidate/width=] is less than or equal to 3, and |newCandidate|'s [=largest contentful paint candidate/height=] minus |currentCandidate|'s [=largest contentful paint candidate/height=] is less than or equal to 3, return null.
+    1. Return |newCandidate|.
 </div>
-
 
 Determine the effective visual size of an element {#sec-effective-visual-size}
 ------------------------------------------------------------------------------
@@ -335,7 +340,7 @@ run the following steps:
 Create a LargestContentfulPaint entry {#sec-create-entry}
 --------------------------------------------------------
 
-In order to <dfn>create a {{LargestContentfulPaint}} entry</dfn>, the user agent must run the following steps:
+In order to <dfn export>create a {{LargestContentfulPaint}} entry</dfn>, the user agent must run the following steps:
 
 <div algorithm="LargestContentfulPaint create-entry">
     : Input
@@ -343,10 +348,7 @@ In order to <dfn>create a {{LargestContentfulPaint}} entry</dfn>, the user agent
     ::  |paintTimingInfo|, a [=PaintTimingMixin/paint timing info=]
     ::  |document|, a {{Document}}
     : Output
-    ::  None
-        1. Set |document|'s [=largest contentful paint size=] to |candidate|'s [=largest contentful paint candidate/size=].
-        1. Set |document|'s [=largest contentful paint width=] to |candidate|'s [=largest contentful paint candidate/width=].
-        1. Set |document|'s [=largest contentful paint height=] to |candidate|'s [=largest contentful paint candidate/height=].
+    ::  A {{LargestContentfulPaint}}
         1. Let |url| be the empty string.
         1. If |candidate|'s [=largest contentful paint candidate/request=] is not null, set |url| to be |candidate|'s [=largest contentful paint candidate/request=]'s [=request URL=].
         1. Let |entry| be a new {{LargestContentfulPaint}} entry with |document|'s [=relevant realm=], whose [=PaintTimingMixin/paint timing info=] is |paintTimingInfo|, with its
@@ -355,7 +357,7 @@ In order to <dfn>create a {{LargestContentfulPaint}} entry</dfn>, the user agent
             * {{LargestContentfulPaint/id}} set to |candidate|'s [=largest contentful paint candidate/element=]'s <a attribute for=Element>element id</a>,
             * {{LargestContentfulPaint/loadTime}} set to |candidate|'s [=largest contentful paint candidate/loadTime=],
             * and {{LargestContentfulPaint/element}} set to |candidate|'s [=largest contentful paint candidate/element=].
-        1. [=Queue the PerformanceEntry=] |entry|.
+        1. Return |entry|.
 </div>
 
 Security & privacy considerations {#sec-security}

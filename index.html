@@ -5,9 +5,9 @@
   <title>Largest Contentful Paint</title>
   <meta content="ED" name="w3c-status">
   <link href="https://www.w3.org/StyleSheets/TR/2021/W3C-ED" rel="stylesheet">
-  <meta content="Bikeshed version d113b2e81, updated Tue Jun 9 14:57:55 2026 -0700" name="generator">
+  <meta content="Bikeshed version ac92c2f0d, updated Fri Aug 21 16:01:29 2026 -0700" name="generator">
   <link href="https://www.w3.org/TR/largest-contentful-paint" rel="canonical">
-  <meta content="0793d0e033ec40f70be43be30f4868bf0cd0d532" name="revision">
+  <meta content="45e9c0ac7c8d85efa48ef6f9bcf3cfa46b80511d" name="revision">
   <meta content="dark light" name="color-scheme">
   <link href="https://www.w3.org/StyleSheets/TR/2021/dark.css" media="(prefers-color-scheme: dark)" rel="stylesheet" type="text/css">
 <style>/* Boilerplate: style-autolinks */
@@ -773,7 +773,7 @@ var[data-var-color="6"] { --var-vg: #FFBCF2; }
 </p>
    <h1 class="no-ref p-name" id="title">Largest Contentful Paint</h1>
    <p id="w3c-state"><a href="https://www.w3.org/standards/types/#ED">Editor’s Draft</a>,
-    <time class="dt-updated" datetime="2026-07-13">13 July 2026</time></p>
+    <time class="dt-updated" datetime="2026-08-26">26 August 2026</time></p>
    <details open>
     <summary>More details about this document</summary>
     <div data-fill-with="spec-metadata">
@@ -1150,9 +1150,9 @@ run the following steps:</p>
        <li data-md>
         <p>Let <var>root</var> be <var>document</var>’s <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/document-sequences.html#concept-document-bc" id="ref-for-concept-document-bc">browsing context</a>’s <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/document-sequences.html#top-level-browsing-context" id="ref-for-top-level-browsing-context">top-level browsing context</a>’s <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/document-sequences.html#nav-document" id="ref-for-nav-document">active document</a>.</p>
        <li data-md>
-        <p>Let <var>rootWidth</var> be <var>root</var>’s <a data-link-type="dfn" href="https://drafts.csswg.org/cssom-view/#visual-viewport" id="ref-for-visual-viewport">visual viewport</a>’s width, excluding any scrollbars.</p>
+        <p>Let <var>rootWidth</var> be <var>root</var>’s <a data-link-type="dfn" href="https://drafts.csswg.org/css-viewport/#visual-viewport" id="ref-for-visual-viewport">visual viewport</a>’s width, excluding any scrollbars.</p>
        <li data-md>
-        <p>Let <var>rootHeight</var> be <var>root</var>’s <a data-link-type="dfn" href="https://drafts.csswg.org/cssom-view/#visual-viewport" id="ref-for-visual-viewport①">visual viewport</a>’s height, excluding any scrollbars.</p>
+        <p>Let <var>rootHeight</var> be <var>root</var>’s <a data-link-type="dfn" href="https://drafts.csswg.org/css-viewport/#visual-viewport" id="ref-for-visual-viewport①">visual viewport</a>’s height, excluding any scrollbars.</p>
        <li data-md>
         <p>If <var>size</var> is equal to <var>rootWidth</var> times <var>rootHeight</var>, return null.</p>
        <li data-md>
@@ -1395,10 +1395,14 @@ run the following steps:</p>
      <li><span class="dfn-paneled" id="f0ba04de">number</span>
     </ul>
    <li>
+    <a data-link-type="biblio">[CSS-VIEWPORT-1]</a> defines the following terms:
+    <ul>
+     <li><span class="dfn-paneled" id="e3de5d2d">visual viewport</span>
+    </ul>
+   <li>
     <a data-link-type="biblio">[CSSOM-VIEW-1]</a> defines the following terms:
     <ul>
      <li><span class="dfn-paneled" id="5b482fa1">scroll</span>
-     <li><span class="dfn-paneled" id="62a0057d">visual viewport</span>
     </ul>
    <li>
     <a data-link-type="biblio">[DOM]</a> defines the following terms:
@@ -1522,6 +1526,8 @@ run the following steps:</p>
    <dd>Elika Etemad; Koji Ishii. <a href="https://drafts.csswg.org/css-text-decor-4/"><cite>CSS Text Decoration Module Level 4</cite></a>. URL: <a href="https://drafts.csswg.org/css-text-decor-4/">https://drafts.csswg.org/css-text-decor-4/</a>
    <dt id="biblio-css-values-4">[CSS-VALUES-4]
    <dd>Tab Atkins Jr.; Elika Etemad. <a href="https://drafts.csswg.org/css-values-4/"><cite>CSS Values and Units Module Level 4</cite></a>. URL: <a href="https://drafts.csswg.org/css-values-4/">https://drafts.csswg.org/css-values-4/</a>
+   <dt id="biblio-css-viewport-1">[CSS-VIEWPORT-1]
+   <dd>Florian Rivoal; Emilio Cobos Álvarez. <a href="https://drafts.csswg.org/css-viewport/"><cite>CSS Viewport Module Level 1</cite></a>. URL: <a href="https://drafts.csswg.org/css-viewport/">https://drafts.csswg.org/css-viewport/</a>
    <dt id="biblio-cssom-view-1">[CSSOM-VIEW-1]
    <dd>Simon Fraser; Emilio Cobos Álvarez. <a href="https://drafts.csswg.org/cssom-view/"><cite>CSSOM View Module</cite></a>. URL: <a href="https://drafts.csswg.org/cssom-view/">https://drafts.csswg.org/cssom-view/</a>
    <dt id="biblio-dom">[DOM]
@@ -1797,7 +1803,6 @@ let dfnPanelData = {
 "5b482fa1": {"dfnID":"5b482fa1","dfnText":"scroll","external":true,"refSections":[{"refs":[{"id":"ref-for-eventdef-document-scroll"}],"title":"4.1. Modifications to the DOM specification"}],"url":"https://drafts.csswg.org/cssom-view-1/#eventdef-document-scroll"},
 "5d7209e9": {"dfnID":"5d7209e9","dfnText":"Window","external":true,"refSections":[{"refs":[{"id":"ref-for-window"}],"title":"3. Largest Contentful Paint"},{"refs":[{"id":"ref-for-window\u2460"}],"title":"4. Processing model"},{"refs":[{"id":"ref-for-window\u2461"}],"title":"4.1. Modifications to the DOM specification"}],"url":"https://html.spec.whatwg.org/multipage/nav-history-apis.html#window"},
 "5e0e1948": {"dfnID":"5e0e1948","dfnText":"width","external":true,"refSections":[{"refs":[{"id":"ref-for-dom-domrectreadonly-width"},{"id":"ref-for-dom-domrectreadonly-width\u2460"},{"id":"ref-for-dom-domrectreadonly-width\u2461"}],"title":"4.3. Determine the effective visual size of an element"}],"url":"https://drafts.csswg.org/geometry-1/#dom-domrectreadonly-width"},
-"62a0057d": {"dfnID":"62a0057d","dfnText":"visual viewport","external":true,"refSections":[{"refs":[{"id":"ref-for-visual-viewport"},{"id":"ref-for-visual-viewport\u2460"}],"title":"4.3. Determine the effective visual size of an element"}],"url":"https://drafts.csswg.org/cssom-view/#visual-viewport"},
 "67ba7293": {"dfnID":"67ba7293","dfnText":"event dispatch algorithm","external":true,"refSections":[{"refs":[{"id":"ref-for-concept-event-dispatch"}],"title":"4.1. Modifications to the DOM specification"}],"url":"https://dom.spec.whatwg.org#concept-event-dispatch"},
 "692595fe": {"dfnID":"692595fe","dfnText":"ordered set","external":true,"refSections":[{"refs":[{"id":"ref-for-ordered-set"},{"id":"ref-for-ordered-set\u2460"},{"id":"ref-for-ordered-set\u2461"},{"id":"ref-for-ordered-set\u2462"}],"title":"4.2. Report Largest Contentful Paint"}],"url":"https://infra.spec.whatwg.org/#ordered-set"},
 "6a7f12db": {"dfnID":"6a7f12db","dfnText":"alpha channel","external":true,"refSections":[{"refs":[{"id":"ref-for-alpha-channel"}],"title":"4.2. Report Largest Contentful Paint"}],"url":"https://drafts.csswg.org/css-color-4/#alpha-channel"},
@@ -1837,6 +1842,7 @@ let dfnPanelData = {
 "dom-largestcontentfulpaint-size": {"dfnID":"dom-largestcontentfulpaint-size","dfnText":"size","external":false,"refSections":[{"refs":[{"id":"ref-for-dom-largestcontentfulpaint-size"}],"title":"3.1. LargestContentfulPaint interface"},{"refs":[{"id":"ref-for-dom-largestcontentfulpaint-size\u2460"}],"title":"4.4. Create a LargestContentfulPaint entry"}],"url":"#dom-largestcontentfulpaint-size"},
 "dom-largestcontentfulpaint-tojson": {"dfnID":"dom-largestcontentfulpaint-tojson","dfnText":"toJSON","external":false,"refSections":[],"url":"#dom-largestcontentfulpaint-tojson"},
 "dom-largestcontentfulpaint-url": {"dfnID":"dom-largestcontentfulpaint-url","dfnText":"url","external":false,"refSections":[{"refs":[{"id":"ref-for-dom-largestcontentfulpaint-url"}],"title":"3.1. LargestContentfulPaint interface"},{"refs":[{"id":"ref-for-dom-largestcontentfulpaint-url\u2460"}],"title":"4.4. Create a LargestContentfulPaint entry"}],"url":"#dom-largestcontentfulpaint-url"},
+"e3de5d2d": {"dfnID":"e3de5d2d","dfnText":"visual viewport","external":true,"refSections":[{"refs":[{"id":"ref-for-visual-viewport"},{"id":"ref-for-visual-viewport\u2460"}],"title":"4.3. Determine the effective visual size of an element"}],"url":"https://drafts.csswg.org/css-viewport/#visual-viewport"},
 "e97a9688": {"dfnID":"e97a9688","dfnText":"unsigned long","external":true,"refSections":[{"refs":[{"id":"ref-for-idl-unsigned-long"}],"title":"3.1. LargestContentfulPaint interface"}],"url":"https://webidl.spec.whatwg.org/#idl-unsigned-long"},
 "e99bd18e": {"dfnID":"e99bd18e","dfnText":"relevant global object","external":true,"refSections":[{"refs":[{"id":"ref-for-concept-relevant-global"},{"id":"ref-for-concept-relevant-global\u2460"}],"title":"4.1. Modifications to the DOM specification"},{"refs":[{"id":"ref-for-concept-relevant-global\u2461"}],"title":"4.2. Report Largest Contentful Paint"}],"url":"https://html.spec.whatwg.org/multipage/webappapis.html#concept-relevant-global"},
 "eade7401": {"dfnID":"eade7401","dfnText":"transform","external":true,"refSections":[{"refs":[{"id":"ref-for-generictransformstream-transform"}],"title":"4.3. Determine the effective visual size of an element"}],"url":"https://streams.spec.whatwg.org/#generictransformstream-transform"},
@@ -2308,8 +2314,8 @@ let refsData = {
 "https://drafts.csswg.org/css-images-3/#propdef-object-position": {"displayText":"object-position","export":true,"for_":[],"level":"3","normative":true,"shortname":"css-images","spec":"css-images-3","status":"current","text":"object-position","type":"property","url":"https://drafts.csswg.org/css-images-3/#propdef-object-position"},
 "https://drafts.csswg.org/css-text-decor-4/#propdef-text-shadow": {"displayText":"text-shadow","export":true,"for_":[],"level":"4","normative":true,"shortname":"css-text-decor","spec":"css-text-decor-4","status":"current","text":"text-shadow","type":"property","url":"https://drafts.csswg.org/css-text-decor-4/#propdef-text-shadow"},
 "https://drafts.csswg.org/css-values-4/#number": {"displayText":"number","export":true,"for_":[],"level":"4","normative":true,"shortname":"css-values","spec":"css-values-4","status":"current","text":"number","type":"dfn","url":"https://drafts.csswg.org/css-values-4/#number"},
+"https://drafts.csswg.org/css-viewport/#visual-viewport": {"displayText":"visual viewport","export":true,"for_":[],"level":"1","normative":true,"shortname":"css-viewport","spec":"css-viewport-1","status":"current","text":"visual viewport","type":"dfn","url":"https://drafts.csswg.org/css-viewport/#visual-viewport"},
 "https://drafts.csswg.org/cssom-view-1/#eventdef-document-scroll": {"displayText":"scroll","export":true,"for_":["Document","Element","VisualViewport"],"level":"1","normative":true,"shortname":"cssom-view","spec":"cssom-view-1","status":"current","text":"scroll","type":"event","url":"https://drafts.csswg.org/cssom-view-1/#eventdef-document-scroll"},
-"https://drafts.csswg.org/cssom-view/#visual-viewport": {"displayText":"visual viewport","export":true,"for_":[],"level":"","normative":true,"shortname":"cssom-view","spec":"cssom-view","status":"anchor-block","text":"visual viewport","type":"dfn","url":"https://drafts.csswg.org/cssom-view/#visual-viewport"},
 "https://drafts.csswg.org/fill-stroke-3/#propdef-stroke-color": {"displayText":"stroke-color","export":true,"for_":[],"level":"3","normative":true,"shortname":"fill-stroke","spec":"fill-stroke-3","status":"current","text":"stroke-color","type":"property","url":"https://drafts.csswg.org/fill-stroke-3/#propdef-stroke-color"},
 "https://drafts.csswg.org/fill-stroke-3/#propdef-stroke-image": {"displayText":"stroke-image","export":true,"for_":[],"level":"3","normative":true,"shortname":"fill-stroke","spec":"fill-stroke-3","status":"current","text":"stroke-image","type":"property","url":"https://drafts.csswg.org/fill-stroke-3/#propdef-stroke-image"},
 "https://drafts.csswg.org/geometry-1/#dom-domrectreadonly-height": {"displayText":"height","export":true,"for_":["DOMRectReadOnly"],"level":"1","normative":true,"shortname":"geometry","spec":"geometry-1","status":"current","text":"height","type":"attribute","url":"https://drafts.csswg.org/geometry-1/#dom-domrectreadonly-height"},

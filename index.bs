@@ -309,9 +309,11 @@ run the following steps:
         1. If |size| is equal to |rootWidth| times |rootHeight|, return null.
 
         1. If |imageRequest| is not null, run the following steps to adjust for image position and upscaling:
-            1. If |imageRequest|'s [=/response=]'s content length in bytes is less than |size| * 0.004, then return null.
+            1. If |element| is not an {{HTMLVideoElement}}, and |imageRequest|'s [=/response=]'s content length in bytes is less than |size| * 0.004, then return null.
                 
                 Note: This heuristic tests whether the image resource contains sufficient data to be seen as contentful to the user. It compares the transferred file size with the number of pixels which are actually produced, after decoding and any image scaling is applied. Images which encode a very large number of pixels with in a very small number of bytes are typically low-content backgrounds, gradients, and the like, and are not considered as LCP candidates.
+
+                Note: Video elements are exempt from this heuristic because it would only ever be evaluated against the first video frame, which often encodes very little data (for example a solid color frame), and the element would get no later opportunity to become a candidate even when subsequent frames are contentful.
 
             1. Let |concreteDimensions| be |imageRequest|'s [=concrete object size=] within |element|.
             1. Let |visibleDimensions| be |concreteDimensions|, adjusted for positioning by 'object-position' or 'background-position' and |element|'s [=content box=].

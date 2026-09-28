@@ -49,6 +49,8 @@ urlPrefix: https://html.spec.whatwg.org/multipage/webappapis.html; spec: html;
         text: naturalHeight; url: #dom-img-naturalheight;
         text: width; url: #dom-img-width;
         text: height; url: #dom-img-height;
+urlPrefix: https://www.w3.org/TR/css-backgrounds-3/; spec: CSS-BACKGROUNDS-3;
+    type: dfn; text: background-image; url: #propdef-background-image;
 urlPrefix: https://drafts.csswg.org/css-color-3/; spec: CSS-COLOR-3;
     type: dfn; text: transparent;
 urlPrefix: https://w3c.github.io/paint-timing/; spec: PAINT-TIMING;
@@ -307,6 +309,8 @@ run the following steps:
         1. Let |rootWidth| be |root|'s <a>visual viewport</a>'s width, excluding any scrollbars.
         1. Let |rootHeight| be |root|'s <a>visual viewport</a>'s height, excluding any scrollbars.
         1. If |size| is equal to |rootWidth| times |rootHeight|, return null.
+
+            Note: [=background-image=] that cover the entire <a>visual viewport</a> are excluded.
 
         1. If |imageRequest| is not null, run the following steps to adjust for image position and upscaling:
             1. If |imageRequest|'s [=/response=]'s content length in bytes is less than |size| * 0.004, then return null.

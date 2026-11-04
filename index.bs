@@ -123,7 +123,9 @@ The {{PerformanceEntry/startTime}} getter returns {{LargestContentfulPaint/rende
 
 Each entry represents a new largest candidate selected by the [=compute a new largest contentful paint candidate=] algorithm.
 A later entry replaces the earlier one, so the value can change as more content paints, even after the <code>load</code> event.
-Equal or smaller content does not replace the current candidate, and removing it does not undo its entry.
+Equal or smaller content does not replace the current candidate.
+Neither does content that is at most 3 pixels wider and 3 pixels taller than it.
+Removing the current candidate does not undo its entry.
 For example, text painted at 400ms followed by a larger image at 1200ms gives an LCP of 1200ms.
 A smaller image painted at 1800ms does not change it.
 

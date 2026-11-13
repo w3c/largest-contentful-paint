@@ -79,6 +79,7 @@ Largest Contentful Paint (LCP) aims to be a page-load metric that:
 * reduces the chance of gaming
 
 The largest paint during the loading process of the page is likely to signify a meaningful event from the user's perspective, and is therefore something we want to expose by default to developers, enabling performance teams, analytics providers and lab-based measurement tools to collect those metrics without requiring extra annotation work by the folks creating the content itself.
+The <a href="https://github.com/w3c/largest-contentful-paint/blob/main/lcp-explainer.md">LCP explainer</a> describes how to compute the LCP metric from {{LargestContentfulPaint}} entries.
 
 The API relies heavily on concepts defined in [[PAINT-TIMING]], which can be thought of as the low-level primitive that this high-level feature is built on top of. For cases where the content creators are willing to annotate their content and indicate the important points in the page's loading cycle, [[ELEMENT-TIMING]] is the API that will provide them more control over the elements that get reported.
 

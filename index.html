@@ -5,9 +5,8 @@
   <title>Largest Contentful Paint</title>
   <meta content="ED" name="w3c-status">
   <link href="https://www.w3.org/StyleSheets/TR/2021/W3C-ED" rel="stylesheet">
-  <meta content="Bikeshed version ac92c2f0d, updated Fri Aug 21 16:01:29 2026 -0700" name="generator">
+  <meta content="Bikeshed version e0b165ae4, updated Mon Nov 2 15:16:49 2026 -0800" name="generator">
   <link href="https://www.w3.org/TR/largest-contentful-paint" rel="canonical">
-  <meta content="45e9c0ac7c8d85efa48ef6f9bcf3cfa46b80511d" name="revision">
   <meta content="dark light" name="color-scheme">
   <link href="https://www.w3.org/StyleSheets/TR/2021/dark.css" media="(prefers-color-scheme: dark)" rel="stylesheet" type="text/css">
 <style>/* Boilerplate: style-autolinks */
@@ -360,14 +359,17 @@ figure.table figcaption:not(.no-marker)::before {
     height: auto;
     max-height: 500px;
     overflow: auto;
+    margin: 0;
     padding: 0.5em 0.75em;
     font: small Helvetica Neue, sans-serif, Droid Sans Fallback;
     background: var(--dfnpanel-bg);
     color: var(--dfnpanel-text);
     border: outset 0.2em;
     white-space: normal; /* in case it's moved into a pre */
+    inset: auto;
+    position-area: bottom span-right;
+    position-try-fallbacks: flip-block, flip-inline, flip-block flip-inline;
 }
-.dfn-panel:not(.on) { display: none; }
 .dfn-panel * { margin: 0; padding: 0; text-indent: 0; }
 .dfn-panel > b { display: block; }
 .dfn-panel a { color: var(--dfnpanel-text); }
@@ -387,6 +389,9 @@ figure.table figcaption:not(.no-marker)::before {
 .dfn-panel.activated {
     display: inline-block;
     position: fixed;
+    position-area: none;
+    top: auto;
+    right: auto;
     left: 8px;
     bottom: 2em;
     margin: 0 auto;
@@ -443,7 +448,8 @@ figure.table figcaption:not(.no-marker)::before {
     opacity: 1;
 }
 
-.dfn-paneled[role="button"] { cursor: help; }
+.dfn-paneled { cursor: help; }
+.dfn-paneled > .dfn-panelbutton { all: unset; }
 
 .highlighted {
     animation: target-fade 3s;
@@ -773,7 +779,7 @@ var[data-var-color="6"] { --var-vg: #FFBCF2; }
 </p>
    <h1 class="no-ref p-name" id="title">Largest Contentful Paint</h1>
    <p id="w3c-state"><a href="https://www.w3.org/standards/types/#ED">Editor’s Draft</a>,
-    <time class="dt-updated" datetime="2026-08-26">26 August 2026</time></p>
+    <time class="dt-updated" datetime="2026-11-17">17 November 2026</time></p>
    <details open>
     <summary>More details about this document</summary>
     <div data-fill-with="spec-metadata">
@@ -880,7 +886,8 @@ The LargestContentfulPaint API enables developers to gain visibility into the lo
     <li data-md>
      <p>reduces the chance of gaming</p>
    </ul>
-   <p>The largest paint during the loading process of the page is likely to signify a meaningful event from the user’s perspective, and is therefore something we want to expose by default to developers, enabling performance teams, analytics providers and lab-based measurement tools to collect those metrics without requiring extra annotation work by the folks creating the content itself.</p>
+   <p>The largest paint during the loading process of the page is likely to signify a meaningful event from the user’s perspective, and is therefore something we want to expose by default to developers, enabling performance teams, analytics providers and lab-based measurement tools to collect those metrics without requiring extra annotation work by the folks creating the content itself.
+The <a href="https://github.com/w3c/largest-contentful-paint/blob/main/lcp-explainer.md">LCP explainer</a> describes how to compute the LCP metric from <code class="idl"><a data-link-type="idl" href="#largestcontentfulpaint" id="ref-for-largestcontentfulpaint">LargestContentfulPaint</a></code> entries.</p>
    <p>The API relies heavily on concepts defined in <a data-link-type="biblio" href="#biblio-paint-timing" title="Paint Timing">[PAINT-TIMING]</a>, which can be thought of as the low-level primitive that this high-level feature is built on top of. For cases where the content creators are willing to annotate their content and indicate the important points in the page’s loading cycle, <a data-link-type="biblio" href="#biblio-element-timing" title="Element Timing API">[ELEMENT-TIMING]</a> is the API that will provide them more control over the elements that get reported.</p>
    <p class="note" role="note"><span class="marker">NOTE:</span> The Largest Contentful Paint API will only expose elements that are <a data-link-type="dfn" href="https://w3c.github.io/paint-timing/#timing-eligible" id="ref-for-timing-eligible">timing-eligible</a>. Note that unlike Element Timing, there is no need to annotate elements in order to have them be eligible for Largest Contentful Paint.</p>
    <h3 class="heading settled" data-level="1.1" id="sec-largest-content"><span class="secno">1.1. </span><span class="content">Largest content</span><a class="self-link" href="#sec-largest-content"></a></h3>
@@ -939,7 +946,7 @@ following members:</p>
    <p class="note" role="note"><span class="marker">Note:</span> A user agent implementing the Largest Contentful Paint API would need to include <code class="highlight"><c- u>"largest-contentful-paint"</c-></code> in <code class="idl"><a data-link-type="idl" href="https://w3c.github.io/performance-timeline/#supportedentrytypes-attribute" id="ref-for-supportedentrytypes-attribute">supportedEntryTypes</a></code> for <code class="idl"><a data-link-type="idl" href="https://html.spec.whatwg.org/multipage/nav-history-apis.html#window" id="ref-for-window">Window</a></code> contexts.
 This allows developers to detect support for the API.</p>
    <p>Largest Contentful Paint involves the following new interface:</p>
-   <h3 class="heading settled" data-level="3.1" id="sec-largest-contentful-paint-interface"><span class="secno">3.1. </span><span class="content"><code class="idl"><a data-link-type="idl" href="#largestcontentfulpaint" id="ref-for-largestcontentfulpaint">LargestContentfulPaint</a></code> interface</span><a class="self-link" href="#sec-largest-contentful-paint-interface"></a></h3>
+   <h3 class="heading settled" data-level="3.1" id="sec-largest-contentful-paint-interface"><span class="secno">3.1. </span><span class="content"><code class="idl"><a data-link-type="idl" href="#largestcontentfulpaint" id="ref-for-largestcontentfulpaint①">LargestContentfulPaint</a></code> interface</span><a class="self-link" href="#sec-largest-contentful-paint-interface"></a></h3>
 <pre class="def highlight idl">[<a class="idl-code" data-link-type="extended-attribute" href="https://webidl.spec.whatwg.org/#Exposed" id="ref-for-Exposed"><c- g>Exposed</c-></a>=<c- n>Window</c->]
 <c- b>interface</c-> <dfn class="dfn-paneled idl-code" data-dfn-type="interface" data-export id="largestcontentfulpaint"><code class="highlight"><c- g>LargestContentfulPaint</c-></code></dfn> : <a data-link-type="idl-name" href="https://w3c.github.io/performance-timeline/#the-performanceentry-interface" id="ref-for-the-performanceentry-interface"><c- n>PerformanceEntry</c-></a> {
     <c- b>readonly</c-> <c- b>attribute</c-> <a data-link-type="idl-name" href="https://w3c.github.io/hr-time#dom-domhighrestimestamp" id="ref-for-dom-domhighrestimestamp"><c- n>DOMHighResTimeStamp</c-></a> <dfn class="dfn-paneled idl-code" data-dfn-for="LargestContentfulPaint" data-dfn-type="attribute" data-export data-readonly data-type="DOMHighResTimeStamp" id="dom-largestcontentfulpaint-loadtime"><code class="highlight"><c- g>loadTime</c-></code></dfn>;
@@ -951,9 +958,9 @@ This allows developers to detect support for the API.</p>
     [<a class="idl-code" data-link-type="extended-attribute" href="https://webidl.spec.whatwg.org/#Default" id="ref-for-Default"><c- g>Default</c-></a>] <a class="idl-code" data-link-type="interface" href="https://webidl.spec.whatwg.org/#idl-object" id="ref-for-idl-object"><c- b>object</c-></a> <dfn class="dfn-paneled idl-code" data-dfn-for="LargestContentfulPaint" data-dfn-type="method" data-export data-lt="toJSON()" id="dom-largestcontentfulpaint-tojson"><code class="highlight"><c- g>toJSON</c-></code></dfn>();
 };
 
-<a data-link-type="idl-name" href="#largestcontentfulpaint" id="ref-for-largestcontentfulpaint①"><c- n>LargestContentfulPaint</c-></a> <c- b>includes</c-> <a data-link-type="idl-name" href="https://w3c.github.io/paint-timing/#painttimingmixin" id="ref-for-painttimingmixin"><c- n>PaintTimingMixin</c-></a>;
+<a data-link-type="idl-name" href="#largestcontentfulpaint" id="ref-for-largestcontentfulpaint②"><c- n>LargestContentfulPaint</c-></a> <c- b>includes</c-> <a data-link-type="idl-name" href="https://w3c.github.io/paint-timing/#painttimingmixin" id="ref-for-painttimingmixin"><c- n>PaintTimingMixin</c-></a>;
 </pre>
-   <p>Each <code class="idl"><a data-link-type="idl" href="#largestcontentfulpaint" id="ref-for-largestcontentfulpaint②">LargestContentfulPaint</a></code> object has these associated concepts:</p>
+   <p>Each <code class="idl"><a data-link-type="idl" href="#largestcontentfulpaint" id="ref-for-largestcontentfulpaint③">LargestContentfulPaint</a></code> object has these associated concepts:</p>
    <ul>
     <li data-md>
      <p>A <dfn class="dfn-paneled" data-dfn-for="LargestContentfulPaint" data-dfn-type="dfn" data-noexport id="largestcontentfulpaint-size">size</dfn>, initially set to 0.</p>
@@ -1194,7 +1201,7 @@ run the following steps:</p>
     </dl>
    </div>
    <h3 class="heading settled" data-level="4.4" id="sec-create-entry"><span class="secno">4.4. </span><span class="content">Create a LargestContentfulPaint entry</span><a class="self-link" href="#sec-create-entry"></a></h3>
-   <p>In order to <dfn class="dfn-paneled" data-dfn-type="dfn" data-export id="create-a-largestcontentfulpaint-entry">create a <code class="idl"><a data-link-type="idl" href="#largestcontentfulpaint" id="ref-for-largestcontentfulpaint③">LargestContentfulPaint</a></code> entry</dfn>, the user agent must run the following steps:</p>
+   <p>In order to <dfn class="dfn-paneled" data-dfn-type="dfn" data-export id="create-a-largestcontentfulpaint-entry">create a <code class="idl"><a data-link-type="idl" href="#largestcontentfulpaint" id="ref-for-largestcontentfulpaint④">LargestContentfulPaint</a></code> entry</dfn>, the user agent must run the following steps:</p>
    <div class="algorithm" data-algorithm="LargestContentfulPaint create-entry">
     <dl>
      <dt data-md>Input
@@ -1206,14 +1213,14 @@ run the following steps:</p>
       <p><var>document</var>, a <code class="idl"><a data-link-type="idl" href="https://dom.spec.whatwg.org/#document" id="ref-for-document④">Document</a></code></p>
      <dt data-md>Output
      <dd data-md>
-      <p>A <code class="idl"><a data-link-type="idl" href="#largestcontentfulpaint" id="ref-for-largestcontentfulpaint④">LargestContentfulPaint</a></code></p>
+      <p>A <code class="idl"><a data-link-type="idl" href="#largestcontentfulpaint" id="ref-for-largestcontentfulpaint⑤">LargestContentfulPaint</a></code></p>
       <ol>
        <li data-md>
         <p>Let <var>url</var> be the empty string.</p>
        <li data-md>
         <p>If <var>candidate</var>’s <a data-link-type="dfn" href="#largest-contentful-paint-candidate-request" id="ref-for-largest-contentful-paint-candidate-request②">request</a> is not null, set <var>url</var> to be <var>candidate</var>’s <a data-link-type="dfn" href="#largest-contentful-paint-candidate-request" id="ref-for-largest-contentful-paint-candidate-request③">request</a>’s <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#dom-request-url" id="ref-for-dom-request-url">request URL</a>.</p>
        <li data-md>
-        <p>Let <var>entry</var> be a new <code class="idl"><a data-link-type="idl" href="#largestcontentfulpaint" id="ref-for-largestcontentfulpaint⑤">LargestContentfulPaint</a></code> entry with <var>document</var>’s <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/webappapis.html#concept-relevant-realm" id="ref-for-concept-relevant-realm">relevant realm</a>, whose <a data-link-type="dfn" href="https://w3c.github.io/paint-timing/#paint-timing-info" id="ref-for-paint-timing-info③">paint timing info</a> is <var>paintTimingInfo</var>, with its</p>
+        <p>Let <var>entry</var> be a new <code class="idl"><a data-link-type="idl" href="#largestcontentfulpaint" id="ref-for-largestcontentfulpaint⑥">LargestContentfulPaint</a></code> entry with <var>document</var>’s <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/webappapis.html#concept-relevant-realm" id="ref-for-concept-relevant-realm">relevant realm</a>, whose <a data-link-type="dfn" href="https://w3c.github.io/paint-timing/#paint-timing-info" id="ref-for-paint-timing-info③">paint timing info</a> is <var>paintTimingInfo</var>, with its</p>
         <ul>
          <li data-md>
           <p><code class="idl"><a data-link-type="idl" href="#dom-largestcontentfulpaint-size" id="ref-for-dom-largestcontentfulpaint-size①">size</a></code> set to <var>candidate</var>’s <a data-link-type="dfn" href="#largest-contentful-paint-candidate-size" id="ref-for-largest-contentful-paint-candidate-size③">size</a>,</p>
@@ -1869,7 +1876,7 @@ let dfnPanelData = {
 "largest-contentful-paint-candidate-request": {"dfnID":"largest-contentful-paint-candidate-request","dfnText":"request","external":false,"refSections":[{"refs":[{"id":"ref-for-largest-contentful-paint-candidate-request"},{"id":"ref-for-largest-contentful-paint-candidate-request\u2460"}],"title":"4.2. Report Largest Contentful Paint"},{"refs":[{"id":"ref-for-largest-contentful-paint-candidate-request\u2461"},{"id":"ref-for-largest-contentful-paint-candidate-request\u2462"}],"title":"4.4. Create a LargestContentfulPaint entry"}],"url":"#largest-contentful-paint-candidate-request"},
 "largest-contentful-paint-candidate-size": {"dfnID":"largest-contentful-paint-candidate-size","dfnText":"size","external":false,"refSections":[{"refs":[{"id":"ref-for-largest-contentful-paint-candidate-size"},{"id":"ref-for-largest-contentful-paint-candidate-size\u2460"},{"id":"ref-for-largest-contentful-paint-candidate-size\u2461"}],"title":"4.2. Report Largest Contentful Paint"},{"refs":[{"id":"ref-for-largest-contentful-paint-candidate-size\u2462"}],"title":"4.4. Create a LargestContentfulPaint entry"}],"url":"#largest-contentful-paint-candidate-size"},
 "largest-contentful-paint-candidate-width": {"dfnID":"largest-contentful-paint-candidate-width","dfnText":"width","external":false,"refSections":[{"refs":[{"id":"ref-for-largest-contentful-paint-candidate-width"},{"id":"ref-for-largest-contentful-paint-candidate-width\u2460"},{"id":"ref-for-largest-contentful-paint-candidate-width\u2461"},{"id":"ref-for-largest-contentful-paint-candidate-width\u2462"}],"title":"4.2. Report Largest Contentful Paint"}],"url":"#largest-contentful-paint-candidate-width"},
-"largestcontentfulpaint": {"dfnID":"largestcontentfulpaint","dfnText":"LargestContentfulPaint","external":false,"refSections":[{"refs":[{"id":"ref-for-largestcontentfulpaint"},{"id":"ref-for-largestcontentfulpaint\u2460"},{"id":"ref-for-largestcontentfulpaint\u2461"}],"title":"3.1. LargestContentfulPaint interface"},{"refs":[{"id":"ref-for-largestcontentfulpaint\u2462"},{"id":"ref-for-largestcontentfulpaint\u2463"},{"id":"ref-for-largestcontentfulpaint\u2464"}],"title":"4.4. Create a LargestContentfulPaint entry"}],"url":"#largestcontentfulpaint"},
+"largestcontentfulpaint": {"dfnID":"largestcontentfulpaint","dfnText":"LargestContentfulPaint","external":false,"refSections":[{"refs":[{"id":"ref-for-largestcontentfulpaint"}],"title":"1. Introduction"},{"refs":[{"id":"ref-for-largestcontentfulpaint\u2460"},{"id":"ref-for-largestcontentfulpaint\u2461"},{"id":"ref-for-largestcontentfulpaint\u2462"}],"title":"3.1. LargestContentfulPaint interface"},{"refs":[{"id":"ref-for-largestcontentfulpaint\u2463"},{"id":"ref-for-largestcontentfulpaint\u2464"},{"id":"ref-for-largestcontentfulpaint\u2465"}],"title":"4.4. Create a LargestContentfulPaint entry"}],"url":"#largestcontentfulpaint"},
 "largestcontentfulpaint-element": {"dfnID":"largestcontentfulpaint-element","dfnText":"element","external":false,"refSections":[{"refs":[{"id":"ref-for-largestcontentfulpaint-element"},{"id":"ref-for-largestcontentfulpaint-element\u2460"}],"title":"3.1. LargestContentfulPaint interface"}],"url":"#largestcontentfulpaint-element"},
 "largestcontentfulpaint-id": {"dfnID":"largestcontentfulpaint-id","dfnText":"id","external":false,"refSections":[{"refs":[{"id":"ref-for-largestcontentfulpaint-id"}],"title":"3.1. LargestContentfulPaint interface"}],"url":"#largestcontentfulpaint-id"},
 "largestcontentfulpaint-loadtime": {"dfnID":"largestcontentfulpaint-loadtime","dfnText":"loadTime","external":false,"refSections":[{"refs":[{"id":"ref-for-largestcontentfulpaint-loadtime"}],"title":"3.1. LargestContentfulPaint interface"}],"url":"#largestcontentfulpaint-loadtime"},
@@ -1880,16 +1887,6 @@ let dfnPanelData = {
 
 document.addEventListener("DOMContentLoaded", ()=>{
     genAllDfnPanels();
-
-    document.body.addEventListener("click", (e) => {
-        // If not handled already, just hide all dfn panels.
-        hideAllDfnPanels();
-    });
-});
-
-window.addEventListener("resize", () => {
-    // Pin any visible dfn panel
-    queryAll(".dfn-panel.on, .dfn-panel.activated").forEach(el=>positionDfnPanel(el));
 });
 
 function genAllDfnPanels() {
@@ -1901,16 +1898,17 @@ function genAllDfnPanels() {
             continue;
         }
         dfn.panelData = panelData;
-        insertDfnPopupAction(dfn);
+        genDfnPanel(dfn, panelData);
     }
 }
 
 function genDfnPanel(dfn, { dfnID, url, dfnText, refSections, external }) {
-    const dfnPanel = mk.aside({
-        class: "dfn-panel on",
+    const dfnPanel = mk.dialog({
+        class: "dfn-panel",
         id: `infopanel-for-${dfnID}`,
+        popover: "hint",
         "data-for": dfnID,
-        "aria-labelled-by":`infopaneltitle-for-${dfnID}`,
+        "aria-labelledby": `infopaneltitle-for-${dfnID}`,
         },
         mk.span({id:`infopaneltitle-for-${dfnID}`, style:"display:none"},
             `Info about the '${dfnText}' ${external?"external":""} reference.`),
@@ -1942,106 +1940,34 @@ function genDfnPanel(dfn, { dfnID, url, dfnText, refSections, external }) {
         event.stopPropagation();
         refocusOnTarget(event);
     });
-    dfnPanel.addEventListener('keydown', (event) => {
-        if(event.keyCode == 27) { // Escape key
-            hideDfnPanel({dfnPanel});
-            event.stopPropagation();
-            event.preventDefault();
+
+    dfnPanel.addEventListener('toggle', event=>{
+        if(event.newState == "closed") {
+            unpinDfnPanel(dfnPanel);
         }
     });
 
     dfnPanel.dfn = dfn;
     dfn.dfnPanel = dfnPanel;
+    dfn.after(dfnPanel);
+    const button = mk.button(
+        {
+            class:"dfn-panelbutton",
+            "popovertarget":dfnPanel.id
+        },
+        ...dfn.childNodes
+    );
+    dfn.append(button);
     return dfnPanel;
-}
-
-
-
-function hideAllDfnPanels() {
-    // Delete the currently-active dfn panel.
-    queryAll(".dfn-panel").forEach(dfnPanel=>hideDfnPanel({dfnPanel}));
-}
-
-function showDfnPanel(dfn) {
-    hideAllDfnPanels(); // Only display one at a time.
-
-    dfn.setAttribute("aria-expanded", "true");
-
-    const dfnPanel = genDfnPanel(dfn, dfn.panelData);
-
-    // Give the dfn a unique tabindex, and then
-    // give all the tabbable panel bits successive indexes.
-    let tabIndex = 100;
-    dfn.tabIndex = tabIndex++;
-    const tabbable = dfnPanel.querySelectorAll(":is(a, button)");
-    for (const el of tabbable) {
-        el.tabIndex = tabIndex++;
-    }
-
-    append(document.body, dfnPanel);
-    positionDfnPanel(dfnPanel);
-}
-
-function positionDfnPanel(dfnPanel) {
-    const dfn = dfnPanel.dfn;
-    const dfnPos = getBounds(dfn);
-    dfnPanel.style.top = dfnPos.bottom + "px";
-    dfnPanel.style.left = dfnPos.left + "px";
-
-    const panelPos = dfnPanel.getBoundingClientRect();
-    const panelMargin = 8;
-    const maxRight = document.body.parentNode.clientWidth - panelMargin;
-    if (panelPos.right > maxRight) {
-        const overflowAmount = panelPos.right - maxRight;
-        const newLeft = Math.max(panelMargin, dfnPos.left - overflowAmount);
-        dfnPanel.style.left = newLeft + "px";
-    }
 }
 
 function pinDfnPanel(dfnPanel) {
     // Switch it to "activated" state, which pins it.
     dfnPanel.classList.add("activated");
-    dfnPanel.style.position = "fixed";
-    dfnPanel.style.left = null;
-    dfnPanel.style.top = null;
 }
 
-function hideDfnPanel({dfn, dfnPanel}) {
-    if(!dfnPanel) dfnPanel = dfn.dfnPanel;
-    if(!dfn) dfn = dfnPanel.dfn;
-    dfn.dfnPanel = undefined;
-    dfnPanel.dfn = undefined;
-    dfn.setAttribute("aria-expanded", "false");
-    dfn.tabIndex = undefined;
-    dfnPanel.remove()
-}
-
-function toggleDfnPanel(dfn) {
-    if(dfn.dfnPanel) {
-        hideDfnPanel(dfn);
-    } else {
-        showDfnPanel(dfn);
-    }
-}
-
-function insertDfnPopupAction(dfn) {
-    dfn.setAttribute('role', 'button');
-    dfn.setAttribute('aria-expanded', 'false')
-    dfn.tabIndex = 0;
-    dfn.classList.add('has-dfn-panel');
-    dfn.addEventListener('click', (event) => {
-        toggleDfnPanel(dfn);
-        event.stopPropagation();
-    });
-    dfn.addEventListener('keypress', (event) => {
-        const kc = event.keyCode;
-        // 32->Space, 13->Enter
-        if(kc == 32 || kc == 13) {
-            toggleDfnPanel(dfn);
-            event.stopPropagation();
-            event.preventDefault();
-        }
-    });
+function unpinDfnPanel(dfnPanel) {
+    dfnPanel.classList.remove("activated");
 }
 
 function refocusOnTarget(event) {
@@ -2051,21 +1977,6 @@ function refocusOnTarget(event) {
         // This is needed after browser scrolls to the destination.
         target.focus();
     });
-}
-
-// TODO: shared util
-// Returns the root-level absolute position {left and top} of element.
-function getBounds(el, relativeTo=document.body) {
-    const relativeRect = relativeTo.getBoundingClientRect();
-    const elRect = el.getBoundingClientRect();
-    const top = elRect.top - relativeRect.top;
-    const left = elRect.left - relativeRect.left;
-    return {
-        top,
-        left,
-        bottom: top + elRect.height,
-        right: left + elRect.width,
-    }
 }
 
 function scrollToTargetAndHighlight(event) {

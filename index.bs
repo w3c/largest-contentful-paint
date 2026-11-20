@@ -255,7 +255,7 @@ Report Largest Contentful Paint {#sec-report-largest-contentful-paint}
         1. Let |imageElement| be |record|'s [=pending image record/element=].
         1. If |imageElement| is not [=exposed for paint timing=], given |document|, continue.
         1. Let |intersectionRect| be the value returned by the intersection rect algorithm using |imageElement| as the target and viewport as the root.
-        1. Let |result| be the [=effective visual size=] of |imageElement| given |intersectionRect| and |record|'s [=pending image record/request=].
+        1. Let |result| be the [=effective visual size=] of |imageElement| given |intersectionRect|, |record|'s [=pending image record/request=], and |document|.
         1. If |result| is null, continue.
         1. If |result|'s [=effective visual size result/size=] is less than or equal to |largestSize|, continue.
         1. Set |largestSize| to |result|'s [=effective visual size result/size=].
@@ -271,7 +271,7 @@ Report Largest Contentful Paint {#sec-report-largest-contentful-paint}
         1. If |textNode| has [=alpha channel=] value <=0 or [=opacity=] value <=0:
             1. If |textNode|'s <a property>text-shadow</a> value is none, |textNode|'s 'stroke-color' value is [=transparent=] and |textNode|'s 'stroke-image' value is none, continue.
         1. Let |intersectionRect| be the union of the border boxes of all {{Text}} <a>nodes</a> in |textNode|'s <a>set of owned text nodes</a>, intersected with the visual viewport.
-        1. Let |result| be the [=effective visual size=] of |textNode| given |intersectionRect| and null.
+        1. Let |result| be the [=effective visual size=] of |textNode| given |intersectionRect|, null, and |document|.
         1. If |result| is null, continue.
         1. If |result|'s [=effective visual size result/size=] is less than or equal to |largestSize|, continue.
         1. Set |largestSize| to |result|'s [=effective visual size result/size=].

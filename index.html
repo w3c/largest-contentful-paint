@@ -1093,6 +1093,7 @@ run the following steps:</p>
         <p>Let <var>rootHeight</var> be <var>root</var>’s <a data-link-type="dfn" href="https://drafts.csswg.org/css-viewport/#visual-viewport" id="ref-for-visual-viewport①">visual viewport</a>’s height, excluding any scrollbars.</p>
        <li data-md>
         <p>If <var>size</var> is equal to <var>rootWidth</var> times <var>rootHeight</var>, return null.</p>
+        <p class="note" role="note"><span class="marker">Note:</span> <a data-link-type="dfn" href="https://www.w3.org/TR/css-backgrounds-3/#propdef-background-image" id="ref-for-propdef-background-image">background-image</a> that cover the entire <a data-link-type="dfn" href="https://drafts.csswg.org/css-viewport/#visual-viewport" id="ref-for-visual-viewport②">visual viewport</a> are excluded.</p>
        <li data-md>
         <p>If <var>imageRequest</var> is not null, run the following steps to adjust for image position and upscaling:</p>
         <ol>
@@ -1296,6 +1297,7 @@ run the following steps:</p>
    <li>
     <a data-link-type="biblio">[CSS-BACKGROUNDS-3]</a> defines the following terms:
     <ul>
+     <li><span class="dfn-paneled" id="5ced56d0">background-image</span>
      <li><span class="dfn-paneled" id="d27a809f">background-position</span>
     </ul>
    <li>
@@ -1739,6 +1741,7 @@ let dfnPanelData = {
 "597088f0": {"dfnID":"597088f0","dfnText":"Text","external":true,"refSections":[{"refs":[{"id":"ref-for-text"}],"title":"4.2. Report Largest Contentful Paint"}],"url":"https://dom.spec.whatwg.org/#text"},
 "5991ccfb": {"dfnID":"5991ccfb","dfnText":"relevant realm","external":true,"refSections":[{"refs":[{"id":"ref-for-concept-relevant-realm"}],"title":"4.4. Create a LargestContentfulPaint entry"}],"url":"https://html.spec.whatwg.org/multipage/webappapis.html#concept-relevant-realm"},
 "5b482fa1": {"dfnID":"5b482fa1","dfnText":"scroll","external":true,"refSections":[{"refs":[{"id":"ref-for-eventdef-document-scroll"}],"title":"4.1. Modifications to the DOM specification"}],"url":"https://drafts.csswg.org/cssom-view-1/#eventdef-document-scroll"},
+"5ced56d0": {"dfnID":"5ced56d0","dfnText":"background-image","external":true,"refSections":[{"refs":[{"id":"ref-for-propdef-background-image"}],"title":"4.3. Determine the effective visual size of an element"}],"url":"https://www.w3.org/TR/css-backgrounds-3/#propdef-background-image"},
 "5d7209e9": {"dfnID":"5d7209e9","dfnText":"Window","external":true,"refSections":[{"refs":[{"id":"ref-for-window"}],"title":"3. Largest Contentful Paint"},{"refs":[{"id":"ref-for-window\u2460"}],"title":"4. Processing model"},{"refs":[{"id":"ref-for-window\u2461"}],"title":"4.1. Modifications to the DOM specification"}],"url":"https://html.spec.whatwg.org/multipage/nav-history-apis.html#window"},
 "5e0e1948": {"dfnID":"5e0e1948","dfnText":"width","external":true,"refSections":[{"refs":[{"id":"ref-for-dom-domrectreadonly-width"},{"id":"ref-for-dom-domrectreadonly-width\u2460"},{"id":"ref-for-dom-domrectreadonly-width\u2461"}],"title":"4.3. Determine the effective visual size of an element"}],"url":"https://drafts.csswg.org/geometry-1/#dom-domrectreadonly-width"},
 "67ba7293": {"dfnID":"67ba7293","dfnText":"event dispatch algorithm","external":true,"refSections":[{"refs":[{"id":"ref-for-concept-event-dispatch"}],"title":"4.1. Modifications to the DOM specification"}],"url":"https://dom.spec.whatwg.org#concept-event-dispatch"},
@@ -1780,7 +1783,7 @@ let dfnPanelData = {
 "dom-largestcontentfulpaint-size": {"dfnID":"dom-largestcontentfulpaint-size","dfnText":"size","external":false,"refSections":[{"refs":[{"id":"ref-for-dom-largestcontentfulpaint-size"}],"title":"3.1. LargestContentfulPaint interface"},{"refs":[{"id":"ref-for-dom-largestcontentfulpaint-size\u2460"}],"title":"4.4. Create a LargestContentfulPaint entry"}],"url":"#dom-largestcontentfulpaint-size"},
 "dom-largestcontentfulpaint-tojson": {"dfnID":"dom-largestcontentfulpaint-tojson","dfnText":"toJSON","external":false,"refSections":[],"url":"#dom-largestcontentfulpaint-tojson"},
 "dom-largestcontentfulpaint-url": {"dfnID":"dom-largestcontentfulpaint-url","dfnText":"url","external":false,"refSections":[{"refs":[{"id":"ref-for-dom-largestcontentfulpaint-url"}],"title":"3.1. LargestContentfulPaint interface"},{"refs":[{"id":"ref-for-dom-largestcontentfulpaint-url\u2460"}],"title":"4.4. Create a LargestContentfulPaint entry"}],"url":"#dom-largestcontentfulpaint-url"},
-"e3de5d2d": {"dfnID":"e3de5d2d","dfnText":"visual viewport","external":true,"refSections":[{"refs":[{"id":"ref-for-visual-viewport"},{"id":"ref-for-visual-viewport\u2460"}],"title":"4.3. Determine the effective visual size of an element"}],"url":"https://drafts.csswg.org/css-viewport/#visual-viewport"},
+"e3de5d2d": {"dfnID":"e3de5d2d","dfnText":"visual viewport","external":true,"refSections":[{"refs":[{"id":"ref-for-visual-viewport"},{"id":"ref-for-visual-viewport\u2460"},{"id":"ref-for-visual-viewport\u2461"}],"title":"4.3. Determine the effective visual size of an element"}],"url":"https://drafts.csswg.org/css-viewport/#visual-viewport"},
 "e97a9688": {"dfnID":"e97a9688","dfnText":"unsigned long","external":true,"refSections":[{"refs":[{"id":"ref-for-idl-unsigned-long"}],"title":"3.1. LargestContentfulPaint interface"}],"url":"https://webidl.spec.whatwg.org/#idl-unsigned-long"},
 "e99bd18e": {"dfnID":"e99bd18e","dfnText":"relevant global object","external":true,"refSections":[{"refs":[{"id":"ref-for-concept-relevant-global"},{"id":"ref-for-concept-relevant-global\u2460"}],"title":"4.1. Modifications to the DOM specification"},{"refs":[{"id":"ref-for-concept-relevant-global\u2461"}],"title":"4.2. Report Largest Contentful Paint"}],"url":"https://html.spec.whatwg.org/multipage/webappapis.html#concept-relevant-global"},
 "eade7401": {"dfnID":"eade7401","dfnText":"transform","external":true,"refSections":[{"refs":[{"id":"ref-for-generictransformstream-transform"}],"title":"4.3. Determine the effective visual size of an element"}],"url":"https://streams.spec.whatwg.org/#generictransformstream-transform"},
@@ -2775,6 +2778,7 @@ let refsData = {
 "https://webidl.spec.whatwg.org/#idl-unsigned-long": {"displayText":"unsigned long","export":true,"for_":[],"level":"1","normative":true,"shortname":"webidl","spec":"webidl","status":"current","text":"unsigned long","type":"interface","url":"https://webidl.spec.whatwg.org/#idl-unsigned-long"},
 "https://webidl.spec.whatwg.org/#this": {"displayText":"this","export":true,"for_":[],"level":"1","normative":true,"shortname":"webidl","spec":"webidl","status":"current","text":"this","type":"dfn","url":"https://webidl.spec.whatwg.org/#this"},
 "https://wicg.github.io/event-timing#has-dispatched-input-event": {"displayText":"has dispatched input event","export":true,"for_":[],"level":"","normative":true,"shortname":"event-timing","spec":"event-timing","status":"anchor-block","text":"has dispatched input event","type":"dfn","url":"https://wicg.github.io/event-timing#has-dispatched-input-event"},
+"https://www.w3.org/TR/css-backgrounds-3/#propdef-background-image": {"displayText":"background-image","export":true,"for_":[],"level":"3","normative":true,"shortname":"css-backgrounds","spec":"css-backgrounds-3","status":"anchor-block","text":"background-image","type":"dfn","url":"https://www.w3.org/TR/css-backgrounds-3/#propdef-background-image"},
 };
 
 function mkRefHint(link, ref) {
